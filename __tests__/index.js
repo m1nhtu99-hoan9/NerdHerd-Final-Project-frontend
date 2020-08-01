@@ -1,0 +1,3 @@
+/*
+  All tests go to this folder
+*/
