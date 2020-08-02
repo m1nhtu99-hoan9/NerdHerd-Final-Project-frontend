@@ -9,23 +9,18 @@ import {
 import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
 
-const LoginScr = () => {
+export default function LoginScreen () {
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
-      <Line/>
-      <Text style={styles.logo}>
-        Crescorex
-      </Text>
-      <Line/>
+      <Line />
+      <Text style={styles.logo}>Crescorex</Text>
+      <Line />
 
       <TextInput
-        color={'white'}
-        fontSize={15}
         maxLength={20}
         style={styles.inputUsername}
         placeholder="Username"
         placeholderTextColor={'#bdbdbd'}
-        textAlign="left"
       />
 
       <TextInput
@@ -33,7 +28,6 @@ const LoginScr = () => {
         style={styles.inputPassword}
         placeholder="Password"
         placeholderTextColor={'#bdbdbd'}
-        textAlign="left"
         secureTextEntry
       />
 
@@ -42,9 +36,7 @@ const LoginScr = () => {
       </Text>
 
       <TouchableHighlight style={styles.buttonLogin}>
-        <Text style={styles.loginText}>
-          Log in
-        </Text>
+        <Text style={styles.loginText}>Log in</Text>
       </TouchableHighlight>
     </LinearGradient>
   )
@@ -76,6 +68,8 @@ const styles = StyleSheet.create({
   inputUsername: {
     textAlign: 'center',
     width: 70 + '%',
+    color: 'white',
+    fontSize: 15,
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderWidth: 2,
@@ -109,5 +103,3 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 })
-
-export default LoginScr
