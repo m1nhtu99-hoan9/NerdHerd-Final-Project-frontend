@@ -2,16 +2,16 @@
   "name": "nerdherd-final-project",
   "author": "MinhTu Thomas Hoang",
   "contributors": [
-    { 
-      "name": "Do Trung Duc", 
+    {
+      "name": "Do Trung Duc",
       "url": "https://github.com/duc1807"
     },
     {
-      "name": "Phat Ngo", 
+      "name": "Phat Ngo",
       "url": "https://github.com/PhatsNgoo"
-    } 
+    }
   ],
-  "version": "0.0.1", 
+  "version": "0.0.1",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -19,19 +19,15 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject", 
-    "test": "jest", 
+    "eject": "expo eject",
+    "test": "jest",
     "build:android": "expo build:android",
     "lint": "eslint -ext js,jsx,ts,tsx .",
-    "lint:fix": "eslint -ext js,jsx,ts,tsx . --fix", 
-    "prettier": "prettier . ", 
+    "lint:fix": "eslint -ext js,jsx,ts,tsx . --fix",
+    "prettier": "prettier . ",
     "prettier:fix": "prettier . --fix"
   },
   "dependencies": {
-    "expo": "~38.0.8",
-    "expo-status-bar": "^1.0.2",
-    "react-dom": "~16.11.0",
-    "react-native-web": "~0.11.7",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/material-top-tabs": "^5.2.15",
     "@react-navigation/native": "^5.7.1",
@@ -39,9 +35,13 @@
     "@types/ramda": "^0.27.12",
     "@xstate/react": "^0.8.1",
     "axios": "^0.19.2",
+    "expo": "~38.0.8",
+    "expo-status-bar": "^1.0.2",
     "formik": "^2.1.5",
+    "native-base": "^2.13.13",
     "ramda": "^0.27.0",
     "react": "~16.11.0",
+    "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-gesture-handler": "~1.6.1",
     "react-native-paper": "^4.0.1",
@@ -49,13 +49,14 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-tab-view": "^2.15.0",
+    "react-native-web": "~0.11.7",
     "xstate": "^4.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@babel/runtime": "^7.10.5",
     "@types/react": "~16.9.41",
     "@types/react-native": "~0.62.13",
-    "@babel/runtime": "^7.10.5",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.5.0",
     "eslint-config-airbnb": "^18.2.0",
