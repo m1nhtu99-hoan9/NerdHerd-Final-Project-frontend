@@ -20,7 +20,7 @@ const vn = {
       }, 
       secondSubHeader: 'Loan Options',
       result: 'Result:', 
-      resultContent: 'ác suất vay thành công là %{percentage} phần trăm',
+      resultContent: 'Xác suất vay thành công là %{percentage} phần trăm',
       consultation: 'Suggestive advices to the customer:',
       consultationContent: [
         'Quý khách có thể cân nhắc khoản vay với số tiền ít hơn', 
