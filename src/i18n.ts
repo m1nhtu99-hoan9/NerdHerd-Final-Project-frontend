@@ -1,7 +1,7 @@
 import i18n from 'i18n-js'
 
-import en from './locale/en.json'
-import vn from './locale/vn.json'
+import en from './locale/en'
+import vn from './locale/vn'
 
 i18n.defaultLocale = 'vn'
 /* current locale */
