@@ -1,11 +1,4 @@
-import HomeScreen from './HomeScreen'
-import ChangePasswordScreen from './ChangePasswordScreen'
-import InformationScreen from './InformationScreen'
-import LoginScreen from './LoginScreen'
-
-export default {
-  HomeScreen, 
-  ChangePasswordScreen, 
-  InformationScreen, 
-  LoginScreen
-}
+export { default as HomeScreen } from './HomeScreen'
+export { default as ChangePasswordScreen } from './ChangePasswordScreen'
+export { default as InformationScreen } from './InformationScreen'
+export { default as LoginScreen } from './LoginScreen'
