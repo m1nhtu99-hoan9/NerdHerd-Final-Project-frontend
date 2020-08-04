@@ -8,36 +8,17 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
+import LoginForm from '../components/LoginForm'
 
-export default function LoginScreen () {
+export default function LoginScreen() {
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
-      <Line />
-      <Text style={styles.logo}>Crescorex</Text>
-      <Line />
-
-      <TextInput
-        maxLength={20}
-        style={styles.inputUsername}
-        placeholder="Username"
-        placeholderTextColor={'#bdbdbd'}
-      />
-
-      <TextInput
-        maxLength={22}
-        style={styles.inputPassword}
-        placeholder="Password"
-        placeholderTextColor={'#bdbdbd'}
-        secureTextEntry
-      />
-
-      <Text style={styles.forgotText}>
-        Forgot Password?
-      </Text>
-
-      <TouchableHighlight style={styles.buttonLogin}>
-        <Text style={styles.loginText}>Log in</Text>
-      </TouchableHighlight>
+      <Content contentContainerStyle={styles.contentContainer}>
+        <Line />
+        <Text style={styles.logo}>Crescorex</Text>
+        <Line />
+        <LoginForm />
+      </Content>
     </LinearGradient>
   )
 }
@@ -47,6 +28,15 @@ const Line = () => {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  contentContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 100
+  },
   whiteLine: {
     backgroundColor: 'white',
     height: 6,
@@ -57,13 +47,6 @@ const styles = StyleSheet.create({
   logo: {
     color: 'white',
     fontSize: 40,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'lightblue',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 100,
   },
   inputUsername: {
     textAlign: 'center',

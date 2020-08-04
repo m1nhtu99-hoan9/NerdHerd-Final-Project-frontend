@@ -2,10 +2,10 @@ const vn = {
   appName: 'CreScorex',
   signIn: {
     _nav: 'Sign In',
-    usernameInput: 'Username',
-    passwordInput: 'Password',
-    forgetPassword: 'Forget Password?',
-    submitBtn: 'Sign In',
+    usernameInput: 'Tên đăng nhập',
+    passwordInput: 'Mật khẩu',
+    forgetPassword: 'Quên mật khẩu?',
+    submitBtn: 'Đăng Nhập',
   },
   home: {
     _nav: 'Home',
