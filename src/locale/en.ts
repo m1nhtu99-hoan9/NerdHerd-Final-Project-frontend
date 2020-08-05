@@ -30,6 +30,7 @@ const en = {
   search: {
     _nav: 'Search',
     phoneNumInput: 'Phone Number',
+    otpCodeInput: 'OTP Code',
     submitBtn: 'Process >',
   },
   changePassword: {

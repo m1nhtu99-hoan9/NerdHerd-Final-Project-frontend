@@ -151,6 +151,9 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 22
   },
+  T_loanDetailResult:{
+
+  },
 
   loanType: {
     height: 50,

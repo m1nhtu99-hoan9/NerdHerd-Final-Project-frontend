@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
+import 'react-native-gesture-handler';
 
 export default function LoginScreen () {
   return (
@@ -15,7 +16,6 @@ export default function LoginScreen () {
       <Line />
       <Text style={styles.logo}>Crescorex</Text>
       <Line />
-
       <TextInput
         maxLength={20}
         style={styles.inputUsername}
