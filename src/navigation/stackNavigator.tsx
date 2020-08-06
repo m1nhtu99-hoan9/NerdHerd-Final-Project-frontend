@@ -6,11 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { StackParamList } from '../../src/@types/navigation'
 import BottomTabNavigator from './bottomTabNavigator'
 
-//Import Screens
 import { LoginScreen, ChangePasswordScreen } from '../screens/index'
 
 const Stack = createStackNavigator<StackParamList>()
 
+
+// LogIn <-> Home <-> ChangePassword
 const StackNavigator = () => {
   return (
         <Stack.Navigator initialRouteName="Login">

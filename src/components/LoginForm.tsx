@@ -1,14 +1,9 @@
 import i18n from '../i18n'
 import React from 'react'
-<<<<<<< HEAD
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native'
 import MaskedView from '@react-native-community/masked-view'
 import { Content, Input, Item, Text } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
-=======
-import { StyleSheet } from 'react-native' 
-import { Content, Input, Item, Text, Button, View } from 'native-base'
->>>>>>> 33ff63fa39cde313438dc69409fe5ae45ab9b86e
 import * as f from 'formik'
 import Colours from '../styles/colours'
 
@@ -20,7 +15,6 @@ export default function LoginForm(props: unknown) {
   return (
     <View style={styles.container}>
       <Item rounded style={styles.textboxContainer}>
-<<<<<<< HEAD
         <Input
           selectionColor={Colours.White}
           style={styles.placeholderTxt}
@@ -68,24 +62,12 @@ export default function LoginForm(props: unknown) {
           {/* Shows behind the mask, you can put anything here, such as an image */}
         </MaskedView>
       </LinearGradient>
-=======
-        <Input placeholder={i18n.t('signIn.usernameInput')} />
-      </Item>
-      <Item rounded style={styles.textboxContainer}>
-        <Input placeholder={i18n.t('signIn.passwordInput')} secureTextEntry />
-      </Item>
-      <Text>{i18n.t('signIn.forgetPassword')}</Text>
-      <Button rounded dark style={styles.btnContainer}>
-        <Text>{i18n.t('signIn.submitBtn')}</Text>
-      </Button>
->>>>>>> 33ff63fa39cde313438dc69409fe5ae45ab9b86e
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-<<<<<<< HEAD
     flex: 8,
     flexDirection: 'column',
     width: 80 + '%',
@@ -118,14 +100,4 @@ const styles = StyleSheet.create({
     borderColor: Colours.White,
     elevation: 5,
   },
-=======
-    width: 80+'%'
-  },
-  textboxContainer: {
-    marginVertical: 10
-  },
-  btnContainer: {
-    alignSelf: 'center'
-  }
->>>>>>> 33ff63fa39cde313438dc69409fe5ae45ab9b86e
 })

@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
-import { exp } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useNavigation } from '@react-navigation/native'
+
+import { HomeScreenNavigationProps } from '../@types/navigation'
 
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 
@@ -12,6 +14,8 @@ const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function HomeScreen() {
+  const navigation = useNavigation<HomeScreenNavigationProps>()
+
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
       <View style={styles.container}>
