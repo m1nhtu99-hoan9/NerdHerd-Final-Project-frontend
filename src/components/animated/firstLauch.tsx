@@ -10,7 +10,8 @@ import {
 import Animated, { Easing, useCode } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as R from 'ramda'
-import { translate } from 'i18n-js'
+
+import LoginForm from '../LoginForm'
 
 /* @References: 
     https://www.youtube.com/watch?v=hqbmv1yvndE&t=s
@@ -84,26 +85,7 @@ export default function AnimatedLoginScreen() {
         Crescorex
       </Animated.Text>
       <Line />
-      <TextInput
-        maxLength={20}
-        style={styles.inputUsername}
-        placeholder="Username"
-        placeholderTextColor={'#bdbdbd'}
-      />
-
-      <TextInput
-        maxLength={22}
-        style={styles.inputPassword}
-        placeholder="Password"
-        placeholderTextColor={'#bdbdbd'}
-        secureTextEntry
-      />
-
-      <Text style={styles.forgotText}>Forgot Password?</Text>
-
-      <TouchableHighlight style={styles.buttonLogin}>
-        <Text style={styles.loginText}>Log in</Text>
-      </TouchableHighlight>
+      <LoginForm/>
     </LinearGradient>
   )
 }
