@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import Animated, { Easing, useCode } from 'react-native-reanimated'
 import { LinearGradient } from 'expo-linear-gradient'
+import * as R from 'ramda'
 import { translate } from 'i18n-js'
 
 /* @References: 
@@ -32,7 +33,9 @@ const {
   Extrapolate,
 } = Animated
 
-const runTiming = (clock: Animated.Clock, posValue: any, dest: any) => {
+const runTiming = (posValue: any, dest: any) => {
+  const innerClock = new Clock()
+
   const state: Animated.TimingState = {
     finished: new Value(0),
     position: new Value(0),
@@ -43,29 +46,32 @@ const runTiming = (clock: Animated.Clock, posValue: any, dest: any) => {
   const config: Animated.TimingConfig = {
     duration: 500,
     toValue: new Value(0),
-    easing: Easing.inOut(Easing.ease),
+    easing: Easing.inOut(Easing.quad),
   }
 
   return block([
-    cond(clockRunning(clock), 0, [
+    cond(clockRunning(innerClock), 0, [
       set(state.finished, 0),
       set(state.time, 0),
       set(state.position, posValue),
       set(state.frameTime, 0),
       set(config.toValue, dest),
-      startClock(clock),
+      startClock(innerClock),
     ]),
-    timing(clock, state, config),
-    cond(state.finished, debug('stop clock', stopClock(clock))),
+    timing(innerClock, state, config),
+    cond(state.finished, debug('stop clock', stopClock(innerClock))),
     state.position,
   ])
 }
 
+const runTimingReversed = R.flip(runTiming)
+
 export default function AnimatedLoginScreen() {
-  const logoFontSize = useState(new Value(40))[0]
+  const logoFontSize = useState(new Value(0))[0]
+  const isIntro = useState(true)
 
   useCode(
-    set(logoFontSize, runTiming(new Clock(), 40, 65))
+    set(logoFontSize, (isIntro ? runTiming : runTimingReversed)(65, 40))
   , [])
 
   return (
