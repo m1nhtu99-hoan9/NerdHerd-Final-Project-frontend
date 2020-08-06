@@ -1,6 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, View, Text, TextInput, Dimensions } from 'react-native'
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
+
+const SCREEN_HEIGHT = Dimensions.get('window').height
+const SCREEN_WIDTH = Dimensions.get('window').width
 
 interface UserCreditInfoCardProps {
   phoneNumber: string
@@ -16,6 +19,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
   return (
     <>
       <View style={styles.content}>
+        <ScrollView>
         <View style={styles.V_phoneNum}>
           <Text style={styles.phoneNum}>{phoneNumber}</Text>
         </View>
@@ -30,17 +34,17 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
 
         <Line></Line>
 
-        <View style={styles.V_creditScoreHistory}>
+        {/* <View style={styles.V_creditScoreHistory}>
           <Text style={styles.T_creditScoreHistoryHeader}>Lich su diem tin dung</Text>
           <Text style={styles.Graph_creditScoreHistory}>!!! Graph &amp; Gauge go here !!! Still in development </Text>
           <Text style={styles.T_creditScoreHistoryNote}>Chi tiet</Text>
-        </View>
+        </View> */}
 
         <Line></Line>
 
         <View style={styles.V_loanDetail}>
           <Text style={styles.T_loanDetailHeader}>Tinh toan khoan vay</Text>
-          <Text style={styles.T_loanDetailResult}>dhbiausdnoisdf</Text>
+          <Text style={styles.T_loanDetailResult}>Content goes here</Text>
 
           <TextInput
             style={styles.loanType}
@@ -60,6 +64,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
           </TouchableOpacity>
 
         </View>
+        </ScrollView>
       </View>
     </>
   )
@@ -85,12 +90,12 @@ const styles = StyleSheet.create({
     fontSize: 28
   },
   content: {
-    width: 400,
-    backgroundColor: 'transparent',
-    marginHorizontal: 30,
-    borderWidth: 3,
+    width: SCREEN_WIDTH /10 * 9.4,
+    backgroundColor: 'pink',
     borderRadius: 20,
+    marginHorizontal: 30,
     flexDirection: 'column',
+    alignContent: 'center'
   },
   footer: {
     flex: 0.08,

@@ -13,8 +13,6 @@ const Stack = createStackNavigator<StackParamList>()
 
 const StackNavigator = () => {
   return (
-    <View>
-      <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login">{() => <LoginScreen />}</Stack.Screen>
           <Stack.Screen
@@ -28,9 +26,7 @@ const StackNavigator = () => {
             initialParams={{}}
           />
         </Stack.Navigator>
-      </NavigationContainer>
-    </View>
   )
 }
 
-export default StackNavigator
+export default StackNavigator;
