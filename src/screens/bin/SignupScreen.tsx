@@ -8,43 +8,60 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
-import 'react-native-gesture-handler';
+import 'react-native-gesture-handler'
 
-//Import components
-import LoginForm from '../components/LoginForm'
-
-export default function LoginScreen ({}) {
+export default function SignupScreen({}) {
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
       <Line />
       <Text style={styles.logo}>Crescorex</Text>
       <Line />
 
-      {/* <TextInput
+      <Text style={{alignSelf: 'flex-start'}}>{"<"} Quay lai</Text>
+
+      <View>
+      <TextInput
         maxLength={20}
         style={styles.inputUsername}
-        placeholder="Username"
+        placeholder="Ma ban quyen"
+        placeholderTextColor={'#bdbdbd'}
+      />
+
+      <TextInput
+        maxLength={20}
+        style={styles.inputUsername}
+        placeholder="Email"
+        placeholderTextColor={'#bdbdbd'}
+      />
+
+      <TextInput
+        maxLength={20}
+        style={styles.inputUsername}
+        placeholder="So dien thoai"
         placeholderTextColor={'#bdbdbd'}
       />
 
       <TextInput
         maxLength={22}
         style={styles.inputPassword}
-        placeholder="Password"
+        placeholder="Mat khau"
         placeholderTextColor={'#bdbdbd'}
         secureTextEntry
       />
 
-      <Text style={styles.forgotText}>
-        Forgot Password?
-      </Text>
+      <TextInput
+        maxLength={22}
+        style={styles.inputPassword}
+        placeholder="Xac nhan mat khau"
+        placeholderTextColor={'#bdbdbd'}
+        secureTextEntry
+      />
 
       <TouchableHighlight style={styles.buttonLogin}>
         <Text style={styles.loginText}>Log in</Text>
-      </TouchableHighlight> */}
-
-      <LoginForm></LoginForm>
-
+      </TouchableHighlight>
+    </View>
+    
     </LinearGradient>
   )
 }
@@ -82,7 +99,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#e3e3e3',
     borderRadius: 30,
-    marginTop: 70,
+    marginTop: 15,
   },
   inputPassword: {
     textAlign: 'center',
@@ -92,11 +109,11 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#e3e3e3',
     borderRadius: 30,
-    marginTop: 15,
+    marginTop: 10,
   },
   forgotText: {
     color: 'white',
-    marginTop: 10,
+    marginTop: 15,
   },
   buttonLogin: {
     width: 70 + '%',
@@ -104,7 +121,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
     backgroundColor: 'white',
     borderRadius: 50,
-    marginTop: 40,
+    marginTop: 30,
   },
   loginText: {
     alignSelf: 'center',

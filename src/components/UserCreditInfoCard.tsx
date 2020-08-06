@@ -30,17 +30,17 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
 
         <Line></Line>
 
-        <View style={styles.V_creditScoreHistory}>
+        {/* <View style={styles.V_creditScoreHistory}>
           <Text style={styles.T_creditScoreHistoryHeader}>Lich su diem tin dung</Text>
           <Text style={styles.Graph_creditScoreHistory}>!!! Graph &amp; Gauge go here !!! Still in development </Text>
           <Text style={styles.T_creditScoreHistoryNote}>Chi tiet</Text>
-        </View>
+        </View> */}
 
         <Line></Line>
 
         <View style={styles.V_loanDetail}>
           <Text style={styles.T_loanDetailHeader}>Tinh toan khoan vay</Text>
-          <Text style={styles.T_loanDetailResult}>dhbiausdnoisdf</Text>
+          <Text style={styles.T_loanDetailResult}>Content goes here</Text>
 
           <TextInput
             style={styles.loanType}
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: 400,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     marginHorizontal: 30,
     borderWidth: 3,
     borderRadius: 20,

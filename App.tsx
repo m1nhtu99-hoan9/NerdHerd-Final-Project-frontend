@@ -3,15 +3,16 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 //import HomeScreen from './src/screens/HomeScreen'
-import { LoginScreen } from './src/screens/index'
+import { HomeScreen, SingupScreen, LoginScreen } from './src/screens/index'
 import { BottomTabNavigator } from './src/navigation/index'
+import { StackNavigator } from './src/navigation/index'
+import { NavigationContainer } from '@react-navigation/native'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Text>OK</Text>
-    </View>
+      <NavigationContainer>
+        <LoginScreen />
+      </NavigationContainer>
   );
 }
 
