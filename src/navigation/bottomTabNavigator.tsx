@@ -7,12 +7,23 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 //Import Screens
 import { HomeScreen } from '../screens/index'
 import { InformationScreen } from '../screens/index'
+import styles from '../styles'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
 const BottomTabNavigator = () => {
   return (
-    <Tab.Navigator initialRouteName="Index">
+    <Tab.Navigator
+      initialRouteName="Index"
+      tabBarOptions={{
+        style: {
+          backgroundColor: 'transparent',
+          borderTopWidth: 0,
+          position: 'absolute',
+          elevation: 0
+        },
+      }}
+    >
       <Tab.Screen name="Index" component={HomeScreen} />
       <Tab.Screen name="Search" component={HomeScreen} />
       <Tab.Screen name="Profile" component={InformationScreen} />
@@ -20,4 +31,4 @@ const BottomTabNavigator = () => {
   )
 }
 
-export default BottomTabNavigator;
+export default BottomTabNavigator
