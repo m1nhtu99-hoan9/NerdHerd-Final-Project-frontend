@@ -1,31 +1,37 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LinearGradient } from 'expo-linear-gradient'
 
-export default function InformationScreen () {
+const SCREEN_HEIGHT = Dimensions.get('window').height
+const SCREEN_WIDTH = Dimensions.get('window').width
+
+export default function InformationScreen() {
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Thong tin</Text>
-      </View>
-      <View style={styles.information}>
-        <Text style={styles.name}>NGO TAI PHAT</Text>
-        <Text style={styles.infoText}>Ngan hang: Techcombank</Text>
-        <Text style={styles.infoText}>Tinh trang: Binh thuong</Text>
-        <Text style={styles.infoText}>Email: phatxxxxx@gmail.com</Text>
-        <Text style={styles.infoText}>So dien thoai: 094345xxx</Text>
-      </View>
-      <Line></Line>
-      <View style={styles.button}>
-        <TouchableOpacity style={styles.logoutButton}>
-          <Text>Dang xuat</Text>
-        </TouchableOpacity>
+    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Thong tin</Text>
+        </View>
+        <View style={styles.information}>
+          <Text style={styles.name}>NGO TAI PHAT</Text>
+          <Text style={styles.infoText}>Ngan hang: Techcombank</Text>
+          <Text style={styles.infoText}>Tinh trang: Binh thuong</Text>
+          <Text style={styles.infoText}>Email: phatxxxxx@gmail.com</Text>
+          <Text style={styles.infoText}>So dien thoai: 094345xxx</Text>
+        </View>
+        <Line></Line>
+        <View style={styles.button}>
+          <TouchableOpacity style={styles.logoutButton}>
+            <Text>Dang xuat</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.changePasswordButton}>
-          <Text>Doi mat khau</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.changePasswordButton}>
+            <Text>Doi mat khau</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </LinearGradient>
   )
 }
 
@@ -43,12 +49,26 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: 94 + '%',
+    width: 100 + '%',
+  },
+  content: {
+    backgroundColor: 'white',
+    width: SCREEN_WIDTH / 10 * 9.4,
+    height: SCREEN_HEIGHT / 10 * 7,
     alignSelf: 'center',
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 6.27,
+    elevation: 10,
+    marginTop: 10 + '%',paddingLeft: 20
   },
   header: {
     flex: 0.1,
-    backgroundColor: 'lightpink',
     justifyContent: 'flex-end',
     paddingBottom: 10,
   },

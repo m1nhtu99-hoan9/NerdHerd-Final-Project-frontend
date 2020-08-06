@@ -1,6 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, TextInput } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, View, Text, TextInput, Dimensions } from 'react-native'
+import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
+
+const SCREEN_HEIGHT = Dimensions.get('window').height
+const SCREEN_WIDTH = Dimensions.get('window').width
 
 interface UserCreditInfoCardProps {
   phoneNumber: string
@@ -16,6 +19,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
   return (
     <>
       <View style={styles.content}>
+        <ScrollView>
         <View style={styles.V_phoneNum}>
           <Text style={styles.phoneNum}>{phoneNumber}</Text>
         </View>
@@ -60,6 +64,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
           </TouchableOpacity>
 
         </View>
+        </ScrollView>
       </View>
     </>
   )
@@ -85,12 +90,12 @@ const styles = StyleSheet.create({
     fontSize: 28
   },
   content: {
-    width: 400,
-    backgroundColor: 'white',
-    marginHorizontal: 30,
-    borderWidth: 3,
+    width: SCREEN_WIDTH /10 * 9.4,
+    backgroundColor: 'pink',
     borderRadius: 20,
+    marginHorizontal: 30,
     flexDirection: 'column',
+    alignContent: 'center'
   },
   footer: {
     flex: 0.08,
