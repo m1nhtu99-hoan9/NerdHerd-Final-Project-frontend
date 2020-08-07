@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     width: 65 + '%',
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
+    marginTop: 20
   },
   container: {
     flex: 1,
@@ -190,12 +191,23 @@ const styles = StyleSheet.create({
     height: (SCREEN_HEIGHT / 10) * 6.5,
     backgroundColor: 'white',
     borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 12.35,
+
+    elevation: 19,
   },
   modalContentHeader: {
     flex: 0.15,
     alignItems: 'center',
     paddingBottom: 10,
     flexDirection: 'row',
+    backgroundColor: '#009591',
+    borderTopEndRadius: 20,
   },
   inputFieldContainer: {
     flex: 0.85,

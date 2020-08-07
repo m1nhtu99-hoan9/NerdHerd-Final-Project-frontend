@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.15,
     justifyContent: 'flex-end',
+    backgroundColor: '#009591',
+    borderTopEndRadius: 15,
   },
   headerText: {
     paddingBottom: 20,
