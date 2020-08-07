@@ -26,9 +26,9 @@ export default function HomeScreen() {
             </View>
 
             <ScrollView horizontal style={{ flex: 0.85, borderRadius: 15 }}>
-              <UserCreditInfoCard phoneNumber="0967162652" />
+              <UserCreditInfoCard phoneNumber='0967162652' />
 
-              <UserCreditInfoCard phoneNumber="0904586221" />
+              <UserCreditInfoCard phoneNumber='0904586221' />
             </ScrollView>
           </View>
         </ScrollView>
