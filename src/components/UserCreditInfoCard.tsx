@@ -92,7 +92,8 @@ const styles = StyleSheet.create({
   content: {
     width: SCREEN_WIDTH /10 * 9.4,
     backgroundColor: 'pink',
-    borderRadius: 20,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
     marginHorizontal: 30,
     flexDirection: 'column',
     alignContent: 'center'
@@ -188,7 +189,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     borderWidth: 2,
     borderColor: 'black',
-    marginTop: 70,
+    marginTop: 20,
     height: 50,
     width: 170,
     alignSelf: 'center',

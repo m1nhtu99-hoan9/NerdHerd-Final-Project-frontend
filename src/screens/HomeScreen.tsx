@@ -79,4 +79,9 @@ const styles = StyleSheet.create({
     elevation: 10,
     marginTop: 10 + '%',
   },
+  scrollViewStyle: {
+    flex: 0.85, 
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15
+  }
 })
