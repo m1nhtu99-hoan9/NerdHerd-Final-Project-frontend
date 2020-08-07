@@ -9,8 +9,7 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 
 //Import Screens
-import { HomeScreen } from '../screens/index'
-import { InformationScreen } from '../screens/index'
+import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
 import styles from '../styles'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
@@ -39,7 +38,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={HomeScreen}
+        component={SearchScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="search1" size={24} color="black" />

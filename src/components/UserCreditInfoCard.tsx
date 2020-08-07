@@ -32,8 +32,6 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
           <Text style={styles.T_creditScoreNote}>Goi y: Ban nen duy tri...</Text>
         </View>
 
-        <Line></Line>
-
         {/* <View style={styles.V_creditScoreHistory}>
           <Text style={styles.T_creditScoreHistoryHeader}>Lich su diem tin dung</Text>
           <Text style={styles.Graph_creditScoreHistory}>!!! Graph &amp; Gauge go here !!! Still in development </Text>
@@ -72,7 +70,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
 
 const styles = StyleSheet.create({
   line: {
-    height: 18,
+    height: 25,
     width: 100 + '%',
     backgroundColor: '#e3d3d3'
   },
@@ -91,7 +89,6 @@ const styles = StyleSheet.create({
   },
   content: {
     width: SCREEN_WIDTH /10 * 9.4,
-    backgroundColor: 'pink',
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     marginHorizontal: 30,
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
   },
   //Content View
   V_phoneNum: {
-    height: 80,
+    height: 60,
     width: 100 + '%',
     justifyContent: 'center',
     alignItems: 'center'
@@ -128,23 +125,23 @@ const styles = StyleSheet.create({
     padding: 10
   },
 
-  /////
-  V_creditScoreHistory: {
-    width: 100 + '%',
-    height: 400,
-    justifyContent: 'space-between'
-  },
-  T_creditScoreHistoryHeader: {
-    fontSize: 22,
-    padding: 10
-  },
-  Graph_creditScoreHistory: {
-    alignSelf: 'center'
-  },
-  T_creditScoreHistoryNote: {
-    alignSelf: "center",
-    paddingBottom: 10
-  },
+
+  // V_creditScoreHistory: {
+  //   width: 100 + '%',
+  //   height: 400,
+  //   justifyContent: 'space-between'
+  // },
+  // T_creditScoreHistoryHeader: {
+  //   fontSize: 22,
+  //   padding: 10
+  // },
+  // Graph_creditScoreHistory: {
+  //   alignSelf: 'center'
+  // },
+  // T_creditScoreHistoryNote: {
+  //   alignSelf: "center",
+  //   paddingBottom: 10
+  // },
 
 
   ///////

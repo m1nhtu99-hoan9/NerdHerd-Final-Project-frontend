@@ -6,12 +6,12 @@ import AnimatedLoginScreen from './src/components/animated/firstLauch'
 import LoginScreen from './src/screens/LoginScreen'
 import {HomeScreen} from './src/screens/index'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabNavigator} from './src/navigation/index'
+import { BottomTabNavigator, StackNavigator} from './src/navigation/index'
 
 export default function App() {
   return (
     <NavigationContainer>
-        <BottomTabNavigator />
+        <StackNavigator />
       </NavigationContainer>
 
   );

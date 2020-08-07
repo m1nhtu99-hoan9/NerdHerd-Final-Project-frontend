@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   View,
+  TextInput,
+  TouchableHighlight,
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { Content } from 'native-base'
+import { Container, Header, Content, Accordion } from 'native-base'
 import LoginForm from '../components/LoginForm'
 
-<<<<<<< HEAD
 export default function LoginScreen() {
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
@@ -18,43 +19,6 @@ export default function LoginScreen() {
         <Line />
         <LoginForm />
       </Content>
-=======
-//Import components
-import LoginForm from '../components/LoginForm'
-
-export default function LoginScreen ({}) {
-  return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
-      <Line />
-      <Text style={styles.logo}>Crescorex</Text>
-      <Line />
-
-      {/* <TextInput
-        maxLength={20}
-        style={styles.inputUsername}
-        placeholder="Username"
-        placeholderTextColor={'#bdbdbd'}
-      />
-
-      <TextInput
-        maxLength={22}
-        style={styles.inputPassword}
-        placeholder="Password"
-        placeholderTextColor={'#bdbdbd'}
-        secureTextEntry
-      />
-
-      <Text style={styles.forgotText}>
-        Forgot Password?
-      </Text>
-
-      <TouchableHighlight style={styles.buttonLogin}>
-        <Text style={styles.loginText}>Log in</Text>
-      </TouchableHighlight> */}
-
-      <LoginForm></LoginForm>
-
->>>>>>> 33ff63fa39cde313438dc69409fe5ae45ab9b86e
     </LinearGradient>
   )
 }
@@ -83,16 +47,6 @@ const styles = StyleSheet.create({
   logo: {
     color: 'white',
     fontSize: 40,
-<<<<<<< HEAD
-  }
-=======
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'lightblue',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: 100,
   },
   inputUsername: {
     textAlign: 'center',
@@ -103,7 +57,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 2,
     borderColor: '#e3e3e3',
-    borderRadius: 30,
+    borderRadius: 18,
     marginTop: 70,
   },
   inputPassword: {
@@ -113,7 +67,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 2,
     borderColor: '#e3e3e3',
-    borderRadius: 30,
+    borderRadius: 18,
     marginTop: 15,
   },
   forgotText: {
@@ -131,5 +85,4 @@ const styles = StyleSheet.create({
   loginText: {
     alignSelf: 'center',
   },
->>>>>>> 33ff63fa39cde313438dc69409fe5ae45ab9b86e
 })

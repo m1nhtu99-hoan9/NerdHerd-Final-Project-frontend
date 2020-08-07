@@ -1,12 +1,28 @@
-import React from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import React, { useState } from 'react'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Modal,
+  Systrace,
+  TextInput,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LinearGradient } from 'expo-linear-gradient'
+import { useNavigation } from '@react-navigation/native'
+import { MaterialIcons } from '@expo/vector-icons'
 
+import { HomeScreenNavigationProps } from '../@types/navigation'
+
+//Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function InformationScreen() {
+  const [modalVisible, setModalVisible] = useState(false)
+  const navigation = useNavigation<HomeScreenNavigationProps>()
+
   return (
     <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
       <View style={styles.content}>
@@ -22,15 +38,62 @@ export default function InformationScreen() {
         </View>
         <Line></Line>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.logoutButton}>
+          <TouchableOpacity
+            style={styles.logoutButton}
+            onPress={() => {
+              navigation.replace('Login', { name: 0 })
+            }}
+          >
             <Text>Dang xuat</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.changePasswordButton}>
+          <TouchableOpacity
+            style={styles.changePasswordButton}
+            onPress={() => setModalVisible(true)}
+          >
             <Text>Doi mat khau</Text>
           </TouchableOpacity>
         </View>
       </View>
+
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalContentHeader}>
+              <TouchableOpacity
+                style={styles.backButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <MaterialIcons name="arrow-back" size={32} color="black" />
+              </TouchableOpacity>
+              <Text style={styles.modalContentHeaderText}>Doi mat khau</Text>
+            </View>
+            <View style={styles.inputFieldContainer}>
+              <TextInput
+                style={styles.inputField}
+                placeholder="Nhap mat khau cu"
+                secureTextEntry
+              />
+
+              <TextInput
+                style={styles.inputField}
+                placeholder="Nhap mat khau moi"
+                secureTextEntry
+              />
+
+              <TextInput
+                style={styles.inputField}
+                placeholder="Xac nhan mat khau"
+                secureTextEntry
+              />
+
+              <TouchableOpacity style={styles.modalContentButton}>
+                <Text>Xac nhan</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </LinearGradient>
   )
 }
@@ -53,8 +116,8 @@ const styles = StyleSheet.create({
   },
   content: {
     backgroundColor: 'white',
-    width: SCREEN_WIDTH / 10 * 9.4,
-    height: SCREEN_HEIGHT / 10 * 7,
+    width: (SCREEN_WIDTH / 10) * 9.4,
+    height: (SCREEN_HEIGHT / 10) * 7,
     alignSelf: 'center',
     borderRadius: 15,
     shadowColor: '#000',
@@ -65,7 +128,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
-    marginTop: 10 + '%',paddingLeft: 20
+    marginTop: 10 + '%',
   },
   header: {
     flex: 0.1,
@@ -110,5 +173,63 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 7,
+  },
+
+  //Setting up modal
+  modalBackground: {
+    position: 'absolute',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    backgroundColor: 'rgba(0, 0, 0, 0.57)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContent: {
+    position: 'absolute',
+    width: (SCREEN_WIDTH / 10) * 8.5,
+    height: (SCREEN_HEIGHT / 10) * 6.5,
+    backgroundColor: 'white',
+    borderRadius: 20,
+  },
+  modalContentHeader: {
+    flex: 0.15,
+    alignItems: 'center',
+    paddingBottom: 10,
+    flexDirection: 'row',
+  },
+  inputFieldContainer: {
+    flex: 0.85,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  inputField: {
+    textAlign: 'center',
+    height: 50,
+    marginVertical: 15,
+    width: 80 + '%',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 30,
+    paddingHorizontal: 20,
+    fontSize: 17,
+    alignSelf: 'center',
+  },
+  modalContentButton: {
+    marginTop: 20,
+    borderWidth: 2,
+    width: 65 + '%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderRadius: 7,
+  },
+  modalContentHeaderText: {
+    fontSize: 28,
+    fontWeight: '600',
+  },
+  backButton: {
+    padding: 15,
   },
 })

@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LoginScreen } from '.'
 
 /* @TODOs: 
     - [x] (01/08/2020): Just mock-up
@@ -25,7 +27,7 @@ export default function HomeScreen() {
               <Text style={styles.headerText}>Search history</Text>
             </View>
 
-            <ScrollView horizontal style={{ flex: 0.85, borderRadius: 15 }}>
+            <ScrollView horizontal style={styles.scrollViewStyle}>
               <UserCreditInfoCard phoneNumber='0967162652' />
 
               <UserCreditInfoCard phoneNumber='0904586221' />
