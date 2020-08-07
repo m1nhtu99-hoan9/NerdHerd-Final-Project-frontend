@@ -21,7 +21,7 @@ export default function HomeScreen() {
               <Text style={styles.headerText}>Search history</Text>
             </View>
 
-            <ScrollView horizontal style={{ flex: 0.85, borderRadius: 15 }}>
+            <ScrollView horizontal style={styles.scrollViewStyle}>
               <UserCreditInfoCard phoneNumber="0967162652" />
 
               <UserCreditInfoCard phoneNumber="0904586221" />
@@ -75,4 +75,9 @@ const styles = StyleSheet.create({
     elevation: 10,
     marginTop: 10 + '%',
   },
+  scrollViewStyle: {
+    flex: 0.85, 
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15
+  }
 })
