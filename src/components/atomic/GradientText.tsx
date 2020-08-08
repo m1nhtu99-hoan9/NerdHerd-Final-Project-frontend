@@ -10,16 +10,18 @@ type GradientTextProps = TextProperties & {
   constrast?: boolean
 }
 
+const colourSets = [
+  ['#017DDC', '#00BCA0'],
+  ['#BC001C', '#DC6001']
+]
+
 export default function GradientText(props: GradientTextProps) {
   const { constrast } = props
 
   return (
     <MaskedView maskElement={<Text {...props} />}>
       <LinearGradient
-        colors={[
-          constrast ? '#DC6001' : '#017DDC',
-          constrast ? '#BC001C' : '#00BCA0',
-        ]}
+        colors={colourSets[constrast ? 1 : 0]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       >

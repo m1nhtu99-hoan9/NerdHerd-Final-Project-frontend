@@ -1,5 +1,9 @@
 const en = {
   appName: 'CreScorex',
+  welcome: {
+    _nav: 'Welcome',
+    subtext: 'WELCOME TO'
+  },
   signIn: {
     _nav: 'Sign In',
     usernameInput: 'Username',

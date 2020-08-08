@@ -1,5 +1,9 @@
 const vn = {
   appName: 'CreScorex',
+  welcome: {
+    _nav: 'Welcome',
+    subtext: 'CHÀO MỪNG BẠN ĐẾN VỚI'
+  },
   signIn: {
     _nav: 'Sign In',
     usernameInput: 'Số điện thoại',
