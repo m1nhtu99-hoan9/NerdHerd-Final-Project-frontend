@@ -12,7 +12,7 @@ import { Container, Header, Content, Accordion } from 'native-base'
 
 export default function SignupScreen({}) {
   return (
-    <LinearContainer flexDirection={'column'}>
+    <GradientContainer flexDirection={'column'}>
       <Line />
       <Text style={styles.logo}>Crescorex</Text>
       <Line />
@@ -62,7 +62,7 @@ export default function SignupScreen({}) {
       </TouchableHighlight>
     </View>
     
-    </LinearContainer>
+    </GradientContainer>
   )
 }
 

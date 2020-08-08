@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-import LinearContainer from '../components/atomic/LinearContainer'
+import GradientContainer from '../components/atomic/GradientContainer'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LoginScreen } from '.'
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
-    <LinearContainer flexDirection={'column'}>
+    <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.userInfoCardContainer}>
@@ -37,7 +37,7 @@ export default function HomeScreen() {
 
         <View style={styles.footer}></View>
       </View>
-    </LinearContainer>
+    </GradientContainer>
   )
 }
 

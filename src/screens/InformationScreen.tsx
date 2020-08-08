@@ -12,7 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import LinearContainer from '../components/atomic/LinearContainer'
+import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 //Get devices's dimension
@@ -24,7 +24,7 @@ export default function InformationScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
-    <LinearContainer flexDirection={'column'}>
+    <GradientContainer flexDirection={'column'}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Thong tin</Text>
@@ -94,7 +94,7 @@ export default function InformationScreen() {
           </View>
         </View>
       </Modal>
-    </LinearContainer>
+    </GradientContainer>
   )
 }
 

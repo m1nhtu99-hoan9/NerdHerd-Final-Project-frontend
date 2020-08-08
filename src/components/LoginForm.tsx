@@ -1,15 +1,13 @@
 import i18n from '../i18n'
 import React from 'react'
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 import MaskedView from '@react-native-community/masked-view'
 import { Content, Input, Item, Text } from 'native-base'
-import { LinearGradient } from 'expo-linear-gradient'
 import * as f from 'formik'
-import Colours from '../styles/colours'
 
-interface LoginFormProps {
-  name?: string,
-}
+import Colours from '../styles/colours'
+import GradientText from './atomic/GradientText'
 
 export default function LoginForm(props: unknown) {
   return (
@@ -31,7 +29,9 @@ export default function LoginForm(props: unknown) {
           secureTextEntry
         />
       </Item>
-      <Text>{i18n.t('signIn.forgetPassword')}</Text>
+      <GradientText style={styles.forgetPasswordTxt}>
+        {i18n.t('signIn.forgetPassword')}
+      </GradientText>
     </View>
   )
 }
@@ -70,4 +70,8 @@ const styles = StyleSheet.create({
     borderColor: Colours.White,
     elevation: 5,
   },
+  forgetPasswordTxt: {
+    fontSize: 15,
+    textAlign: 'center', 
+  }
 })

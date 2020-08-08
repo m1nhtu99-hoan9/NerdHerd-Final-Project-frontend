@@ -7,7 +7,7 @@ type LinearContainerProps = {
   children: React.ReactNode
 }
 
-export default function LinearContainer(props: LinearContainerProps) {
+export default function GradientContainer(props: LinearContainerProps) {
   const { flexDirection, children } = props
 
   return (
@@ -18,6 +18,8 @@ export default function LinearContainer(props: LinearContainerProps) {
         flexDirection,
         justifyContent: 'center',
       }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 0, y: 0.75 }}
     >
       {children}
     </LinearGradient>

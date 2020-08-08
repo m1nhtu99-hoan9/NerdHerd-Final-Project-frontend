@@ -9,18 +9,18 @@ import {
 import { Container, Header, Content, Accordion } from 'native-base'
 import LoginForm from '../components/LoginForm'
 
-import LinearContainer from '../components/atomic/LinearContainer'
+import GradientContainer from '../components/atomic/GradientContainer'
 
 export default function LoginScreen() {
   return (
-    <LinearContainer flexDirection={'column'}>
+    <GradientContainer flexDirection={'column'}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Line />
         <Text style={styles.logo}>Crescorex</Text>
         <Line />
         <LoginForm />
       </Content>
-    </LinearContainer>
+    </GradientContainer>
   )
 }
 
