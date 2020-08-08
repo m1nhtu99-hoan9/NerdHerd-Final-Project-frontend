@@ -8,11 +8,11 @@ import {
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
-import 'react-native-gesture-handler'
+
 
 export default function SignupScreen({}) {
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <Line />
       <Text style={styles.logo}>Crescorex</Text>
       <Line />
@@ -62,7 +62,7 @@ export default function SignupScreen({}) {
       </TouchableHighlight>
     </View>
     
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 

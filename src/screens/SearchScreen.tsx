@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 
+import LinearContainer from '../components/atomic/LinearContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 //Get devices's dimension
@@ -12,7 +12,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function SeacrhScreen() {
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Tra cuu</Text>
@@ -27,7 +27,7 @@ export default function SeacrhScreen() {
           </TouchableOpacity>
         </View>
       </View>
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 

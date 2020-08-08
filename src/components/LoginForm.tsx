@@ -32,36 +32,6 @@ export default function LoginForm(props: unknown) {
         />
       </Item>
       <Text>{i18n.t('signIn.forgetPassword')}</Text>
-      <LinearGradient colors={[Colours.Purple1, Colours.Sapphire]}>
-        <MaskedView
-          style={{ flex: 1, flexDirection: 'row', height: '100%' }}
-          maskElement={
-            <View
-              style={{
-                // Transparent background because mask is based off alpha channel.
-                backgroundColor: 'transparent',
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-            >
-              <TouchableOpacity>
-                <Text
-                  style={{
-                    fontSize: 60,
-                    color: 'black',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  Basic Mask
-                </Text>
-              </TouchableOpacity>
-            </View>
-          }
-        >
-          {/* Shows behind the mask, you can put anything here, such as an image */}
-        </MaskedView>
-      </LinearGradient>
     </View>
   )
 }

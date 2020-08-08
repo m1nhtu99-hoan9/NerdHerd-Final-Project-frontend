@@ -9,10 +9,10 @@ import {
   TextInput,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons } from '@expo/vector-icons'
 
+import LinearContainer from '../components/atomic/LinearContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 //Get devices's dimension
@@ -24,7 +24,7 @@ export default function InformationScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Thong tin</Text>
@@ -94,7 +94,7 @@ export default function InformationScreen() {
           </View>
         </View>
       </Modal>
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 

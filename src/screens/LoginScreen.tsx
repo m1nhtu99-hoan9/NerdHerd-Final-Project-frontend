@@ -6,20 +6,21 @@ import {
   TextInput,
   TouchableHighlight,
 } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
 import { Container, Header, Content, Accordion } from 'native-base'
 import LoginForm from '../components/LoginForm'
 
+import LinearContainer from '../components/atomic/LinearContainer'
+
 export default function LoginScreen() {
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Line />
         <Text style={styles.logo}>Crescorex</Text>
         <Line />
         <LoginForm />
       </Content>
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 

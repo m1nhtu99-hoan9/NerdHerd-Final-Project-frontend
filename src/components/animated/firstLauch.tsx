@@ -76,7 +76,7 @@ export default function AnimatedLoginScreen() {
   , [])
 
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <Line />
       <Animated.Text style={{ 
         ...styles.logo,
@@ -86,7 +86,7 @@ export default function AnimatedLoginScreen() {
       </Animated.Text>
       <Line />
       <LoginForm/>
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 

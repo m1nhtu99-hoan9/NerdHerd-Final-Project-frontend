@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
 import { useNavigation } from '@react-navigation/native'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
+import LinearContainer from '../components/atomic/LinearContainer'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LoginScreen } from '.'
@@ -19,7 +19,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
-    <LinearGradient colors={['#017DDC', '#00BCA0']} style={styles.container}>
+    <LinearContainer flexDirection={'column'}>
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.userInfoCardContainer}>
@@ -37,7 +37,7 @@ export default function HomeScreen() {
 
         <View style={styles.footer}></View>
       </View>
-    </LinearGradient>
+    </LinearContainer>
   )
 }
 
