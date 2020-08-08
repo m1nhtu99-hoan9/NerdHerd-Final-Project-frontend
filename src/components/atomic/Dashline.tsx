@@ -1,17 +1,27 @@
 import React from 'react'
 import { View } from 'react-native'
 
-export default function Line() {
+type DashlineProps = {
+  top?: boolean
+  bottom?: boolean
+}
+
+export default function Dashline(props: DashlineProps) {
+  const { top, bottom } = props
+
   return (
     <View
-      style={{
-        height: 3,
-        borderRadius: 100,
-        width: 65 + '%',
-        alignSelf: 'center',
-        backgroundColor: '#e6e6e6',
-        marginTop: 20,
-      }}
+      style={[
+        {
+          height: 6,
+          width: 77 + '%',
+          borderRadius: 20,
+          marginVertical: 10,
+          backgroundColor: 'white',
+        },
+        top && { marginTop: 100 },
+        bottom && { marginBottom: 75 },
+      ]}
     />
   )
 }

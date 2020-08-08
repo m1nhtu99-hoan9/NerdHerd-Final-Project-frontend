@@ -5,13 +5,21 @@ import MaskedView from '@react-native-community/masked-view'
 
 import { Colours } from '../../styles/index'
 
-export default function GradientText(
-  props: TextProperties & { children: string },
-) {
+type GradientTextProps = TextProperties & {
+  children: string
+  constrast?: boolean
+}
+
+export default function GradientText(props: GradientTextProps) {
+  const { constrast } = props
+
   return (
     <MaskedView maskElement={<Text {...props} />}>
       <LinearGradient
-        colors={[Colours.Purple1, Colours.RedVenetian]}
+        colors={[
+          constrast ? '#DC6001' : '#017DDC',
+          constrast ? '#BC001C' : '#00BCA0',
+        ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       >

@@ -4,17 +4,16 @@ import { StyleSheet, Text, View } from 'react-native'
 import AnimatedLoginScreen from './src/components/animated/firstLauch'
 
 import LoginScreen from './src/screens/LoginScreen'
-import {HomeScreen} from './src/screens/index'
+import { HomeScreen } from './src/screens/index'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabNavigator, StackNavigator} from './src/navigation/index'
+import { BottomTabNavigator, StackNavigator } from './src/navigation/index'
 
 export default function App() {
   return (
     <NavigationContainer>
-        <StackNavigator />
-      </NavigationContainer>
-
-  );
+      <StackNavigator />
+    </NavigationContainer>
+  )
 }
 
 const styles = StyleSheet.create({
@@ -24,4 +23,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-});
+})

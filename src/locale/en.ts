@@ -6,6 +6,8 @@ const en = {
     passwordInput: 'Password',
     forgetPassword: 'Forget Password?',
     submitBtn: 'Sign In',
+    askSignUpTxt: 'Don\'t have an account?',
+    signUpTxt: 'Sign Up'
   },
   home: {
     _nav: 'Home',

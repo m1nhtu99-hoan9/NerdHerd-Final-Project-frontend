@@ -6,6 +6,8 @@ const vn = {
     passwordInput: 'Mật khẩu',
     forgetPassword: 'Quên mật khẩu?',
     submitBtn: 'Đăng nhập',
+    askSignUpTxt: 'Chưa có tài khoản?',
+    signUpTxt: 'Đăng Ký'
   },
   home: {
     _nav: 'Trang chủ',

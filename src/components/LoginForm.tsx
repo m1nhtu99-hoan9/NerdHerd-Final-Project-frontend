@@ -1,9 +1,8 @@
 import i18n from '../i18n'
 import React from 'react'
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native'
-import { LinearGradient } from 'expo-linear-gradient'
-import MaskedView from '@react-native-community/masked-view'
-import { Content, Input, Item, Text } from 'native-base'
+import { StyleSheet } from 'react-native'
+import { Input, Item, Text, View } from 'native-base'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
 import Colours from '../styles/colours'
@@ -29,34 +28,68 @@ export default function LoginForm(props: unknown) {
           secureTextEntry
         />
       </Item>
-      <GradientText style={styles.forgetPasswordTxt}>
-        {i18n.t('signIn.forgetPassword')}
-      </GradientText>
+      <TouchableOpacity>
+        <Text style={styles.forgetPasswordTxt}>
+          {i18n.t('signIn.forgetPassword')}
+        </Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.btnContainer}>
+        <GradientText style={styles.btnTxt}>
+          {i18n.t('signIn.submitBtn')}
+        </GradientText>
+      </TouchableOpacity>
+      <View style={styles.signUpTxtContainer}>
+        <View>
+        <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
+          {`${i18n.t('signIn.askSignUpTxt')}`}
+        </Text>
+        </View>
+        <TouchableOpacity style={styles.signUpTouchableTxt}>
+          <Text style={styles.signUpTxt}>
+            {i18n.t('signIn.signUpTxt')}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 8,
+    flex: 4,
     flexDirection: 'column',
     width: 80 + '%',
   },
   textboxContainer: {
+    flex: 3,
     marginVertical: 10,
     borderColor: Colours.White,
+    shadowOffset: {
+      width: 0,
+      height: 0.25,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 1,
+    elevation: 2,
   },
   btnContainer: {
-    backgroundColor: 'transparent',
-    borderRadius: 15,
-    height: 32 + '%',
+    backgroundColor: 'white',
+    marginVertical: 10 + '%',
+    borderRadius: 3,
+    height: 33 + '%',
     alignSelf: 'center',
     justifyContent: 'center',
-    width: 100 + '%',
+    width: 98 + '%',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
-  buttonTxt: {
-    color: 'black',
-    fontSize: 60,
+  btnTxt: {
+    fontSize: 18,
     textAlign: 'center',
   },
   placeholderTxt: {
@@ -68,10 +101,44 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     borderColor: Colours.White,
-    elevation: 5,
   },
   forgetPasswordTxt: {
+    flex: 1,
     fontSize: 15,
-    textAlign: 'center', 
+    color: Colours.White,
+    paddingTop: 10,
+    textAlign: 'center',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  signUpTxtContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: 100 + '%',
+    justifyContent: 'center',
+    alignContent: 'center',
+  },
+  signUpTxt: {
+    flex: 2,
+    fontSize: 15,
+    color: Colours.Sapphire,
+    paddingLeft: 5,
+    paddingTop: 10,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+  },
+  signUpTouchableTxt: {
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 1.12,
+    elevation: 3,
   }
 })
