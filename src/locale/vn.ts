@@ -5,7 +5,7 @@ const vn = {
     usernameInput: 'Số điện thoại',
     passwordInput: 'Mật khẩu',
     forgetPassword: 'Quên mật khẩu?',
-    submitBtn: 'Đăng nhập',
+    submitBtn: 'Đăng Nhập',
     askSignUpTxt: 'Chưa có tài khoản?',
     signUpTxt: 'Đăng Ký'
   },
