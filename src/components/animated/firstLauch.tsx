@@ -65,14 +65,12 @@ const runTiming = (posValue: any, dest: any) => {
   ])
 }
 
-const runTimingReversed = R.flip(runTiming)
-
 export default function AnimatedLoginScreen() {
   const logoFontSize = useState(new Value(0))[0]
   const isIntro = useState(true)
 
   useCode(
-    set(logoFontSize, (isIntro ? runTiming : runTimingReversed)(65, 40))
+    set(logoFontSize, runTiming(65, 40))
   , [])
 
   return (

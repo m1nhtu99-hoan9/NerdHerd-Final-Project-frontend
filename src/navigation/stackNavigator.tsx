@@ -7,7 +7,7 @@ import { StackParamList } from '../../src/@types/navigation'
 import BottomTabNavigator from './bottomTabNavigator'
 
 import { LoginScreen, ChangePasswordScreen } from '../screens/index'
-import { Fab } from 'native-base'
+import WelcomeStackNavigator from './sharedElementTransitions/welcomeStackNavigator'
 
 const Stack = createStackNavigator<StackParamList>()
 
@@ -18,7 +18,7 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Login"
         options={{ headerShown: false }}
-        component={LoginScreen}
+        component={WelcomeStackNavigator}
         initialParams={{}}
       />
       <Stack.Screen

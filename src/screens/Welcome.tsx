@@ -1,10 +1,19 @@
 import i18n from '../i18n'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { View, Content, Text } from 'native-base'
-import { Dashline, GradientContainer } from '../components/atomic/index'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useNavigation, NavigationProp } from '@react-navigation/native'
+import { SharedElement } from 'react-navigation-shared-element'
 
+import { Dashline, GradientContainer } from '../components/atomic/index'
 export default function WelcomeScreen() {
+  const nav = useNavigation()
+
+  useEffect(() => {
+    setTimeout(() => nav.navigate('Login', { id: 'LogoText' }), 1000)
+  }, [])
+
   return (
     <GradientContainer flexDirection={'column'}>
       <Content contentContainerStyle={styles.contentContainer}>
@@ -12,7 +21,9 @@ export default function WelcomeScreen() {
           <Text style={styles.subtxt}>{i18n.t('welcome.subtext')}</Text>
         </View>
         <Dashline stretch bottom />
-        <Text style={styles.logo}>Crescorex</Text>
+          <SharedElement id="LogoText">
+            <Text style={styles.logo}>Crescorex</Text>
+          </SharedElement>
         <Dashline stretch bottom />
       </Content>
     </GradientContainer>
