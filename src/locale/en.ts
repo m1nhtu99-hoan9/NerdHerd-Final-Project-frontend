@@ -1,11 +1,17 @@
 const en = {
   appName: 'CreScorex',
+  welcome: {
+    _nav: 'Welcome',
+    subtext: 'WELCOME TO'
+  },
   signIn: {
     _nav: 'Sign In',
     usernameInput: 'Username',
     passwordInput: 'Password',
     forgetPassword: 'Forget Password?',
     submitBtn: 'Sign In',
+    askSignUpTxt: 'Don\'t have an account?',
+    signUpTxt: 'Sign Up'
   },
   home: {
     _nav: 'Home',
@@ -30,6 +36,7 @@ const en = {
   search: {
     _nav: 'Search',
     phoneNumInput: 'Phone Number',
+    otpCodeInput: 'OTP Code',
     submitBtn: 'Process >',
   },
   changePassword: {

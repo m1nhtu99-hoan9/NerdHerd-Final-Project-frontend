@@ -1,3 +1,3 @@
 /*
- Transient type definitions go here
+  Transient type definitions go here
 */

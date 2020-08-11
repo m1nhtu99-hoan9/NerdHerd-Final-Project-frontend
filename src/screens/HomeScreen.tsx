@@ -1,64 +1,60 @@
 import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Text, View } from 'react-native'
-import { exp } from 'react-native-reanimated'
-import { LinearGradient } from 'expo-linear-gradient'
+import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
+import { HomeScreenNavigationProps } from '../@types/navigation'
+
+import GradientContainer from '../components/atomic/GradientContainer'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LoginScreen } from '.'
 
 /* @TODOs: 
     - [x] (01/08/2020): Just mock-up
 */
+const SCREEN_HEIGHT = Dimensions.get('window').height
+const SCREEN_WIDTH = Dimensions.get('window').width
 
-export default function HomeScreen () {
+export default function HomeScreen() {
+  const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>
-            Search history
-          </Text>
-        </View>
+    <GradientContainer flexDirection={'column'}>
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.userInfoCardContainer}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>Search history</Text>
+            </View>
 
-        <LinearGradient
-          colors={['#017DDC', '#00BCA0']}
-          style={styles.container}>
-          <ScrollView 
-            horizontal
-            style={{ flex: 0.77 }}
-          >
+            <ScrollView horizontal style={styles.scrollViewStyle}>
+              <UserCreditInfoCard phoneNumber='0967162652' />
 
-            <UserCreditInfoCard
-              phoneNumber='0967162652'
-            />
+              <UserCreditInfoCard phoneNumber='0904586221' />
+            </ScrollView>
+          </View>
+        </ScrollView>
 
-            <UserCreditInfoCard
-              phoneNumber='0904586221'
-            />
-
-          </ScrollView>
-        </LinearGradient>
-      </ScrollView>
-
-      <View style={styles.footer}>
-
+        <View style={styles.footer}></View>
       </View>
-    </View>
+    </GradientContainer>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   header: {
-    height: 100,
-    justifyContent: 'flex-end'
+    flex: 0.15,
+    justifyContent: 'flex-end',
+    backgroundColor: '#009591',
+    borderTopEndRadius: 15,
   },
   headerText: {
     paddingBottom: 20,
-    fontSize: 28
+    fontSize: 28,
   },
   content: {
     width: 400,
@@ -70,5 +66,26 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 0.08,
+  },
+  userInfoCardContainer: {
+    width: (SCREEN_WIDTH / 10) * 9.4,
+    height: (SCREEN_HEIGHT / 10) * 8.5,
+    alignSelf: 'center',
+    backgroundColor: 'white',
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 6.27,
+    elevation: 10,
+    marginTop: 10 + '%',
+  },
+  scrollViewStyle: {
+    flex: 0.85, 
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15
   }
-});
+})

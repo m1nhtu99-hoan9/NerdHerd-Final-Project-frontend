@@ -1,5 +1,1 @@
-import Colours from './colours'
-
-export default {
-  Colours
-}
+export { default as Colours } from './colours'
