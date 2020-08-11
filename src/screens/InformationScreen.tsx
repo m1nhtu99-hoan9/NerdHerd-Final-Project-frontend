@@ -15,12 +15,26 @@ import { MaterialIcons } from '@expo/vector-icons'
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
+type UserInfo = {
+  fullName: string
+  bankName: string
+  status: 'normal' | 'warned' | '...' | undefined
+  email: string
+  phone: string
+}
 //Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function InformationScreen() {
   const [modalVisible, setModalVisible] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    fullName: 'Ngo Tai Phat',
+    bankName: 'Techcombank',
+    status: 'normal',
+    email: 'phatxxxxx@gmail.com',
+    phone: '094345xxx',
+  })
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
@@ -30,11 +44,15 @@ export default function InformationScreen() {
           <Text style={styles.headerText}>Thong tin</Text>
         </View>
         <View style={styles.information}>
-          <Text style={styles.name}>NGO TAI PHAT</Text>
-          <Text style={styles.infoText}>Ngan hang: Techcombank</Text>
-          <Text style={styles.infoText}>Tinh trang: Binh thuong</Text>
-          <Text style={styles.infoText}>Email: phatxxxxx@gmail.com</Text>
-          <Text style={styles.infoText}>So dien thoai: 094345xxx</Text>
+          <Text style={styles.name}>{userInfo.fullName}</Text>
+          <Text
+            style={styles.infoText}
+          >{`Ngan hang: ${userInfo.bankName}`}</Text>
+          <Text
+            style={styles.infoText}
+          >{`Tinh trang: ${userInfo.status}`}</Text>
+          <Text style={styles.infoText}>{`Email: ${userInfo.email}`}</Text>
+          <Text style={styles.infoText}>{`Phone: ${userInfo.phone}`}</Text>
         </View>
         <Line></Line>
         <View style={styles.button}>
@@ -109,7 +127,7 @@ const styles = StyleSheet.create({
     width: 65 + '%',
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
-    marginTop: 20
+    marginTop: 20,
   },
   container: {
     flex: 1,
