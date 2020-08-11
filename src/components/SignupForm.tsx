@@ -7,7 +7,7 @@ import {
   Text,
 } from 'react-native'
 
-export const SignupForm = () => {
+export default function SignupForm () {
   return (
     <View>
       <TextInput

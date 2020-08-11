@@ -1,47 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { Content } from 'native-base'
 import { SharedElement } from 'react-native-shared-element'
 import { useNavigation } from '@react-navigation/native'
-import Animated, { useCode } from 'react-native-reanimated'
 
-import LoginForm from '../components/LoginForm'
+import { SignUpForm } from '../components/index'
 import { Dashline, GradientContainer } from '../components/atomic/index'
-import { runTiming } from '../utils/reanimated'
 
-const { Value, set } = Animated
-
-export default function LoginScreen() {
-  const logoFontSize = useState(new Value(0))[0]
-
+export default function SignUpScreen() {
   const nav = useNavigation()
   const _transit = () => {
     nav.goBack()
   }
-
-  /**@TODO on the first run, shrink the logo font size
-   * 
-  */
-  useCode(
-    // @ts-ignore
-    set(logoFontSize, runTiming(80, 40)),
-    [],
-  )
 
   return (
     <GradientContainer flexDirection={'column'}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Dashline top />
         <SharedElement id="logo">
-          <Animated.Text
-            onPress={_transit}
-            style={{ ...styles.logo, fontSize: logoFontSize }}
-          >
+          <Text onPress={_transit} style={styles.logo}>
             Crescorex
-          </Animated.Text>
+          </Text>
         </SharedElement>
         <Dashline bottom />
-        <LoginForm />
+        <SignUpForm />
       </Content>
     </GradientContainer>
   )
