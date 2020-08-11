@@ -7,3 +7,7 @@ module.exports = {
   trailingComma: 'all',
   parser: 'typescript'
 }
+
+/* @Reference: 
+    https://github.com/prettier/prettier/issues/5501
+*/
