@@ -10,7 +10,7 @@ import { Dashline, GradientContainer } from '../components/atomic/index'
 export default function SignUpScreen() {
   const nav = useNavigation()
   const _transit = () => {
-    nav.goBack()
+    nav.navigate('Login')
   }
 
   return (

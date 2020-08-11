@@ -1,33 +1,39 @@
 import i18n from '../i18n'
-import React from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { Input, Item, Text, View } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
 import Colours from '../styles/colours'
-import GradientText from './atomic/GradientText'
+import { GradientText, TextInput} from './atomic/index'
+import { SignInNavContext } from '../contexts'
 
 export default function LoginForm(props: unknown) {
+  const [isSignUpTextPressed, setSignUpTextPressed] = useState(false)
+
+  // get & consume LoginScreen's navigation object
+  const nav = useContext(SignInNavContext)
+
+  useEffect(() => {
+    setSignUpTextPressed(false)
+  }, [])
+
+  /* events triggered when `Sign Up` text link is clicked are defined here */
+  const _signUpTxtOnPressed = () => {
+    setSignUpTextPressed(true)
+    nav.navigate('SignUp')
+  }
+
   return (
     <View style={styles.container}>
-      <Item rounded style={styles.textboxContainer}>
-        <Input
-          selectionColor={Colours.White}
-          style={styles.placeholderTxt}
-          placeholder={i18n.t('signIn.usernameInput')}
-          placeholderTextColor={Colours.White}
-        />
-      </Item>
-      <Item rounded style={styles.textboxContainer}>
-        <Input
-          selectionColor={Colours.White}
-          style={styles.placeholderTxt}
-          placeholder={i18n.t('signIn.passwordInput')}
-          placeholderTextColor={Colours.White}
-          secureTextEntry
-        />
-      </Item>
+      <TextInput
+        i18nPlaceholderContent={'signIn.usernameInput'}
+      />
+      <TextInput
+        i18nPlaceholderContent={'signIn.passwordInput'}
+        secureTextEntry
+      />
       <TouchableOpacity>
         <Text style={styles.forgetPasswordTxt}>
           {i18n.t('signIn.forgetPassword')}
@@ -40,14 +46,16 @@ export default function LoginForm(props: unknown) {
       </TouchableOpacity>
       <View style={styles.signUpTxtContainer}>
         <View>
-        <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
-          {`${i18n.t('signIn.askSignUpTxt')}`}
-        </Text>
-        </View>
-        <TouchableOpacity style={styles.signUpTouchableTxt}>
-          <Text style={styles.signUpTxt}>
-            {i18n.t('signIn.signUpTxt')}
+          <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
+            {`${i18n.t('signIn.askSignUpTxt')}`}
           </Text>
+        </View>
+        <TouchableOpacity
+          style={styles.signUpTouchableTxt}
+          activeOpacity={0.6}
+          onPress={_signUpTxtOnPressed}
+        >
+          <Text style={styles.signUpTxt}>{i18n.t('signIn.signUpTxt')}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -59,18 +67,6 @@ const styles = StyleSheet.create({
     flex: 4,
     flexDirection: 'column',
     width: 80 + '%',
-  },
-  textboxContainer: {
-    flex: 3,
-    marginVertical: 10,
-    borderColor: Colours.White,
-    shadowOffset: {
-      width: 0,
-      height: 0.25,
-    },
-    shadowOpacity: 0.12,
-    shadowRadius: 1,
-    elevation: 2,
   },
   btnContainer: {
     backgroundColor: 'white',
@@ -91,16 +87,6 @@ const styles = StyleSheet.create({
   btnTxt: {
     fontSize: 18,
     textAlign: 'center',
-  },
-  placeholderTxt: {
-    backgroundColor: 'transparent',
-    borderRadius: 99,
-    borderWidth: 2,
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderColor: Colours.White,
   },
   forgetPasswordTxt: {
     flex: 1,
@@ -134,11 +120,11 @@ const styles = StyleSheet.create({
   },
   signUpTouchableTxt: {
     shadowOffset: {
-      width: 0,
-      height: 1,
+      width: 1.25,
+      height: 1.25,
     },
     shadowOpacity: 0.12,
     shadowRadius: 1.12,
     elevation: 3,
-  }
+  },
 })

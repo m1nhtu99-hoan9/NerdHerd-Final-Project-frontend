@@ -7,6 +7,7 @@ import Animated, { useCode } from 'react-native-reanimated'
 
 import LoginForm from '../components/LoginForm'
 import { Dashline, GradientContainer } from '../components/atomic/index'
+import { SignInNavContext } from '../contexts'
 import { runTiming } from '../utils/reanimated'
 
 const { Value, set } = Animated
@@ -20,11 +21,10 @@ export default function LoginScreen() {
   }
 
   /**@TODO on the first run, shrink the logo font size
-   * 
-  */
+   */
   useCode(
     // @ts-ignore
-    set(logoFontSize, runTiming(80, 40)),
+    set(logoFontSize, runTiming(80, 60)),
     [],
   )
 
@@ -41,7 +41,9 @@ export default function LoginScreen() {
           </Animated.Text>
         </SharedElement>
         <Dashline bottom />
-        <LoginForm />
+        <SignInNavContext.Provider value={nav}>
+          <LoginForm />
+        </SignInNavContext.Provider>
       </Content>
     </GradientContainer>
   )
