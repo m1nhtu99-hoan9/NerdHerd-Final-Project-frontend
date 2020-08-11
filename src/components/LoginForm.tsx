@@ -1,4 +1,5 @@
 import i18n from '../i18n'
+
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet } from 'react-native'
 import { Input, Item, Text, View } from 'native-base'
@@ -8,6 +9,7 @@ import * as f from 'formik'
 import Colours from '../styles/colours'
 import { GradientText, TextInput} from './atomic/index'
 import { SignInNavContext } from '../contexts'
+
 
 export default function LoginForm(props: unknown) {
   const [isSignUpTextPressed, setSignUpTextPressed] = useState(false)

@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import AnimatedLoginScreen from './src/components/animated/firstLauch'
 
 import LoginScreen from './src/screens/LoginScreen'
 import { HomeScreen } from './src/screens/index'
@@ -14,12 +13,12 @@ export default function App() {
       <StackNavigator />
     </NavigationContainer>
   )
+
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
