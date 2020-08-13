@@ -9,6 +9,9 @@ import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LoginScreen } from '.'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 /* @TODOs: 
     - [x] (01/08/2020): Just mock-up
 */
@@ -53,8 +56,8 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 15,
   },
   headerText: {
-    paddingBottom: 20,
-    fontSize: 28,
+    paddingBottom: normalise(20),
+    fontSize: normalise(28),
   },
   content: {
     width: 400,
@@ -68,8 +71,8 @@ const styles = StyleSheet.create({
     flex: 0.08,
   },
   userInfoCardContainer: {
-    width: (SCREEN_WIDTH / 10) * 9.4,
-    height: (SCREEN_HEIGHT / 10) * 8.5,
+    width: (SCREEN_WIDTH / 10) * 9.4,   //////////////////////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 8.5, //////////////////////////////////////////////
     alignSelf: 'center',
     backgroundColor: 'white',
     borderRadius: 15,

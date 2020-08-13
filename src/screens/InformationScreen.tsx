@@ -15,6 +15,9 @@ import { MaterialIcons } from '@expo/vector-icons'
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 type UserInfo = {
   fullName: string
   bankName: string
@@ -124,19 +127,19 @@ const styles = StyleSheet.create({
   line: {
     height: 3,
     borderRadius: 100,
-    width: 65 + '%',
+    width: 65 + '%',            /////////////////////////////////////////
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
-    marginTop: 20,
+    marginTop: normalise(20),
   },
   container: {
     flex: 1,
-    width: 100 + '%',
+    width: 100 + '%',           /////////////////////////////////////////
   },
   content: {
     backgroundColor: 'white',
-    width: (SCREEN_WIDTH / 10) * 9.4,
-    height: (SCREEN_HEIGHT / 10) * 7,
+    width: (SCREEN_WIDTH / 10) * 9.4, ////////////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 7, ////////////////////////////////////
     alignSelf: 'center',
     borderRadius: 15,
     shadowColor: '#000',
@@ -152,10 +155,10 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.1,
     justifyContent: 'flex-end',
-    paddingBottom: 10,
+    paddingBottom: normalise(10),
   },
   headerText: {
-    fontSize: 28,
+    fontSize: normalise(28),
     fontWeight: '600',
   },
   information: {
@@ -168,25 +171,25 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 20,
+    fontSize: normalise(20),
   },
   infoText: {
-    fontSize: 17,
+    fontSize: normalise(17),
   },
 
   logoutButton: {
     borderWidth: 2,
-    width: 80 + '%',
+    width: 80 + '%',      //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 30,
+    marginVertical: normalise(30),
     alignSelf: 'center',
     borderRadius: 7,
   },
   changePasswordButton: {
     borderWidth: 2,
-    width: 80 + '%',
+    width: 80 + '%',      //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -197,16 +200,16 @@ const styles = StyleSheet.create({
   //Setting up modal
   modalBackground: {
     position: 'absolute',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
+    width: SCREEN_WIDTH,  //////////////////////////////////////
+    height: SCREEN_HEIGHT,//////////////////////////////////////
     backgroundColor: 'rgba(0, 0, 0, 0.57)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
     position: 'absolute',
-    width: (SCREEN_WIDTH / 10) * 8.5,
-    height: (SCREEN_HEIGHT / 10) * 6.5,
+    width: (SCREEN_WIDTH / 10) * 8.5,    ////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 6.5,  ////////////////////////////
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
   modalContentHeader: {
     flex: 0.15,
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingBottom: normalise(10),
     flexDirection: 'row',
     backgroundColor: '#009591',
     borderTopEndRadius: 20,
@@ -234,21 +237,21 @@ const styles = StyleSheet.create({
   },
   inputField: {
     textAlign: 'center',
-    height: 50,
+    height: normalise(50),
     marginVertical: 15,
-    width: 80 + '%',
+    width: 80 + '%',                  //////////////////////////////////
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 30,
     paddingHorizontal: 20,
-    fontSize: 17,
+    fontSize: normalise(17),
     alignSelf: 'center',
   },
   modalContentButton: {
-    marginTop: 20,
+    marginTop: normalise(20),
     borderWidth: 2,
-    width: 65 + '%',
+    width: 65 + '%',                 ///////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -256,7 +259,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   modalContentHeaderText: {
-    fontSize: 28,
+    fontSize: normalise(28),
     fontWeight: '600',
   },
   backButton: {

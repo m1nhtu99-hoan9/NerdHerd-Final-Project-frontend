@@ -10,6 +10,9 @@ import { Dashline, GradientContainer } from '../components/atomic/index'
 import { SignInNavContext } from '../contexts'
 import { runTiming } from '../utils/reanimated'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 const { Value, set } = Animated
 
 export default function LoginScreen() {
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: 'white',
-    fontSize: 56,
+    fontSize: normalise(56),
     shadowOffset: {
       width: -3,
       height: -3,

@@ -7,6 +7,9 @@ import { useNavigation } from '@react-navigation/native'
 import { SignUpForm } from '../components/index'
 import { Dashline, GradientContainer } from '../components/atomic/index'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 export default function SignUpScreen() {
   const nav = useNavigation()
   const _transit = () => {
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     color: 'white',
-    fontSize: 56,
+    fontSize: normalise(56),
     shadowOffset: {
       width: -3,
       height: -3,

@@ -2,6 +2,9 @@ import React from 'react'
 import { StyleSheet, ScrollView, Text, TextInput, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 export default function ChangePasswordScreen () {
   return (
     <View>
@@ -46,15 +49,15 @@ const styles = StyleSheet.create({
   line: {
     height: 3,
     borderRadius: 100,
-    width: 65 + '%',
+    width: 65 + '%', //////////////////////////////////
     alignSelf: 'center',
     backgroundColor: '#E6E6E6',
     marginVertical: 40,
   },
   input: {
-    width: 80 + '%',
+    width: 80 + '%', //////////////////////////////////
     height: 55,
-    fontSize: 16,
+    fontSize: normalise(16),
     borderWidth: 2,
     alignItems: 'center',
     alignSelf: 'center',
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     borderWidth: 2,
-    width: 80 + '%',
+    width: 80 + '%', ///////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
