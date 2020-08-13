@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { StyleSheet, View, Animated, Text } from 'react-native'
+
 import { BottomTabParamList } from '../../src/@types/navigation'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
-import { View, Animated } from 'react-native'
-import { TouchableOpacity, TextInput } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -27,7 +27,7 @@ const BottomTabNavigator = () => {
 
   const moveTab = (x: number, y: number) => {
     Animated.timing(value, {
-      toValue: { x: x, y: y },
+      toValue: { x, y },
       duration: 300,
       useNativeDriver: false,
     }).start()
@@ -60,8 +60,8 @@ const BottomTabNavigator = () => {
                   end={{ x: 0, y: 1 }}
                 />
               </Animated.View>
-              <TouchableOpacity onPress={() => moveTab(0,0)}>
-              <AntDesign name="home" size={24} color="black" />
+              <TouchableOpacity onPress={() => moveTab(0, 0)}>
+                <AntDesign name="home" size={24} color="black" />
               </TouchableOpacity>
             </View>
           ),
@@ -72,19 +72,13 @@ const BottomTabNavigator = () => {
         component={SearchScreen}
         listeners={() => ({
           tabPress: (e) => {
-            var tabColor = tabbarColor
             setTabbarColor(['#017DDC', '#00BCA0'])
           },
         })}
         options={{
           tabBarIcon: ({ color, size }) => (
             <TouchableOpacity onPress={() => moveTab(123, 0)}>
-            <AntDesign
-              
-              name="search1"
-              size={24}
-              color="black"
-            />
+              <AntDesign name="search1" size={24} color="black" />
             </TouchableOpacity>
           ),
         }}
@@ -95,12 +89,7 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <TouchableOpacity onPress={() => moveTab(248, 0)}>
-            <FontAwesome5
-              
-              name="user"
-              size={24}
-              color="black"
-            />
+              <FontAwesome5 name="user" size={24} color="black" />
             </TouchableOpacity>
           ),
         }}
@@ -119,7 +108,7 @@ const styles = StyleSheet.create({
     bottom: -35,
     alignSelf: 'center',
     borderRadius: 22,
-    zIndex: -2
+    zIndex: -2,
   },
 })
 

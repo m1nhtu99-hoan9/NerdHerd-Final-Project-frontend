@@ -7,19 +7,14 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
 import Colours from '../styles/colours'
-import { GradientText, TextInput} from './atomic/index'
+import { GradientText, TextInput } from './atomic/index'
 import { SignInNavContext } from '../contexts'
-
 
 export default function LoginForm(props: unknown) {
   const [isSignUpTextPressed, setSignUpTextPressed] = useState(false)
 
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
-
-  useEffect(() => {
-    setSignUpTextPressed(false)
-  }, [])
 
   /* events triggered when `Sign Up` text link is clicked are defined here */
   const _signUpTxtOnPressed = () => {
@@ -29,9 +24,7 @@ export default function LoginForm(props: unknown) {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        i18nPlaceholderContent={'signIn.usernameInput'}
-      />
+      <TextInput i18nPlaceholderContent={'signIn.usernameInput'} />
       <TextInput
         i18nPlaceholderContent={'signIn.passwordInput'}
         secureTextEntry

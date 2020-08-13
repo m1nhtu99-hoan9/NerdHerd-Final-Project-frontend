@@ -32,12 +32,6 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
           <Text style={styles.T_creditScoreNote}>Goi y: Ban nen duy tri...</Text>
         </View>
 
-        {/* <View style={styles.V_creditScoreHistory}>
-          <Text style={styles.T_creditScoreHistoryHeader}>Lich su diem tin dung</Text>
-          <Text style={styles.Graph_creditScoreHistory}>!!! Graph &amp; Gauge go here !!! Still in development </Text>
-          <Text style={styles.T_creditScoreHistoryNote}>Chi tiet</Text>
-        </View> */}
-
         <Line></Line>
 
         <View style={styles.V_loanDetail}>
