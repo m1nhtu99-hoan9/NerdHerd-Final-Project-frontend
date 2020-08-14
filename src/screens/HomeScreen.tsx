@@ -11,6 +11,7 @@ import { LoginScreen } from '.'
 
 //Import normalise
 import { normalise } from '../../src/helpers/Constants'
+import Swiper from 'react-native-swiper'
 
 /* @TODOs: 
     - [x] (01/08/2020): Just mock-up
@@ -24,19 +25,52 @@ export default function HomeScreen() {
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
-        <ScrollView>
-          <View style={styles.userInfoCardContainer}>
-            <View style={styles.header}>
-              <Text style={styles.headerText}>Search history</Text>
-            </View>
-
-            <ScrollView horizontal style={styles.scrollViewStyle}>
-              <UserCreditInfoCard phoneNumber='0967162652' />
-
-              <UserCreditInfoCard phoneNumber='0904586221' />
-            </ScrollView>
+        <View style={styles.userInfoCardContainer}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>Search history</Text>
           </View>
-        </ScrollView>
+
+          <Swiper
+          showsButtons
+          dot={
+            <View
+              style={{
+                backgroundColor: 'rgba(0,0,0,.2)',
+                width: 5,
+                height: 5,
+                borderRadius: 4,
+                marginLeft: 3,
+                marginRight: 3,
+                marginTop: 3,
+                marginBottom: 3
+              }}
+            />
+          }
+
+          activeDot={
+            <View
+              style={{
+                backgroundColor: 'green',
+                width: 8,
+                height: 8,
+                borderRadius: 4,
+                marginLeft: 3,
+                marginRight: 3,
+                marginTop: 3,
+                marginBottom: 3
+              }}
+            />
+          }
+            // activeDotColor={'transparent'}
+            // dotColor={'transparent'}
+            loop={false}
+            loadMinimal={true}
+          >
+            <UserCreditInfoCard phoneNumber="0967162652" />
+
+            <UserCreditInfoCard phoneNumber="0904586221" />
+          </Swiper>
+        </View>
 
         <View style={styles.footer}></View>
       </View>
@@ -71,9 +105,11 @@ const styles = StyleSheet.create({
     flex: 0.08,
   },
   userInfoCardContainer: {
-    width: (SCREEN_WIDTH / 10) * 9.4,   //////////////////////////////////////////////
+    overflow: 'hidden',
+    width: (SCREEN_WIDTH / 10) * 9.4, //////////////////////////////////////////////
     height: (SCREEN_HEIGHT / 10) * 8.5, //////////////////////////////////////////////
     alignSelf: 'center',
+    marginBottom: 22,
     backgroundColor: 'white',
     borderRadius: 15,
     shadowColor: '#000',
@@ -84,11 +120,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
-    marginTop: 10 + '%',
   },
   scrollViewStyle: {
-    flex: 0.85, 
+    flex: 0.85,
     borderBottomRightRadius: 15,
-    borderBottomLeftRadius: 15
-  }
+    borderBottomLeftRadius: 15,
+  },
 })

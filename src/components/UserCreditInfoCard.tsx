@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState} from 'react'
 import { StyleSheet, View, Text, TextInput, Dimensions } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
+
+import RNSpeedometer from "react-native-speedometer";
 
 interface UserCreditInfoCardProps {
   phoneNumber: string
@@ -15,6 +17,7 @@ const Line = function () {
 
 export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
   const { phoneNumber } = props
+  const [creditScore, setCreditScore] = useState(12);
 
   return (
     <>
@@ -28,7 +31,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
 
         <View style={styles.V_creditScore}>
           <Text style={styles.T_creditScoreHeader}>Diem tin dung</Text>
-          <Text style={styles.Graph_CreditScore}>!!! Graph &amp; Gauge go here !!! Still in development </Text>
+          <RNSpeedometer value={creditScore} size={200}/>
           <Text style={styles.T_creditScoreNote}>Goi y: Ban nen duy tri...</Text>
         </View>
 
@@ -82,10 +85,9 @@ const styles = StyleSheet.create({
     fontSize: 28
   },
   content: {
+    borderRightWidth: 2,
+    borderLeftWidth: 2,
     width: SCREEN_WIDTH /10 * 9.4,
-    borderBottomLeftRadius: 15,
-    borderBottomRightRadius: 15,
-    marginHorizontal: 30,
     flexDirection: 'column',
     alignContent: 'center'
   },
