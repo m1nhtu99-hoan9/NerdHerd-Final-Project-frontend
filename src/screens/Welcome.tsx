@@ -6,10 +6,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, NavigationProp } from '@react-navigation/native'
 import { SharedElement } from 'react-navigation-shared-element'
 
-import { Dashline, GradientContainer } from '../components/atomic/index'
-
-//Import normalise
+import Fonts from '../styles/fonts'
 import { normalise } from '../../src/helpers/Constants'
+import { Dashline, GradientContainer } from '../components/atomic/index'
 
 export default function WelcomeScreen() {
   const nav = useNavigation()
@@ -22,7 +21,7 @@ export default function WelcomeScreen() {
     <GradientContainer flexDirection={'column'}>
       <Content contentContainerStyle={styles.contentContainer}>
         <View>
-          <Text style={styles.subtxt}>{i18n.t('welcome.subtext')}</Text>
+          <Text style={styles.subtxt}>{'\n' + i18n.t('welcome.subtext')}</Text>
         </View>
         <Dashline stretch bottom />
           <SharedElement id="logo">
@@ -42,10 +41,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   subtxt: {
-    fontSize: normalise(26),
+    fontFamily: Fonts.PrimaryBold,
+    fontSize: normalise(30),
     color: 'white',
-    letterSpacing: 0.3,
-    fontWeight: '600',
     paddingBottom: normalise(12),
     shadowOffset: {
       width: 3,

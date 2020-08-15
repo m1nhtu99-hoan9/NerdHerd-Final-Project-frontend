@@ -13,11 +13,11 @@ const window = Dimensions.get('window')
 const SCREEN_WIDTH = window.width
 const SCREEN_HEIGHT = window.height
 
+/** @description For iOS devices, if this device is an iPhone having _bunny ears_,
+ * evaluates to 44, else evaluates to 20. For Android devices, evaluation is computed 
+ * using React Native's `StatusBar` module.
+ * */
 const STATUS_BAR_HEIGHT: number = Platform.select({
-  /**@todo
-   * for iOS devices, if this device is an iPhone having "bunny ears,
-   * evaluates to 44, else evaluates to 20 */
-
   ios: SCREEN_WIDTH > 736 && !isIPad && !Platform.isTV ? 44 : 20,
   android: StatusBar.currentHeight,
   default: 0,
@@ -31,7 +31,8 @@ const BASE_HEIGHT = 2436
 
 const normaliseSizeVertical = (n: number) => (SCREEN_WIDTH / BASE_WIDTH) * n
 const normaliseSizeHorizontal = (n: number) => (SCREEN_HEIGHT / BASE_HEIGHT) * n
-const normalise = (n: number, factor: number = 0.5) =>
+/**@TODO Calculate the scaled value adjusting to different display dimensions*/
+const normalise = (n: number, factor: number = 0.168) =>
   n + (normaliseSizeVertical(n) - n) * factor
 
 export {

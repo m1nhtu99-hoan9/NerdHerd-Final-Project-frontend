@@ -1,7 +1,4 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-// import 'react-native-gesture-handler'
-import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { StackParamList } from '../../src/@types/navigation'
 import BottomTabNavigator from './bottomTabNavigator'
@@ -14,7 +11,7 @@ const Stack = createStackNavigator<StackParamList>()
 // LogIn <-> Home <-> ChangePassword
 const StackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Login"
         options={{ headerShown: false }}

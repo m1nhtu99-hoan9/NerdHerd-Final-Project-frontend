@@ -6,7 +6,8 @@ import { Input, Item, Text, View } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
-import Colours from '../styles/colours'
+import { Colours, Fonts } from '../styles/index'
+import { normalise } from '../helpers/Constants'
 import { GradientText, TextInput } from './atomic/index'
 import { SignInNavContext } from '../contexts'
 
@@ -80,7 +81,8 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   btnTxt: {
-    fontSize: 18,
+    fontSize: normalise(18),
+    fontFamily: Fonts.PrimaryBold,
     textAlign: 'center',
   },
   forgetPasswordTxt: {
@@ -107,6 +109,7 @@ const styles = StyleSheet.create({
   signUpTxt: {
     flex: 2,
     fontSize: 15,
+    fontFamily: Fonts.PrimaryBold,
     color: Colours.Sapphire,
     paddingLeft: 5,
     paddingTop: 10,
