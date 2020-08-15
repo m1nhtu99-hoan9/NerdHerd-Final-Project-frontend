@@ -1,2 +1,5 @@
-export { default as Colours } from './colours'
-export { default as Fonts } from './fonts'
+import Colours from './colours'
+import { Fonts, FontList } from './fonts'
+import { AssetList } from './asset'
+
+export { Colours, Fonts, FontList, AssetList }

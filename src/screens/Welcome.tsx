@@ -6,7 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, NavigationProp } from '@react-navigation/native'
 import { SharedElement } from 'react-navigation-shared-element'
 
-import Fonts from '../styles/fonts'
+import { Fonts } from '../styles/fonts'
 import { normalise } from '../../src/helpers/Constants'
 import { Dashline, GradientContainer } from '../components/atomic/index'
 
