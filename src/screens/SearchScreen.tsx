@@ -6,6 +6,9 @@ import { useNavigation } from '@react-navigation/native'
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
 //Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -66,30 +69,29 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.15,
     justifyContent: 'flex-end',
-    paddingBottom: 10,
+    paddingBottom: normalise(10),
   },
   searchField: {
     flex: 0.85,
   },
   headerText: {
-    fontSize: 28,
+    fontSize: normalise(28),
     fontWeight: '600',
   },
   inputField: {
     textAlign: 'center',
     height: 50,
-    marginVertical: 15,
+    marginVertical: normalise(15),
     width: 80 + '%',
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 30,
     paddingHorizontal: 20,
-    fontSize: 17,
     alignSelf: 'center',
   },
   searchButton: {
-    marginTop: 20,
+    marginTop: normalise(20),
     borderWidth: 2,
     width: 45 + '%',
     height: 50,

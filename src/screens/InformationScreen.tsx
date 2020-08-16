@@ -15,12 +15,29 @@ import { MaterialIcons } from '@expo/vector-icons'
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
+//Import normalise
+import { normalise } from '../../src/helpers/Constants'
+
+type UserInfo = {
+  fullName: string
+  bankName: string
+  status: 'normal' | 'warned' | '...' | undefined
+  email: string
+  phone: string
+}
 //Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function InformationScreen() {
   const [modalVisible, setModalVisible] = useState(false)
+  const [userInfo, setUserInfo] = useState<UserInfo>({
+    fullName: 'Ngo Tai Phat',
+    bankName: 'Techcombank',
+    status: 'normal',
+    email: 'phatxxxxx@gmail.com',
+    phone: '094345xxx',
+  })
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
   return (
@@ -30,11 +47,15 @@ export default function InformationScreen() {
           <Text style={styles.headerText}>Thong tin</Text>
         </View>
         <View style={styles.information}>
-          <Text style={styles.name}>NGO TAI PHAT</Text>
-          <Text style={styles.infoText}>Ngan hang: Techcombank</Text>
-          <Text style={styles.infoText}>Tinh trang: Binh thuong</Text>
-          <Text style={styles.infoText}>Email: phatxxxxx@gmail.com</Text>
-          <Text style={styles.infoText}>So dien thoai: 094345xxx</Text>
+          <Text style={styles.name}>{userInfo.fullName}</Text>
+          <Text
+            style={styles.infoText}
+          >{`Ngan hang: ${userInfo.bankName}`}</Text>
+          <Text
+            style={styles.infoText}
+          >{`Tinh trang: ${userInfo.status}`}</Text>
+          <Text style={styles.infoText}>{`Email: ${userInfo.email}`}</Text>
+          <Text style={styles.infoText}>{`Phone: ${userInfo.phone}`}</Text>
         </View>
         <Line></Line>
         <View style={styles.button}>
@@ -106,19 +127,19 @@ const styles = StyleSheet.create({
   line: {
     height: 3,
     borderRadius: 100,
-    width: 65 + '%',
+    width: 65 + '%', /////////////////////////////////////////
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
-    marginTop: 20
+    marginTop: normalise(20),
   },
   container: {
     flex: 1,
-    width: 100 + '%',
+    width: 100 + '%', /////////////////////////////////////////
   },
   content: {
     backgroundColor: 'white',
-    width: (SCREEN_WIDTH / 10) * 9.4,
-    height: (SCREEN_HEIGHT / 10) * 7,
+    width: (SCREEN_WIDTH / 10) * 9.4, ////////////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 7, ////////////////////////////////////
     alignSelf: 'center',
     borderRadius: 15,
     shadowColor: '#000',
@@ -134,10 +155,10 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.1,
     justifyContent: 'flex-end',
-    paddingBottom: 10,
+    paddingBottom: normalise(10),
   },
   headerText: {
-    fontSize: 28,
+    fontSize: normalise(28),
     fontWeight: '600',
   },
   information: {
@@ -150,25 +171,25 @@ const styles = StyleSheet.create({
   },
 
   name: {
-    fontSize: 20,
+    fontSize: normalise(20),
   },
   infoText: {
-    fontSize: 17,
+    fontSize: normalise(17),
   },
 
   logoutButton: {
     borderWidth: 2,
-    width: 80 + '%',
+    width: 80 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 30,
+    marginVertical: normalise(30),
     alignSelf: 'center',
     borderRadius: 7,
   },
   changePasswordButton: {
     borderWidth: 2,
-    width: 80 + '%',
+    width: 80 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -179,16 +200,16 @@ const styles = StyleSheet.create({
   //Setting up modal
   modalBackground: {
     position: 'absolute',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT,
+    width: SCREEN_WIDTH, //////////////////////////////////////
+    height: SCREEN_HEIGHT, //////////////////////////////////////
     backgroundColor: 'rgba(0, 0, 0, 0.57)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
     position: 'absolute',
-    width: (SCREEN_WIDTH / 10) * 8.5,
-    height: (SCREEN_HEIGHT / 10) * 6.5,
+    width: (SCREEN_WIDTH / 10) * 8.5, ////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 6.5, ////////////////////////////
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -204,7 +225,7 @@ const styles = StyleSheet.create({
   modalContentHeader: {
     flex: 0.15,
     alignItems: 'center',
-    paddingBottom: 10,
+    paddingBottom: normalise(10),
     flexDirection: 'row',
     backgroundColor: '#009591',
     borderTopEndRadius: 20,
@@ -216,21 +237,21 @@ const styles = StyleSheet.create({
   },
   inputField: {
     textAlign: 'center',
-    height: 50,
+    height: normalise(50),
     marginVertical: 15,
-    width: 80 + '%',
+    width: 80 + '%', //////////////////////////////////
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 30,
     paddingHorizontal: 20,
-    fontSize: 17,
+    fontSize: normalise(17),
     alignSelf: 'center',
   },
   modalContentButton: {
-    marginTop: 20,
+    marginTop: normalise(20),
     borderWidth: 2,
-    width: 65 + '%',
+    width: 65 + '%', ///////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -238,7 +259,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   modalContentHeaderText: {
-    fontSize: 28,
+    fontSize: normalise(28),
     fontWeight: '600',
   },
   backButton: {
