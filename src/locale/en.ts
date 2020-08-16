@@ -13,6 +13,15 @@ const en = {
     askSignUpTxt: 'Don\'t have an account?',
     signUpTxt: 'Sign Up'
   },
+  signUp: {
+    _nav: 'Sign Up', 
+    licenseCodeInput: 'License code', 
+    emailInput: 'Email address',
+    phoneInput: 'Phone number',
+    passwordInput: 'Password', 
+    rePasswordInput: 'Confirm Password', 
+    submitBtn: 'Sign Up'
+  },
   home: {
     _nav: 'Home',
     header: 'Search History',

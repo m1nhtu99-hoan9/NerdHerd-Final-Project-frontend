@@ -7,8 +7,8 @@ import { SharedElement } from 'react-native-shared-element'
 import { useNavigation } from '@react-navigation/native'
 // import Animated, { useCode } from 'react-native-reanimated'
 
-import LoginForm from '../components/LoginForm'
-import { Dashline, GradientContainer } from '../components/atomic/'
+import LoginForm from '../components/forms/LoginForm'
+import { GradientContainer } from '../components/atomic/'
 import { Colours, Fonts } from '../styles'
 import { SignInNavContext } from '../contexts'
 import { normalise, scaleImageByScreenDimensions } from '../../src/helpers/'
@@ -41,7 +41,7 @@ export default function LoginScreen() {
 
   return (
     <GradientContainer flexDirection={'column'}>
-      <Content contentContainerStyle={styles.contentContainer}>
+      <Content scrollEnabled={false} contentContainerStyle={styles.contentContainer}>
         <View style={styles.logoContainer}>
           <SharedElement id="logo">
             <Image
@@ -76,7 +76,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1, 
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -89,7 +89,9 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     alignSelf: 'flex-end',
   },
-  logo: scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.8),
+  logo: { 
+    ...scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.8) 
+  },
   logoContainer: {
     flex: 1,
     alignItems: 'center',
@@ -114,7 +116,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.12,
     shadowRadius: 1.12,
     elevation: 3,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
   },
   forgetPasswordTxt: {
     fontSize: 15,

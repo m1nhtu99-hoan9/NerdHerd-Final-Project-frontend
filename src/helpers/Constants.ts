@@ -39,7 +39,7 @@ const BASE_HEIGHT = 2436
 const normaliseSizeVertical = (n: number) => (SCREEN_WIDTH / BASE_WIDTH) * n
 const normaliseSizeHorizontal = (n: number) => (SCREEN_HEIGHT / BASE_HEIGHT) * n
 /**@description Calculate the scaled value adjusting to different display dimensions*/
-const normalise = (n: number, factor: number = 0.168) =>
+const normalise = (n: number, factor: number = -0.125) =>
   n + (normaliseSizeVertical(n) - n) * factor
 
 /**@arguments

@@ -13,6 +13,15 @@ const vn = {
     askSignUpTxt: 'Chưa có tài khoản?',
     signUpTxt: 'Đăng Ký'
   },
+  signUp: {
+    _nav: 'Sign Up', 
+    licenseCodeInput: 'Mã bản quyền', 
+    emailInput: 'Địa chỉ email',
+    phoneInput: 'Số điện thoại',
+    passwordInput: 'Mật khẩu', 
+    rePasswordInput: 'Xác nhận mật khẩu',
+    submitBtn: 'Đăng Ký'
+  },
   home: {
     _nav: 'Trang chủ',
     header: 'Lịch sử tra cứu',

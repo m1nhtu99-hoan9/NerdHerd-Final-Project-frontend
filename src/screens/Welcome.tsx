@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   subtxt: {
     fontFamily: Fonts.PrimaryBold,
-    fontSize: normalise(30),
+    fontSize: normalise(25),
     color: 'white',
     paddingBottom: normalise(12),
     shadowOffset: {
