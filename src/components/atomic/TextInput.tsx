@@ -49,7 +49,6 @@ export default function TextInput(props: TextInputProps) {
 
 const styles = StyleSheet.create({
   textboxContainer: {
-    flex: 3,
     marginVertical: 10,
     borderColor: Colours.White,
     shadowOffset: {

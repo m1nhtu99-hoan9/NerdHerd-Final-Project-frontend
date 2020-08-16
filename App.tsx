@@ -16,7 +16,7 @@ export default function App() {
   /* if fonts & prefetched images not finished loading yet, 
      display the loading indicator 
   */
-  return !(fontsLoaded && imagesLoaded) ? (
+  return (!fontsLoaded || !imagesLoaded) ? (
     <AppLoading />
   ) : (
     <NavigationContainer>

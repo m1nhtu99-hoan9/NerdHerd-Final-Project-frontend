@@ -4,9 +4,9 @@ NerdHerd's frontend source code for DevC Challenge's final project
 
 ## TODOs
 
-- Assets
+- Asset bundling
   - [x] Font: *Comfortaa*
-  - [ ] Font: icon vector fonts
+  - [x] Font: icon vector fonts (`FontAwesome5`, `AntDesign`, `MaterialIcons`)
   - [ ] Logo image
 - Login Screen 
   - [x] First launch effect

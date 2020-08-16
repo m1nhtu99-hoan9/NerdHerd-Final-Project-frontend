@@ -127,14 +127,14 @@ const styles = StyleSheet.create({
   line: {
     height: 3,
     borderRadius: 100,
-    width: 65 + '%',            /////////////////////////////////////////
+    width: 65 + '%', /////////////////////////////////////////
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
     marginTop: normalise(20),
   },
   container: {
     flex: 1,
-    width: 100 + '%',           /////////////////////////////////////////
+    width: 100 + '%', /////////////////////////////////////////
   },
   content: {
     backgroundColor: 'white',
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
 
   logoutButton: {
     borderWidth: 2,
-    width: 80 + '%',      //////////////////////////////////////
+    width: 80 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   },
   changePasswordButton: {
     borderWidth: 2,
-    width: 80 + '%',      //////////////////////////////////////
+    width: 80 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -200,16 +200,16 @@ const styles = StyleSheet.create({
   //Setting up modal
   modalBackground: {
     position: 'absolute',
-    width: SCREEN_WIDTH,  //////////////////////////////////////
-    height: SCREEN_HEIGHT,//////////////////////////////////////
+    width: SCREEN_WIDTH, //////////////////////////////////////
+    height: SCREEN_HEIGHT, //////////////////////////////////////
     backgroundColor: 'rgba(0, 0, 0, 0.57)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
     position: 'absolute',
-    width: (SCREEN_WIDTH / 10) * 8.5,    ////////////////////////////
-    height: (SCREEN_HEIGHT / 10) * 6.5,  ////////////////////////////
+    width: (SCREEN_WIDTH / 10) * 8.5, ////////////////////////////
+    height: (SCREEN_HEIGHT / 10) * 6.5, ////////////////////////////
     backgroundColor: 'white',
     borderRadius: 20,
     shadowColor: '#000',
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     height: normalise(50),
     marginVertical: 15,
-    width: 80 + '%',                  //////////////////////////////////
+    width: 80 + '%', //////////////////////////////////
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: 'black',
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   modalContentButton: {
     marginTop: normalise(20),
     borderWidth: 2,
-    width: 65 + '%',                 ///////////////////////////////////
+    width: 65 + '%', ///////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',

@@ -18,3 +18,7 @@ export const FontList: Readonly<FontAsset> = {
   ComfortaaRegular: require('../../assets/fonts/Comfortaa-Regular.ttf'),
   ComfortaaBold: require('../../assets/fonts/Comfortaa-Bold.ttf'),
 }
+
+/* For caching of vector icon fonts, declaration of the paths to these fonts
+   in `expo.assetBundlePatterns` field of `app.json` would be enough. 
+*/
