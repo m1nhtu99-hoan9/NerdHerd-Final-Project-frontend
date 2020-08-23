@@ -62,6 +62,7 @@
     "react-navigation": "^4.4.0",
     "react-navigation-shared-element": "^3.0.0",
     "react-navigation-stack": "^2.8.2",
+    "sync-storage": "^0.4.2",
     "xstate": "^4.11.0"
   },
   "devDependencies": {

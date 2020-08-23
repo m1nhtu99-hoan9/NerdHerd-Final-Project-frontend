@@ -1,4 +1,6 @@
 /* Type Definitions */
+import { ParamListBase } from '@react-navigation/routers'
+import { NavigationProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { RouteProp } from '@react-navigation/native'
@@ -43,3 +45,5 @@ export type ProfileScreenNavigationProp = BottomTabNavigationProp<
   BottomTabParamList, 
   'Profile'
 >
+
+export type ScreenNavigation = NavigationProp<ParamListBase>
