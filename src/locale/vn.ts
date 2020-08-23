@@ -2,7 +2,14 @@ const vn = {
   appName: 'CreScorex',
   welcome: {
     _nav: 'Welcome',
-    subtext: 'CHÀO MỪNG BẠN ĐẾN VỚI'
+    subtext: 'CHÀO MỪNG ĐẾN VỚI',
+    userAgreement: {
+      [0]: 'Với việc tạo tài khoản, bạn đã đồng ý với ',
+      [1]: ' và ',
+      [2]: ' của chúng tôi',
+    },
+    termsOfService: 'điều khoản dịch vụ',
+    privacyPolicy: 'chính sách bảo mật',
   },
   signIn: {
     _nav: 'Sign In',
@@ -11,16 +18,16 @@ const vn = {
     forgetPassword: 'Quên mật khẩu?',
     submitBtn: 'Đăng Nhập',
     askSignUpTxt: 'Chưa có tài khoản?',
-    signUpTxt: 'Đăng Ký'
+    signUpTxt: 'Đăng Ký',
   },
   signUp: {
-    _nav: 'Sign Up', 
-    licenseCodeInput: 'Mã bản quyền', 
+    _nav: 'Sign Up',
+    licenseCodeInput: 'Mã bản quyền',
     emailInput: 'Địa chỉ email',
     phoneInput: 'Số điện thoại',
-    passwordInput: 'Mật khẩu', 
+    passwordInput: 'Mật khẩu',
     rePasswordInput: 'Xác nhận mật khẩu',
-    submitBtn: 'Đăng Ký'
+    submitBtn: 'Đăng Ký',
   },
   home: {
     _nav: 'Trang chủ',
@@ -29,7 +36,8 @@ const vn = {
     suggestion: 'Đề xuất',
     suggestionContent: {
       low: '',
-      middle: 'Bạn nên duy trì số dư tài khoản trung bình hàng tháng lớn hơn 15.000.000 VND để có thể cải thiện điểm tín dụng.',
+      middle:
+        'Bạn nên duy trì số dư tài khoản trung bình hàng tháng lớn hơn 15.000.000 VND để có thể cải thiện điểm tín dụng.',
       high: '',
     },
     secondSubHeader: ' Tính toán khoản vay',
