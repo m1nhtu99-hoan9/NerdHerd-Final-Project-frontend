@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import React, { useState } from 'react'
 import {
   StyleSheet,
@@ -44,18 +45,18 @@ export default function InformationScreen() {
     <GradientContainer flexDirection={'column'}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Thong tin</Text>
+          <Text style={styles.headerText}>{i18n.t('aboutMe._nav')}</Text>
         </View>
         <View style={styles.information}>
           <Text style={styles.name}>{userInfo.fullName}</Text>
           <Text
             style={styles.infoText}
-          >{`Ngan hang: ${userInfo.bankName}`}</Text>
+          >{`${i18n.t('aboutMe.bank')}: ${userInfo.bankName}`}</Text>
           <Text
             style={styles.infoText}
-          >{`Tinh trang: ${userInfo.status}`}</Text>
-          <Text style={styles.infoText}>{`Email: ${userInfo.email}`}</Text>
-          <Text style={styles.infoText}>{`Phone: ${userInfo.phone}`}</Text>
+          >{`${i18n.t('aboutMe.accStatus')}: ${userInfo.status}`}</Text>
+          <Text style={styles.infoText}>{`${i18n.t('aboutMe.email')}: ${userInfo.email}`}</Text>
+          <Text style={styles.infoText}>{`${i18n.t('aboutMe.phoneNum')}: ${userInfo.phone}`}</Text>
         </View>
         <Line></Line>
         <View style={styles.button}>
@@ -65,14 +66,14 @@ export default function InformationScreen() {
               navigation.replace('Login', { name: 0 })
             }}
           >
-            <Text>Dang xuat</Text>
+            <Text>{i18n.t('aboutMe.signOutBtn')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.changePasswordButton}
             onPress={() => setModalVisible(true)}
           >
-            <Text>Doi mat khau</Text>
+            <Text>{i18n.t('aboutMe.changePassBtn')}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -87,29 +88,29 @@ export default function InformationScreen() {
               >
                 <MaterialIcons name="arrow-back" size={32} color="black" />
               </TouchableOpacity>
-              <Text style={styles.modalContentHeaderText}>Doi mat khau</Text>
+              <Text style={styles.modalContentHeaderText}>{i18n.t('aboutMe.changePassBtn')}</Text>
             </View>
             <View style={styles.inputFieldContainer}>
               <TextInput
                 style={styles.inputField}
-                placeholder="Nhap mat khau cu"
+                placeholder={i18n.t('changePassword.oldPassInput')}
                 secureTextEntry
               />
 
               <TextInput
                 style={styles.inputField}
-                placeholder="Nhap mat khau moi"
+                placeholder={i18n.t('changePassword.newPassInput')}
                 secureTextEntry
               />
 
               <TextInput
                 style={styles.inputField}
-                placeholder="Xac nhan mat khau"
+                placeholder={i18n.t('changePassword.confirmPassInput')}
                 secureTextEntry
               />
 
               <TouchableOpacity style={styles.modalContentButton}>
-                <Text>Xac nhan</Text>
+                <Text>{i18n.t('changePassword.submitBtn')}</Text>
               </TouchableOpacity>
             </View>
           </View>

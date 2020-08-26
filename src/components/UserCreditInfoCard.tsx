@@ -1,5 +1,6 @@
+import i18n from '../i18n'
 import React, { useState} from 'react'
-import { StyleSheet, View, Text, TextInput, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, TextInput, Dimensions, KeyboardAvoidingView, Platform, Picker } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -17,12 +18,17 @@ const Line = function () {
 
 export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
   const { phoneNumber } = props
-  const [creditScore, setCreditScore] = useState(12);
+  const [creditScore, setCreditScore] = useState(58);
+  const [selectedValue, setSelectedValue] = useState("abc");
 
   return (
     <>
       <View style={styles.content}>
-        <ScrollView>
+      <KeyboardAvoidingView keyboardVerticalOffset={110} style={{ flexDirection: 'column', justifyContent: 'center',}} behavior="position" enabled>
+
+        <ScrollView
+        showsVerticalScrollIndicator={false}
+        >
         <View style={styles.V_phoneNum}>
           <Text style={styles.phoneNum}>{phoneNumber}</Text>
         </View>
@@ -30,36 +36,37 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
         <Line></Line>
 
         <View style={styles.V_creditScore}>
-          <Text style={styles.T_creditScoreHeader}>Diem tin dung</Text>
+          <Text style={styles.T_creditScoreHeader}>{i18n.t('home.firstSubHeader')}</Text>
           <RNSpeedometer value={creditScore} size={200}/>
-          <Text style={styles.T_creditScoreNote}>Goi y: Ban nen duy tri...</Text>
+          <Text style={styles.T_creditScoreNote}>{i18n.t('home.suggestionContent.middle')}</Text>
         </View>
 
         <Line></Line>
 
         <View style={styles.V_loanDetail}>
-          <Text style={styles.T_loanDetailHeader}>Tinh toan khoan vay</Text>
+          <Text style={styles.T_loanDetailHeader}>{i18n.t('home.secondSubHeader')}</Text>
           <Text style={styles.T_loanDetailResult}>Content goes here</Text>
 
           <TextInput
             style={styles.loanType}
-            placeholder="Chon kieu vay"
+            placeholder={i18n.t('home.loanOptionsInput')}
           />
 
           <TextInput
             style={styles.loanAmount}
-            placeholder="So tien vay"
+            placeholder={i18n.t('home.loanAmountInput')}
           />
 
 
           <TouchableOpacity
             style={styles.buttonNext}
           >
-            <Text style={styles.buttonText}>Tiep tuc</Text>
+            <Text style={styles.buttonText}>{i18n.t('home.submitBtn')}</Text>
           </TouchableOpacity>
 
         </View>
         </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     </>
   )
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
   ////////
   V_creditScore: {
     width: 100 + '%',
-    height: 270,
+    height: 320,
     justifyContent: 'space-between'
   },
   T_creditScoreHeader: {
@@ -118,7 +125,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   T_creditScoreNote: {
-    padding: 10
+    paddingTop: 60,
+    paddingBottom: 15
   },
 
 

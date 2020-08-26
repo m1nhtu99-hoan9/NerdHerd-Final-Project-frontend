@@ -1,6 +1,8 @@
+import i18n from '../i18n'
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import { FontAwesome } from '@expo/vector-icons'; 
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
@@ -27,48 +29,59 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <View style={styles.userInfoCardContainer}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>Search history</Text>
+            <Text style={styles.headerText}>{i18n.t('home.header')}</Text>
           </View>
 
           <Swiper
-          showsButtons
-          dot={
-            <View
-              style={{
-                backgroundColor: 'rgba(0,0,0,.2)',
-                width: 5,
-                height: 5,
-                borderRadius: 4,
-                marginLeft: 3,
-                marginRight: 3,
-                marginTop: 3,
-                marginBottom: 3
-              }}
-            />
-          }
-
-          activeDot={
-            <View
-              style={{
-                backgroundColor: 'green',
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                marginLeft: 3,
-                marginRight: 3,
-                marginTop: 3,
-                marginBottom: 3
-              }}
-            />
-          }
+            showsButtons
+            nextButton={
+              <View style={{ justifyContent: 'center',width: 80, height: 80, marginRight: -60, borderRadius: 50, backgroundColor: 'rgba(0, 0, 0, 0.45)'}}>
+                <FontAwesome name="arrow-right" size={24} color="white" style={{paddingLeft: 5}} />
+              </View>
+            }
+            prevButton={
+              <View style={{ justifyContent: 'center', alignItems:'flex-end',width: 80, height: 80, marginLeft: -60, borderRadius: 50, backgroundColor: 'rgba(0, 0, 0, 0.45)'}}>
+                <FontAwesome name="arrow-left" size={24} color="white" style={{paddingRight: 5}} />
+              </View>
+            }
+            dot={
+              <View
+                style={{
+                  backgroundColor: 'rgba(0,0,0,.2)',
+                  width: 5,
+                  height: 5,
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginTop: 3,
+                  marginBottom: 3,
+                }}
+              />
+            }
+            activeDot={
+              <View
+                style={{
+                  backgroundColor: 'green',
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginTop: 3,
+                  marginBottom: 3,
+                }}
+              />
+            }
             // activeDotColor={'transparent'}
             // dotColor={'transparent'}
             loop={false}
             loadMinimal={true}
           >
             <UserCreditInfoCard phoneNumber="0967162652" />
-
+            
             <UserCreditInfoCard phoneNumber="0904586221" />
+
+            <UserCreditInfoCard phoneNumber="0955586221" />
           </Swiper>
         </View>
 

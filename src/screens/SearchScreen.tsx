@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import React from 'react'
 import { StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -18,15 +19,15 @@ export default function SeacrhScreen() {
     <GradientContainer flexDirection={'column'}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Tra cuu</Text>
+          <Text style={styles.headerText}>{i18n.t('search._nav')}</Text>
         </View>
         <View style={styles.searchField}>
-          <TextInput style={styles.inputField} placeholder="So dien thoai" />
+          <TextInput style={styles.inputField} placeholder={i18n.t('search.phoneNumInput')} />
 
-          <TextInput style={styles.inputField} placeholder="Ma OTP" />
+          <TextInput style={styles.inputField} placeholder={i18n.t('search.otpCodeInput')} />
 
           <TouchableOpacity style={styles.searchButton}>
-            <Text>Tra cuu</Text>
+            <Text>{i18n.t('search.submitBtn')}</Text>
           </TouchableOpacity>
         </View>
       </View>
