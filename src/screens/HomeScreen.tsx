@@ -2,7 +2,7 @@ import i18n from '../i18n'
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
@@ -33,15 +33,45 @@ export default function HomeScreen() {
           </View>
 
           <Swiper
+            scrollEnabled={true}
             showsButtons
             nextButton={
-              <View style={{ justifyContent: 'center',width: 80, height: 80, marginRight: -60, borderRadius: 50, backgroundColor: 'rgba(0, 0, 0, 0.45)'}}>
-                <FontAwesome name="arrow-right" size={24} color="white" style={{paddingLeft: 5}} />
+              <View
+                style={{
+                  justifyContent: 'center',
+                  width: 80,
+                  height: 80,
+                  marginRight: -60,
+                  borderRadius: 50,
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                }}
+              >
+                <FontAwesome
+                  name="arrow-right"
+                  size={24}
+                  color="white"
+                  style={{ paddingLeft: 5 }}
+                />
               </View>
             }
             prevButton={
-              <View style={{ justifyContent: 'center', alignItems:'flex-end',width: 80, height: 80, marginLeft: -60, borderRadius: 50, backgroundColor: 'rgba(0, 0, 0, 0.45)'}}>
-                <FontAwesome name="arrow-left" size={24} color="white" style={{paddingRight: 5}} />
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
+                  width: 80,
+                  height: 80,
+                  marginLeft: -60,
+                  borderRadius: 50,
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                }}
+              >
+                <FontAwesome
+                  name="arrow-left"
+                  size={24}
+                  color="white"
+                  style={{ paddingRight: 5 }}
+                />
               </View>
             }
             dot={
@@ -78,7 +108,7 @@ export default function HomeScreen() {
             loadMinimal={true}
           >
             <UserCreditInfoCard phoneNumber="0967162652" />
-            
+
             <UserCreditInfoCard phoneNumber="0904586221" />
 
             <UserCreditInfoCard phoneNumber="0955586221" />

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   V_creditScore: {
     width: 100 + '%',
     height: 320,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   T_creditScoreHeader: {
     fontSize: 22,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   ///////
   V_loanDetail: {
 
-    height: 480,
+    height: 380,
     width: 100 + '%',
   },
   T_loanDetailHeader: {

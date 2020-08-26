@@ -22,10 +22,18 @@ export default function LoginForm(props: unknown) {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput i18nPlaceholderContent={'signIn.usernameInput'} />
+        <TextInput
+          i18nPlaceholderContent={'signIn.usernameInput'}
+          keyboardType="number-pad"
+          style={styles.input}
+          clearButtonMode="always"
+        />
+        
         <TextInput
           i18nPlaceholderContent={'signIn.passwordInput'}
           secureTextEntry
+          style={styles.input}
+          clearButtonMode="always"
         />
         <TouchableOpacity>
           <Text style={styles.forgetPasswordTxt}>
@@ -98,4 +106,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
   },
+  input: {
+    paddingLeft: 20
+  }
 })
