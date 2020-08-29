@@ -18,7 +18,7 @@ import {
   normaliseH,
   scaleImageByScreenDimensions,
 } from '../../src/helpers/'
-import { GradientContainer, GradientText } from '../components/atomic'
+import { GradientContainer, GradientText, StyledText } from '../components/atomic'
 import { color } from 'react-native-reanimated'
 
 const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
@@ -102,25 +102,6 @@ const WelcomeHeader = () => {
 }
 
 const WelcomeFooter = () => {
-  const StyledText = ({
-    children,
-    style,
-  }: {
-    children: string
-    style?: TextStyle
-  }) => (
-    <Text
-      style={{
-        fontFamily: Fonts.PrimaryRegular,
-        fontSize: normalise(16),
-        color: Colours.White,
-        ...style,
-      }}
-    >
-      {children}
-    </Text>
-  )
-
   return (
     <View
       style={[

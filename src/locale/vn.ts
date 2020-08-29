@@ -22,6 +22,7 @@ const vn = {
   },
   signUp: {
     _nav: 'Sign Up',
+    backTxt: 'Quay lại',
     licenseCodeInput: 'Mã bản quyền',
     emailInput: 'Địa chỉ email',
     phoneInput: 'Số điện thoại',
