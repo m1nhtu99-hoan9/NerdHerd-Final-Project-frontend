@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Animated, Text } from 'react-native'
 
-import { BottomTabParamList } from '../../src/@types/navigation'
+import {
+  BottomTabParamList,
+  IndexScreenNavigationProp,
+  SearchScreenNavigationProp,
+  ProfileScreenNavigationProp,
+} from '../../src/@types/navigation'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -9,7 +15,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import {HomeStackNavigator} from '../navigation/index'
+import { HomeStackNavigator } from '../navigation/index'
+import { useNavigation } from '@react-navigation/native'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -24,6 +31,10 @@ const BottomTabNavigator = () => {
     'transparent',
     'transparent',
   ])
+
+  const indexNavigation = useNavigation<IndexScreenNavigationProp>()
+  const searchNavigation = useNavigation<SearchScreenNavigationProp>()
+  const profileNavigation = useNavigation<ProfileScreenNavigationProp>()
 
   const value = useState(new Animated.ValueXY({ x: 0, y: 0 }))[0]
 
@@ -51,6 +62,11 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Index"
         component={HomeScreen}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault()
+          },
+        })}
         options={{
           tabBarIcon: ({ color, size }) => (
             <View>
@@ -62,7 +78,9 @@ const BottomTabNavigator = () => {
                   end={{ x: 0, y: 1 }}
                 />
               </Animated.View>
-              <TouchableOpacity onPress={() => moveTab(0, 0)}>
+              <TouchableOpacity onPress={() => {
+                moveTab(0, 0)
+                indexNavigation.navigate("Index", {userId: ''})}}>
                 <AntDesign name="home" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -74,12 +92,17 @@ const BottomTabNavigator = () => {
         component={HomeStackNavigator}
         listeners={() => ({
           tabPress: (e) => {
-            setTabbarColor(['#017DDC', '#00BCA0'])
+            e.preventDefault()
           },
         })}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <TouchableOpacity onPress={() => moveTab(123, 0)}>
+            <TouchableOpacity
+              onPress={() => {
+                moveTab(123, 0)
+                searchNavigation.navigate('Search')
+              }}
+            >
               <AntDesign name="search1" size={24} color="black" />
             </TouchableOpacity>
           ),
@@ -88,9 +111,16 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Profile"
         component={InformationScreen}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault()
+          },
+        })}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <TouchableOpacity onPress={() => moveTab(248, 0)}>
+            <TouchableOpacity onPress={() => {
+              moveTab(248, 0)
+              profileNavigation.navigate("Profile", {userId: ''})}}>
               <FontAwesome5 name="user" size={24} color="black" />
             </TouchableOpacity>
           ),
