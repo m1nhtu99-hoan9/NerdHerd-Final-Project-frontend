@@ -3,7 +3,6 @@ import React, { useState} from 'react'
 import { StyleSheet, View, Text, TextInput, Dimensions, KeyboardAvoidingView, Platform, Picker } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 
-
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 

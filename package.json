@@ -41,6 +41,7 @@
     "expo-asset": "~8.1.7",
     "expo-device": "^2.2.1",
     "expo-font": "~8.2.1",
+    "expo-linear-gradient": "^8.2.1",
     "expo-status-bar": "^1.0.2",
     "formik": "^2.1.5",
     "i18n-js": "^3.7.1",
@@ -65,6 +66,7 @@
     "react-navigation": "^4.4.0",
     "react-navigation-shared-element": "^3.0.0",
     "react-navigation-stack": "^2.8.2",
+    "rn-faded-scrollview": "^1.0.8",
     "sync-storage": "^0.4.2",
     "xstate": "^4.11.0"
   },

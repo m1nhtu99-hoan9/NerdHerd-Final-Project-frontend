@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
+import RNFadedScrollView from 'rn-faded-scrollview'
+
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
@@ -32,8 +34,9 @@ export default function HomeScreen() {
             <Text style={styles.headerText}>{i18n.t('home.header')}</Text>
           </View>
           <View style={styles.content}>
+            <RNFadedScrollView>
             <UserCreditInfoCard phoneNumber="0967162652" />
-            
+            </RNFadedScrollView>
           </View>
         </View>
 

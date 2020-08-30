@@ -3552,7 +3552,7 @@ expo-keep-awake@~8.2.1:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.2.1.tgz#a7956ad0fa80eb6ac6a28bb7242408e87c493677"
   integrity sha512-m644YH7R/3n6dcn03aZcmHGTk4hDDIiEiImTKsSjbXIIRuW5tfdRqLCHnja5DwBT+4sxUn58wTpK6QnTfXichA==
 
-expo-linear-gradient@~8.2.1:
+expo-linear-gradient@^8.2.1, expo-linear-gradient@~8.2.1:
   version "8.2.1"
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-8.2.1.tgz#4b44649560e1dd694b6a540781c9214abe35b035"
   integrity sha512-GY0N4DDxuIeFALtcLUmHyy/yS3uPvd7R03Qmch+vZKEL7pH+h8qAeuYpSiUXEWRqsMZf2DSMBxOhVFjyg/X7DA==
@@ -7198,6 +7198,11 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+
+rn-faded-scrollview@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/rn-faded-scrollview/-/rn-faded-scrollview-1.0.8.tgz#c429198f7fcd2ec703f3bb12f9751682461d967e"
+  integrity sha512-v+Tx4ufG4re5/EaC6gbaqyeF1rgeEJ+4cuq9x6uLYqsunfj37/WxA9IUM0xj2PQps3AIQPNAgivz4wmw8hkFyw==
 
 rsvp@^4.8.4:
   version "4.8.5"
