@@ -11,6 +11,9 @@ import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
 import { GradientText, TextInput } from '../atomic/index'
 import { SignInNavContext } from '../../contexts'
 
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { Hideo } from 'react-native-textinput-effects'
+
 export default function LoginForm(props: unknown) {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
@@ -22,19 +25,45 @@ export default function LoginForm(props: unknown) {
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput
+        {/* <TextInput
           i18nPlaceholderContent={'signIn.usernameInput'}
           keyboardType="number-pad"
           style={styles.input}
           clearButtonMode="always"
-        />
-        
-        <TextInput
-          i18nPlaceholderContent={'signIn.passwordInput'}
+        /> */}
+
+        {/* <TextInput
+          i18nPlaceholderContent={'signIn.usernameInput'}
           secureTextEntry
           style={styles.input}
           clearButtonMode="always"
+        /> */}
+
+        <Hideo
+          style={styles.input}
+          placeholder={i18n.t('signIn.usernameInput')}
+          iconClass={FontAwesomeIcon}
+          iconName={'mobile-phone'}
+          iconColor={'grey'}
+          iconSize={30}
+          keyboardType={'number-pad'}
+          // this is used as backgroundColor of icon container view.
+          iconBackgroundColor={'white'}
+          inputStyle={{ color: '#464949' }}
         />
+
+        <Hideo
+          secureTextEntry
+          placeholder={i18n.t('signIn.passwordInput')}
+          iconClass={FontAwesomeIcon}
+          iconName={'lock'}
+          iconColor={'grey'}
+          iconSize={22}
+          // this is used as backgroundColor of icon container view.
+          iconBackgroundColor={'white'}
+          inputStyle={{ color: '#464949' }}
+        />
+
         <TouchableOpacity>
           <Text style={styles.forgetPasswordTxt}>
             {i18n.t('signIn.forgetPassword')}
@@ -107,6 +136,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   input: {
-    paddingLeft: 20
-  }
+    marginTop: 30,
+    marginBottom: -50
+  },
 })
