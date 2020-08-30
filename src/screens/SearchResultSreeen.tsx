@@ -4,7 +4,6 @@ import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
 
-
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 import GradientContainer from '../components/atomic/GradientContainer'
@@ -34,6 +33,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.content}>
             <UserCreditInfoCard phoneNumber="0967162652" />
+            
           </View>
         </View>
 
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 0.85,
+    overflow: 'hidden'
   },
 
   userInfoCardContainer: {
