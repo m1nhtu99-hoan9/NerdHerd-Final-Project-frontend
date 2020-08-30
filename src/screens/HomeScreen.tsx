@@ -125,6 +125,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 6.27,
+    elevation: 10,
   },
   header: {
     flex: 0.15,
@@ -155,14 +163,6 @@ const styles = StyleSheet.create({
     marginBottom: 22,
     backgroundColor: 'white',
     borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 6.27,
-    elevation: 10,
   },
   scrollViewStyle: {
     flex: 0.85,

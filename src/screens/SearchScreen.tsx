@@ -3,6 +3,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Dimensions, TextInput } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
+import { SearchScreenNavigationProps } from '../@types/navigation'
 
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
@@ -15,6 +16,8 @@ const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 
 export default function SeacrhScreen() {
+  const navigation = useNavigation<SearchScreenNavigationProps>()
+
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.content}>
@@ -26,7 +29,7 @@ export default function SeacrhScreen() {
 
           <TextInput style={styles.inputField} placeholder={i18n.t('search.otpCodeInput')} />
 
-          <TouchableOpacity style={styles.searchButton}>
+          <TouchableOpacity style={styles.searchButton} onPress={() => navigation.navigate("SearchResult", {phone: undefined})}>
             <Text>{i18n.t('search.submitBtn')}</Text>
           </TouchableOpacity>
         </View>

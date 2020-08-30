@@ -4,6 +4,7 @@ import { NavigationProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { RouteProp } from '@react-navigation/native'
+import { type } from 'ramda'
 
 /* @Reference:  
     https://github.com/mnhthng-thms/News-Feeder-ReactNative/blob/master/src/%40types/navigation.d.ts
@@ -12,6 +13,11 @@ export type StackParamList = {
   Login: { name: number }
   Home: { userId: string }
   ChangePassword: { userId: string }
+}
+
+export type HomeStackParamList = {
+  Search: undefined
+  SearchResult: {phone: number | undefined}
 }
 
 export type BottomTabParamList = {
@@ -31,6 +37,16 @@ export type HomeScreenNavigationProps = StackNavigationProp<
 export type ChangePasswordNavigationProps = StackNavigationProp<
   StackParamList,
   'ChangePassword'
+>
+
+export type SearchScreenNavigationProps = StackNavigationProp<
+  HomeStackParamList,
+  'Search'
+>
+
+export type SearchResultScreenNavigationProps = StackNavigationProp<
+  HomeStackParamList,
+  'SearchResult'
 >
 
 export type IndexScreenNavigationProp = BottomTabNavigationProp<

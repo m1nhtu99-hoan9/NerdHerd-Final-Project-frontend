@@ -9,6 +9,8 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import {HomeStackNavigator} from '../navigation/index'
+
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
 /**@reference
@@ -69,7 +71,7 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={HomeStackNavigator}
         listeners={() => ({
           tabPress: (e) => {
             setTabbarColor(['#017DDC', '#00BCA0'])
