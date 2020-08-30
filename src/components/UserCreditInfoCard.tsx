@@ -24,7 +24,7 @@ export default function UserCreditInfoCard (props: UserCreditInfoCardProps) {
   return (
     <>
       <View style={styles.content}>
-      <KeyboardAvoidingView keyboardVerticalOffset={110} style={{ flexDirection: 'column', justifyContent: 'center',}} behavior="position" enabled>
+      <KeyboardAvoidingView keyboardVerticalOffset={110} style={{ flexDirection: 'column', justifyContent: 'center',}} behavior="height" enabled>
 
         <ScrollView
         showsVerticalScrollIndicator={false}
