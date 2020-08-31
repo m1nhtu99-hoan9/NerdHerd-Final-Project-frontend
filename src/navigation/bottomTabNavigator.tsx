@@ -17,6 +17,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import HomeStackNavigator from '../navigation/homeStackNavigator'
 import { useNavigation } from '@react-navigation/native'
+import { normalise, normaliseV } from '../helpers'
+import { normaliseSizeVertical, SCREEN_WIDTH } from '../helpers/Constants'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -51,11 +53,15 @@ const BottomTabNavigator = () => {
       initialRouteName="Index"
       tabBarOptions={{
         showLabel: false,
+        tabStyle: {
+          marginBottom: normaliseSizeVertical(5)
+        },
         style: {
           backgroundColor: 'transparent',
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
+          height: 70,
         },
       }}
     >
@@ -78,9 +84,13 @@ const BottomTabNavigator = () => {
                   end={{ x: 0, y: 1 }}
                 />
               </Animated.View>
-              <TouchableOpacity onPress={() => {
-                moveTab(0, 0)
-                indexNavigation.navigate("Index", {userId: ''})}}>
+              <TouchableOpacity
+                style={styles.tabbarButton}
+                onPress={() => {
+                  moveTab(0, 0)
+                  indexNavigation.navigate('Index', { userId: '' })
+                }}
+              >
                 <AntDesign name="home" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -98,8 +108,9 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <TouchableOpacity
+              style={styles.tabbarButton}
               onPress={() => {
-                moveTab(123, 0)
+                moveTab( (SCREEN_WIDTH /10 * 3.32), 0)
                 searchNavigation.navigate('Search')
               }}
             >
@@ -118,9 +129,13 @@ const BottomTabNavigator = () => {
         })}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <TouchableOpacity onPress={() => {
-              moveTab(248, 0)
-              profileNavigation.navigate("Profile", {userId: ''})}}>
+            <TouchableOpacity
+              style={styles.tabbarButton}
+              onPress={() => {
+                moveTab((SCREEN_WIDTH / 10 * 6.6), 0)
+                profileNavigation.navigate('Profile', { userId: '' })
+              }}
+            >
               <FontAwesome5 name="user" size={24} color="black" />
             </TouchableOpacity>
           ),
@@ -132,15 +147,20 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBarIconContainer: {
-    width: 330 + '%',
-    height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 92 + '%',
+    height: 50,
     position: 'absolute',
-    bottom: -35,
+    bottom: normaliseV(-145),
     alignSelf: 'center',
-    borderRadius: 22,
+    borderRadius: 27,
     zIndex: -2,
+  },
+  tabbarButton: {
+    height: 55,
+    borderRadius: 22,
+    width: 95,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 
