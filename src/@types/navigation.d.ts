@@ -14,6 +14,18 @@ export type StackParamList = {
   ChangePassword: { userId: string }
 }
 
+export type HomeStackParamList = {
+  Search: undefined
+  SearchResult: { phone: number | undefined }
+}
+
+export type WelcomeStackParamList = {
+  Welcome: undefined
+  Login: undefined
+  SignUp: undefined
+  ForgotPassword: undefined
+}
+
 export type BottomTabParamList = {
   Index: { userId: string }
   Search: undefined
@@ -33,17 +45,44 @@ export type ChangePasswordNavigationProps = StackNavigationProp<
   'ChangePassword'
 >
 
+export type SearchScreenNavigationProps = StackNavigationProp<
+  HomeStackParamList,
+  'Search'
+>
+
+export type SearchResultScreenNavigationProps = StackNavigationProp<
+  HomeStackParamList,
+  'SearchResult'
+>
+
 export type IndexScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Index'
 >
 export type SearchScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Search'
 >
 export type ProfileScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Profile'
+>
+
+export type WelcomeScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'Welcome'
+>
+export type LoginScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'Login'
+>
+export type SignUpScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'SignUp'
+>
+export type ForgotPasswordScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'ForgotPassword'
 >
 
 export type ScreenNavigation = NavigationProp<ParamListBase>

@@ -15,31 +15,20 @@ import { SignInNavContext } from '../../contexts'
  *  - Form validation
  *  - Routing
 */
-export default function SignupForm() {
+export default function ForgotPasswordForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
-  const _signUpFormOnSubmitted = () => {
-    /* see CHANGELOG of 01/09/2020 */
-    nav.navigate('Welcome')
+  const _forgotPasswordFormOnSubmitted = () => {
+    /* implementation for submission handling */
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput i18nPlaceholderContent={'signUp.licenseCodeInput'} />
-        <TextInput i18nPlaceholderContent={'signUp.emailInput'} />
-        <TextInput i18nPlaceholderContent={'signUp.phoneInput'} />
-        <TextInput
-          i18nPlaceholderContent={'signUp.passwordInput'}
-          secureTextEntry
-        />
-        <TextInput
-          i18nPlaceholderContent={'signUp.rePasswordInput'}
-          secureTextEntry
-        />
+        <TextInput i18nPlaceholderContent={'forgotPassword.usernameInput'} />
       </View>
-      {/* Sign Up submit button */}
+      {/* Forgot Password submit button */}
       <View
         style={{
           flex: 4,
@@ -47,10 +36,10 @@ export default function SignupForm() {
       >
         <TouchableOpacity
           style={styles.btnContainer}
-          onPress={_signUpFormOnSubmitted}
+          onPress={_forgotPasswordFormOnSubmitted}
         >
           <GradientText style={styles.btnTxt}>
-            {i18n.t('signUp.submitBtn')}
+            {i18n.t('forgotPassword.submitBtn')}
           </GradientText>
         </TouchableOpacity>
       </View>
@@ -61,23 +50,23 @@ export default function SignupForm() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 12,
     flexDirection: 'column',
     width: 80 + '%',
     alignContent: 'center',
     justifyContent: 'center',
   },
   formContainer: {
-    flex: 10,
+    flex: 2,
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   btnContainer: {
-    backgroundColor: '#070B2B', // Anh Phat's colour :(
+    backgroundColor: Colours.White,
     marginVertical: 15 + '%',
     borderRadius: 6,
-    height: 35 + '%',
+    height: 48,
     justifyContent: 'center',
     width: 100 + '%',
     shadowOffset: {

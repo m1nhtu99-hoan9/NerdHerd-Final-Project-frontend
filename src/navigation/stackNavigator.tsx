@@ -20,7 +20,7 @@ const StackNavigator = () => {
       />
       <Stack.Screen
         name="Home"
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
         component={BottomTabNavigator}
         initialParams={{}}
       />

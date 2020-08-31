@@ -8,34 +8,83 @@ import * as f from 'formik'
 
 import { Colours, Fonts } from '../../styles/index'
 import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
-import { GradientText, TextInput } from '../atomic/index'
+import { GradientText, TextInput, StyledText } from '../atomic/index'
 import { SignInNavContext } from '../../contexts'
 
-export default function LoginForm(props: unknown) {
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { Hideo } from 'react-native-textinput-effects'
+
+export default function LoginForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
   const _signInFormOnSubmitted = () => {
+    /* login authentication pushed here */
     nav.navigate('Home')
+  }
+  const _forgotPassTxtOnClicked = () => {
+    nav.navigate('ForgotPassword')
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput i18nPlaceholderContent={'signIn.usernameInput'} />
-        <TextInput
-          i18nPlaceholderContent={'signIn.passwordInput'}
+        {/* <TextInput
+          i18nPlaceholderContent={'signIn.usernameInput'}
+          keyboardType="number-pad"
+          style={styles.input}
+          clearButtonMode="always"
+        /> */}
+
+        {/* <TextInput
+          i18nPlaceholderContent={'signIn.usernameInput'}
           secureTextEntry
+          style={styles.input}
+          clearButtonMode="always"
+        /> */}
+
+        {/* Phone Number input field */}
+        <Hideo
+          style={styles.input}
+          placeholder={i18n.t('signIn.usernameInput')}
+          iconClass={FontAwesomeIcon}
+          iconName={'mobile-phone'}
+          iconColor={'grey'}
+          iconSize={30}
+          keyboardType={'number-pad'}
+          // this is used as backgroundColor of icon container view.
+          iconBackgroundColor={'white'}
+          inputStyle={{ color: '#464949' }}
         />
-        <TouchableOpacity>
-          <Text style={styles.forgetPasswordTxt}>
-            {i18n.t('signIn.forgetPassword')}
-          </Text>
-        </TouchableOpacity>
+        {/* END Phone Number input field */}
+        {/* Password input field */}
+        <Hideo
+          secureTextEntry
+          placeholder={i18n.t('signIn.passwordInput')}
+          iconClass={FontAwesomeIcon}
+          iconName={'lock'}
+          iconColor={'grey'}
+          iconSize={22}
+          // this is used as backgroundColor of icon container view.
+          iconBackgroundColor={'white'}
+          inputStyle={{ color: '#464949' }}
+        />
+        {/* END Password input field */}
       </View>
+      <View style={{ flex: 2, justifyContent: 'center' }}>
+        {/* Link to `ForgotPassword` screen */}
+        <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
+          <StyledText fontWeight="bold" style={styles.forgetPasswordTxt}>
+            {i18n.t('signIn.forgetPassword')}
+          </StyledText>
+        </TouchableOpacity>
+        {/* END Link to `ForgotPassword` screen */}
+      </View>
+      {/* Sign In submit button */}
       <View
         style={{
-          flex: 6,
+          // !! DANGEROUR ZONE FOR EDITTING !!
+          flex: 9,
         }}
       >
         <TouchableOpacity
@@ -47,20 +96,21 @@ export default function LoginForm(props: unknown) {
           </GradientText>
         </TouchableOpacity>
       </View>
+      {/* END Sign In submit button */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 11, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     width: 80 + '%',
     alignContent: 'center',
     justifyContent: 'center',
   },
   formContainer: {
-    flex: 10,
+    flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -69,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.White,
     marginVertical: 15 + '%',
     borderRadius: 6,
-    height: 33 + '%',
+    height: 45,
     justifyContent: 'center',
     width: 98 + '%',
     shadowOffset: {
@@ -97,5 +147,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
     elevation: 3,
+  },
+  input: {
+    marginTop: 30,
+    marginBottom: -50,
   },
 })

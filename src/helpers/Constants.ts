@@ -13,6 +13,7 @@ import {
 import * as Device from 'expo-device'
 import { Image } from 'react-native'
 import { ImageAsset } from '../utils'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 const isIPad = () => Device.osName === 'iPadOS'
 const window = Dimensions.get('window')
@@ -33,14 +34,13 @@ const STATUS_BAR_HEIGHT: number = Platform.select({
 /* reference: https://stackoverflow.com/questions/33628677/react-native-responsive-font-size */
 
 // base on iPhoneX screen
-const BASE_WIDTH = 1125 / 1.5
-const BASE_HEIGHT = 2436 / 1.5
+const BASE_WIDTH = 1125
+const BASE_HEIGHT = 2436
 
 const normaliseSizeVertical = (n: number) => (SCREEN_WIDTH / BASE_WIDTH) * n
 const normaliseSizeHorizontal = (n: number) => (SCREEN_HEIGHT / BASE_HEIGHT) * n
 /**@description Calculate the scaled value adjusting to different display dimensions*/
-const normalise = (n: number, factor: number = 0.5) =>
-  n + (-normaliseSizeVertical(n) + n) * factor
+const normalise = (n: number) => RFValue(n, SCREEN_HEIGHT)
 
 /**@arguments
  *  - `source`: A number (opaque type returned by `require` function) or an React Native's `ImageSource`.

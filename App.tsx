@@ -3,7 +3,7 @@ import { AppLoading } from 'expo'
 import { StyleSheet } from 'react-native'
 import SyncStorage from 'sync-storage'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabNavigator, StackNavigator } from './src/navigation'
+import StackNavigator from './src/navigation/stackNavigator'
 import { useFonts } from 'expo-font'
 
 import { useImageAsset } from './src/utils/useImageAsset'
@@ -18,7 +18,11 @@ export default function App() {
   useLayoutEffect(() => {
     (async () => {
       const data = await SyncStorage.init()
-      console.log('SyncStorage is available', data)
+      // confirm this is first launch
+      if (typeof SyncStorage.get('isFirstLaunch') === 'undefined') {
+        SyncStorage.set('isFirstLaunch', true)
+      }
+      console.log('SyncStorage is available', SyncStorage.getAllKeys())
     })()
   }, [])
 

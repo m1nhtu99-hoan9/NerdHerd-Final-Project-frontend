@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
 import { StyleSheet, View, Animated, Text } from 'react-native'
 
-import { BottomTabParamList } from '../../src/@types/navigation'
+import {
+  BottomTabParamList,
+  IndexScreenNavigationProp,
+  SearchScreenNavigationProp,
+  ProfileScreenNavigationProp,
+} from '../../src/@types/navigation'
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesome5, AntDesign } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import HomeStackNavigator from '../navigation/homeStackNavigator'
+import { useNavigation } from '@react-navigation/native'
+import { normalise, normaliseV } from '../helpers'
+import { normaliseSizeVertical, SCREEN_WIDTH } from '../helpers/Constants'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
 
@@ -22,6 +33,10 @@ const BottomTabNavigator = () => {
     'transparent',
     'transparent',
   ])
+
+  const indexNavigation = useNavigation<IndexScreenNavigationProp>()
+  const searchNavigation = useNavigation<SearchScreenNavigationProp>()
+  const profileNavigation = useNavigation<ProfileScreenNavigationProp>()
 
   const value = useState(new Animated.ValueXY({ x: 0, y: 0 }))[0]
 
@@ -38,17 +53,26 @@ const BottomTabNavigator = () => {
       initialRouteName="Index"
       tabBarOptions={{
         showLabel: false,
+        tabStyle: {
+          marginBottom: normaliseSizeVertical(5)
+        },
         style: {
           backgroundColor: 'transparent',
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
+          height: 70,
         },
       }}
     >
       <Tab.Screen
         name="Index"
         component={HomeScreen}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault()
+          },
+        })}
         options={{
           tabBarIcon: ({ color, size }) => (
             <View>
@@ -60,7 +84,13 @@ const BottomTabNavigator = () => {
                   end={{ x: 0, y: 1 }}
                 />
               </Animated.View>
-              <TouchableOpacity onPress={() => moveTab(0, 0)}>
+              <TouchableOpacity
+                style={styles.tabbarButton}
+                onPress={() => {
+                  moveTab(0, 0)
+                  indexNavigation.navigate('Index', { userId: '' })
+                }}
+              >
                 <AntDesign name="home" size={24} color="black" />
               </TouchableOpacity>
             </View>
@@ -69,15 +99,21 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={SearchScreen}
+        component={HomeStackNavigator}
         listeners={() => ({
           tabPress: (e) => {
-            setTabbarColor(['#017DDC', '#00BCA0'])
+            e.preventDefault()
           },
         })}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <TouchableOpacity onPress={() => moveTab(123, 0)}>
+            <TouchableOpacity
+              style={styles.tabbarButton}
+              onPress={() => {
+                moveTab( (SCREEN_WIDTH /10 * 3.32), 0)
+                searchNavigation.navigate('Search')
+              }}
+            >
               <AntDesign name="search1" size={24} color="black" />
             </TouchableOpacity>
           ),
@@ -86,9 +122,20 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name="Profile"
         component={InformationScreen}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault()
+          },
+        })}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <TouchableOpacity onPress={() => moveTab(248, 0)}>
+            <TouchableOpacity
+              style={styles.tabbarButton}
+              onPress={() => {
+                moveTab((SCREEN_WIDTH / 10 * 6.6), 0)
+                profileNavigation.navigate('Profile', { userId: '' })
+              }}
+            >
               <FontAwesome5 name="user" size={24} color="black" />
             </TouchableOpacity>
           ),
@@ -100,15 +147,20 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBarIconContainer: {
-    width: 330 + '%',
-    height: 45,
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 92 + '%',
+    height: 50,
     position: 'absolute',
-    bottom: -35,
+    bottom: normaliseV(-145),
     alignSelf: 'center',
-    borderRadius: 22,
+    borderRadius: 27,
     zIndex: -2,
+  },
+  tabbarButton: {
+    height: 55,
+    borderRadius: 22,
+    width: 95,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 

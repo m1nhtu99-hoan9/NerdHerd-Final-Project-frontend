@@ -1,3 +1,4 @@
+import i18n from '../i18n'
 import React from 'react'
 import { StyleSheet, ScrollView, Text, TextInput, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -12,7 +13,7 @@ export default function ChangePasswordScreen () {
         secureTextEntry
         placeholderTextColor={'#BDBDBD'}
         maxLength={22}
-        placeholder={'Nhap mat khau cu'}
+        placeholder={i18n.t('changePassword.oldPassInput')}
         style={styles.input}
       />
 
@@ -20,7 +21,7 @@ export default function ChangePasswordScreen () {
         secureTextEntry
         placeholderTextColor={'#BDBDBD'}
         maxLength={22}
-        placeholder={'Nhap mat khau moi'}
+        placeholder={i18n.t('changePassword.newPassInput')}
         style={styles.input}
       />
 
@@ -28,14 +29,14 @@ export default function ChangePasswordScreen () {
         secureTextEntry
         placeholderTextColor={'#BDBDBD'}
         maxLength={22}
-        placeholder={'Xac nhan mat khau moi'}
+        placeholder={i18n.t('changePassword.confirmPassInput')}
         style={styles.input}
       />
 
       <Line></Line>
 
       <TouchableOpacity style={styles.confirmButton}>
-        <Text>Xac nhan</Text>
+        <Text>{i18n.t('changePassword.submitBtn')}</Text>
       </TouchableOpacity>
     </View>
   )

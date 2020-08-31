@@ -1,6 +1,8 @@
-import i18n from '../i18n'
 import React, { useEffect } from 'react'
+import i18n from '../i18n'
+import SyncStorage from 'sync-storage'
 import { StyleSheet, Image, TextStyle } from 'react-native'
+import * as BaseStyledText from 'react-native-styled-text'
 import { View, Content, Text } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -16,7 +18,7 @@ import {
   normaliseH,
   scaleImageByScreenDimensions,
 } from '../../src/helpers/'
-import { GradientContainer, GradientText } from '../components/atomic'
+import { GradientContainer, GradientText, StyledText } from '../components/atomic'
 import { color } from 'react-native-reanimated'
 
 const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
@@ -28,7 +30,8 @@ export default function WelcomeScreen() {
   }
 
   useEffect(() => {
-    //setTimeout(() => nav.navigate('Login'), 1000)
+    /* If this isn't first launch of user, immediate navigate to `Login` screen */
+    if (SyncStorage.get('isFirstLaunch')) nav.navigate('Login')
   }, [])
 
   return (
@@ -36,6 +39,7 @@ export default function WelcomeScreen() {
       <View style={styles.contentContainer}>
         <WelcomeHeader />
         {/* SignIn & SignUp buttons */}
+        {/* When these two buttons are clicked, update storage key `isFirstLaunch` to `false` */}
         <View style={styles.btnsContainer}>
           <View
             style={{
@@ -45,6 +49,7 @@ export default function WelcomeScreen() {
             <TouchableOpacity
               style={[styles.btnContainer, { backgroundColor: Colours.White }]}
               onPress={() => {
+                SyncStorage.set('isFirstLaunch', false)
                 nav.navigate('Login')
               }}
             >
@@ -61,6 +66,7 @@ export default function WelcomeScreen() {
             <TouchableOpacity
               style={styles.btnContainer}
               onPress={() => {
+                SyncStorage.set('isFirstLaunch', false)
                 nav.navigate('SignUp')
               }}
             >
@@ -96,25 +102,6 @@ const WelcomeHeader = () => {
 }
 
 const WelcomeFooter = () => {
-  const StyledText = ({
-    children,
-    style,
-  }: {
-    children: string
-    style?: TextStyle
-  }) => (
-    <Text
-      style={{
-        //fontFamily: Fonts.PrimaryRegular,
-        fontSize: normalise(14),
-        color: Colours.White,
-        ...style,
-      }}
-    >
-      {children}
-    </Text>
-  )
-
   return (
     <View
       style={[
@@ -161,7 +148,7 @@ const styles = StyleSheet.create({
   },
   subtxt: {
     fontFamily: Fonts.PrimaryBold,
-    fontSize: normalise(23),
+    fontSize: normalise(28),
     textAlign: 'center',
     color: 'white',
     paddingBottom: normalise(12),

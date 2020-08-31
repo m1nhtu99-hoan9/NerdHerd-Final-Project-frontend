@@ -22,6 +22,7 @@ const vn = {
   },
   signUp: {
     _nav: 'Sign Up',
+    backTxt: 'Quay lại',
     licenseCodeInput: 'Mã bản quyền',
     emailInput: 'Địa chỉ email',
     phoneInput: 'Số điện thoại',
@@ -29,6 +30,12 @@ const vn = {
     rePasswordInput: 'Xác nhận mật khẩu',
     submitBtn: 'Đăng Ký',
   },
+  forgotPassword: {
+    _nav: 'Forgot Password',
+    backTxt: 'Quay lại',
+    usernameInput: 'Số điện thoại',
+    submitBtn: 'Xác nhận'
+  }, 
   home: {
     _nav: 'Trang chủ',
     header: 'Lịch sử tra cứu',
