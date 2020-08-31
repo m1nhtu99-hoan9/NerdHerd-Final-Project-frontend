@@ -7221,10 +7221,11 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
-rn-faded-scrollview@^1.0.8:
+rn-faded-scrollview@mnhthng-thms/rn-faded-scrollview#master:
   version "1.0.8"
-  resolved "https://registry.yarnpkg.com/rn-faded-scrollview/-/rn-faded-scrollview-1.0.8.tgz#c429198f7fcd2ec703f3bb12f9751682461d967e"
-  integrity sha512-v+Tx4ufG4re5/EaC6gbaqyeF1rgeEJ+4cuq9x6uLYqsunfj37/WxA9IUM0xj2PQps3AIQPNAgivz4wmw8hkFyw==
+  resolved "https://codeload.github.com/mnhthng-thms/rn-faded-scrollview/tar.gz/2f50d0bc295cca7626b508d6cf1f413c2cac613f"
+  dependencies:
+    expo-linear-gradient "^8.2.1"
 
 rsvp@^4.8.4:
   version "4.8.5"
