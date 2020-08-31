@@ -36,6 +36,7 @@ export default function ForgotPasswordScreen() {
         scrollEnabled={false}
         contentContainerStyle={styles.contentContainer}
       >
+        {/* Logo */}
         <View style={styles.logoContainer}>
           <Image
             style={styles.logo}
@@ -44,7 +45,9 @@ export default function ForgotPasswordScreen() {
             }}
           />
         </View>
+        {/* END Logo */}
         <SignInNavContext.Provider value={nav}>
+          {/* Touchable 'Back' link */}
           <View style={styles.backContainer}>
             <TouchableOpacity
               style={{ flexDirection: 'row' }}
@@ -61,6 +64,7 @@ export default function ForgotPasswordScreen() {
               </StyledText>
             </TouchableOpacity>
           </View>
+          {/* Touchable 'Back' link */}
           <ForgotPasswordForm />
         </SignInNavContext.Provider>
       </Content>
