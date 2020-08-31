@@ -14,7 +14,7 @@ import { SignInNavContext } from '../../contexts'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { Hideo } from 'react-native-textinput-effects'
 
-export default function LoginForm(props: unknown) {
+export default function LoginForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
@@ -70,7 +70,8 @@ export default function LoginForm(props: unknown) {
           inputStyle={{ color: '#464949' }}
         />
         {/* END Password input field */}
-
+      </View>
+      <View style={{ flex: 2, justifyContent: 'center' }}>
         {/* Link to `ForgotPassword` screen */}
         <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
           <StyledText fontWeight="bold" style={styles.forgetPasswordTxt}>
@@ -82,7 +83,8 @@ export default function LoginForm(props: unknown) {
       {/* Sign In submit button */}
       <View
         style={{
-          flex: 6,
+          // !! DANGEROUR ZONE FOR EDITTING !!
+          flex: 9,
         }}
       >
         <TouchableOpacity
@@ -101,14 +103,14 @@ export default function LoginForm(props: unknown) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9,
+    flex: 11, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     width: 80 + '%',
     alignContent: 'center',
     justifyContent: 'center',
   },
   formContainer: {
-    flex: 10,
+    flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -117,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.White,
     marginVertical: 15 + '%',
     borderRadius: 6,
-    height: 33 + '%',
+    height: 45,
     justifyContent: 'center',
     width: 98 + '%',
     shadowOffset: {

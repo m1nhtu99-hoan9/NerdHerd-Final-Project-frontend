@@ -2,6 +2,7 @@ import i18n from '../i18n'
 import React, { useState } from 'react'
 import { StyleSheet, Text, Image } from 'react-native'
 import { Content, View } from 'native-base'
+import { AntDesign } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SharedElement } from 'react-native-shared-element'
 import { useNavigation } from '@react-navigation/native'
@@ -9,7 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import { WelcomeScreenNavigationProps } from '../@types/navigation'
 import LoginForm from '../components/forms/LoginForm'
-import { GradientContainer } from '../components/atomic/'
+import { GradientContainer, StyledText } from '../components/atomic/'
 import { Colours, Fonts } from '../styles'
 import { SignInNavContext } from '../contexts'
 import { normalise, scaleImageByScreenDimensions } from '../../src/helpers/'
@@ -27,6 +28,11 @@ export default function LoginScreen() {
   /* events triggered when `Sign Up` text link is clicked are defined here */
   const _signInTxtOnPressed = () => {
     nav.navigate('SignUp')
+  }
+
+  const _goBack = () => {
+    /* see CHANGELOG of 01/09/2020 */
+    nav.navigate('Welcome')
   }
 
   /**@TODO on the first run, shrink the logo font size
@@ -54,6 +60,22 @@ export default function LoginScreen() {
         {/* END Logo */}
         {/* Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
         <SignInNavContext.Provider value={nav}>
+          {/* Touchable 'Back' link */}
+          <View style={styles.backContainer}>
+            <TouchableOpacity
+              style={{ flexDirection: 'row' }}
+              onPress={_goBack}
+            >
+              <AntDesign
+                name="left"
+                size={normalise(16)}
+                color={Colours.White}
+                style={{ alignSelf: 'flex-start' }}
+              />
+              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
+            </TouchableOpacity>
+          </View>
+          {/* END Touchable 'Back' link */}
           <LoginForm />
         </SignInNavContext.Provider>
         {/* END Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
@@ -104,6 +126,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 15 + '%',
+  },
+  backContainer: {
+    flex: 0.5, // !! DANGEROUR ZONE FOR EDITTING !!
+    flexDirection: 'row',
+    width: 80 + '%',
+    paddingVertical: 16,
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
   },
   signUpTxt: {
     flex: 2,

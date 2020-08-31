@@ -21,12 +21,10 @@ const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
 
 export default function SignupScreen() {
   const nav = useNavigation()
+  
   const _goBack = () => {
-    nav.goBack()
-  }
-
-  const _signUpTxtOnPressed = () => {
-    nav.navigate('SignUp')
+    /* see CHANGELOG of 01/09/2020 */
+    nav.navigate('Welcome')
   }
 
   return (

@@ -19,8 +19,9 @@ export default function SignupForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
-  const _signInFormOnSubmitted = () => {
-    nav.navigate('Home')
+  const _signUpFormOnSubmitted = () => {
+    /* see CHANGELOG of 01/09/2020 */
+    nav.navigate('Welcome')
   }
 
   return (
@@ -46,7 +47,7 @@ export default function SignupForm() {
       >
         <TouchableOpacity
           style={styles.btnContainer}
-          onPress={_signInFormOnSubmitted}
+          onPress={_signUpFormOnSubmitted}
         >
           <GradientText style={styles.btnTxt}>
             {i18n.t('signUp.submitBtn')}
