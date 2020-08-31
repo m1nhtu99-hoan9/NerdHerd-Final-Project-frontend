@@ -4,11 +4,11 @@ NerdHerd's frontend source code for DevC Challenge's final project
 
 ## TODOs
 
-Check with JIRA 
+Sync with JIRA 
 
 ## CHANGELOG
 
-See [CHANGELOG](./CHANGLOG.md)
+See [CHANGELOG](https://github.com/mnhthng-thms/NerdHerd-Final-Project-frontend/blob/master/CHANGELOG.md)
 
 ## Q & A
 

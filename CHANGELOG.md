@@ -6,7 +6,7 @@ Fixes based on PM's feedback:
 
 - [x] `LoginScreen`: Form quên mật khẩu, và nút quay lại màn hình giới thiệu
 - [x] `LoginScreen`: Nút quay lại dẫn đến màn hình giới thiệu
-- [ ] `SignUpScreen`: Đăng ký xong sẽ process đến màn hình đăng nhập chứ không process đến màn hình chính luôn
+- [x] `SignUpScreen`: Đăng ký xong sẽ process đến màn hình đăng nhập chứ không process đến màn hình chính luôn
 
 Still in negotiation: 
 
