@@ -30,6 +30,12 @@ const vn = {
     rePasswordInput: 'Xác nhận mật khẩu',
     submitBtn: 'Đăng Ký',
   },
+  forgotPassword: {
+    _nav: 'Forgot Password',
+    backTxt: 'Quay lại',
+    usernameInput: 'Số điện thoại',
+    submitBtn: 'Xác nhận'
+  }, 
   home: {
     _nav: 'Trang chủ',
     header: 'Lịch sử tra cứu',

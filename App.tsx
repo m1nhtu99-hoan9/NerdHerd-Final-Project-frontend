@@ -3,7 +3,7 @@ import { AppLoading } from 'expo'
 import { StyleSheet } from 'react-native'
 import SyncStorage from 'sync-storage'
 import { NavigationContainer } from '@react-navigation/native'
-import { BottomTabNavigator, StackNavigator } from './src/navigation'
+import StackNavigator from './src/navigation/stackNavigator'
 import { useFonts } from 'expo-font'
 
 import { useImageAsset } from './src/utils/useImageAsset'

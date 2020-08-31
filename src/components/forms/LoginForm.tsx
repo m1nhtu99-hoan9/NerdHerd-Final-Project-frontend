@@ -8,7 +8,7 @@ import * as f from 'formik'
 
 import { Colours, Fonts } from '../../styles/index'
 import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
-import { GradientText, TextInput } from '../atomic/index'
+import { GradientText, TextInput, StyledText } from '../atomic/index'
 import { SignInNavContext } from '../../contexts'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -19,7 +19,11 @@ export default function LoginForm(props: unknown) {
   const nav = useContext(SignInNavContext)
 
   const _signInFormOnSubmitted = () => {
+    /* login authentication pushed here */
     nav.navigate('Home')
+  }
+  const _forgotPassTxtOnClicked = () => {
+    nav.navigate('ForgotPassword')
   }
 
   return (
@@ -39,6 +43,7 @@ export default function LoginForm(props: unknown) {
           clearButtonMode="always"
         /> */}
 
+        {/* Phone Number input field */}
         <Hideo
           style={styles.input}
           placeholder={i18n.t('signIn.usernameInput')}
@@ -51,7 +56,8 @@ export default function LoginForm(props: unknown) {
           iconBackgroundColor={'white'}
           inputStyle={{ color: '#464949' }}
         />
-
+        {/* END Phone Number input field */}
+        {/* Password input field */}
         <Hideo
           secureTextEntry
           placeholder={i18n.t('signIn.passwordInput')}
@@ -63,13 +69,17 @@ export default function LoginForm(props: unknown) {
           iconBackgroundColor={'white'}
           inputStyle={{ color: '#464949' }}
         />
+        {/* END Password input field */}
 
-        <TouchableOpacity>
-          <Text style={styles.forgetPasswordTxt}>
+        {/* Link to `ForgotPassword` screen */}
+        <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
+          <StyledText fontWeight="bold" style={styles.forgetPasswordTxt}>
             {i18n.t('signIn.forgetPassword')}
-          </Text>
+          </StyledText>
         </TouchableOpacity>
+        {/* END Link to `ForgotPassword` screen */}
       </View>
+      {/* Sign In submit button */}
       <View
         style={{
           flex: 6,
@@ -84,6 +94,7 @@ export default function LoginForm(props: unknown) {
           </GradientText>
         </TouchableOpacity>
       </View>
+      {/* END Sign In submit button */}
     </View>
   )
 }
@@ -137,6 +148,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 30,
-    marginBottom: -50
+    marginBottom: -50,
   },
 })

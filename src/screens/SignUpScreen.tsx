@@ -35,6 +35,7 @@ export default function SignupScreen() {
         scrollEnabled={false}
         contentContainerStyle={styles.contentContainer}
       >
+        {/* Logo */}
         <View style={styles.logoContainer}>
           <SharedElement id="logo">
             <Image
@@ -45,7 +46,9 @@ export default function SignupScreen() {
             />
           </SharedElement>
         </View>
+        {/* END Logo */}
         <SignInNavContext.Provider value={nav}>
+          {/* Touchable 'Back' link */}
           <View style={styles.backContainer}>
             <TouchableOpacity
               style={{ flexDirection: 'row' }}
@@ -60,6 +63,7 @@ export default function SignupScreen() {
               <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
             </TouchableOpacity>
           </View>
+          {/* END Touchable 'Back' link */}
           <SignupForm />
         </SignInNavContext.Provider>
       </Content>

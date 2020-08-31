@@ -1,13 +1,11 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { HomeStackParamList } from '../../src/@types/navigation'
-
-import { SearchScreen } from '../screens/index';
-import { SearchResultScreen } from '../screens/index';
+import { SearchScreen, SearchResultScreen } from '../screens/';
 
 const Stack = createStackNavigator<HomeStackParamList>()
 
-// LogIn <-> Home <-> ChangePassword
+/**Navigation stack between `Search` screen & `SearchResult` screen */
 const HomeStackNavigator = () => {
   return (
     <Stack.Navigator initialRouteName="Search">

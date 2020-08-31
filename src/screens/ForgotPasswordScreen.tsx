@@ -8,19 +8,20 @@ import { SharedElement } from 'react-native-shared-element'
 import { useNavigation } from '@react-navigation/native'
 // import Animated, { useCode } from 'react-native-reanimated'
 
-import SignupForm from '../components/forms/SignupForm'
-import { GradientContainer, StyledText } from '../components/atomic/'
+import { WelcomeScreenNavigationProps } from '../@types/navigation'
+import ForgotPasswordForm from '../components/forms/ForgotPasswordForm'
+import { GradientContainer, StyledText } from '../components/atomic'
 import { Colours, Fonts } from '../styles'
 import { SignInNavContext } from '../contexts'
-import { normalise, scaleImageByScreenDimensions } from '../../src/helpers/'
-import { getCachedImageUri, runReanimatedTiming as runTiming } from '../utils/'
+import { normalise, scaleImageByScreenDimensions } from '../helpers'
+import { getCachedImageUri, runReanimatedTiming as runTiming } from '../utils'
 
 // const { Value, set } = Animated
 
 const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
 
-export default function SignupScreen() {
-  const nav = useNavigation()
+export default function ForgotPasswordScreen() {
+  const nav = useNavigation<WelcomeScreenNavigationProps>()
   const _goBack = () => {
     nav.goBack()
   }
@@ -36,14 +37,12 @@ export default function SignupScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         <View style={styles.logoContainer}>
-          <SharedElement id="logo">
-            <Image
-              style={styles.logo}
-              source={{
-                uri: getCachedImageUri(require(LOGO_IMAGE_PATH)),
-              }}
-            />
-          </SharedElement>
+          <Image
+            style={styles.logo}
+            source={{
+              uri: getCachedImageUri(require(LOGO_IMAGE_PATH)),
+            }}
+          />
         </View>
         <SignInNavContext.Provider value={nav}>
           <View style={styles.backContainer}>
@@ -57,10 +56,12 @@ export default function SignupScreen() {
                 color={Colours.White}
                 style={{ alignSelf: 'flex-start' }}
               />
-              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
+              <StyledText fontWeight="bold">
+                {i18n.t('signUp.backTxt')}
+              </StyledText>
             </TouchableOpacity>
           </View>
-          <SignupForm />
+          <ForgotPasswordForm />
         </SignInNavContext.Provider>
       </Content>
     </GradientContainer>
@@ -73,6 +74,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logoContainer: {
+    // PLEASE DO NOT EDIT THIS 
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15 + '%',
   },
   signUpTxtContainer: {
     flex: 1,
@@ -92,12 +100,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     ...scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.8),
-  },
-  logoContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 15 + '%',
   },
   signUpTxt: {
     flex: 2,

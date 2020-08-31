@@ -3,15 +3,17 @@ import {
   createSharedElementStackNavigator,
   SharedElementCompatRoute,
 } from 'react-navigation-shared-element'
+
+import { WelcomeStackParamList } from '../../@types/navigation'
 import WelcomeScreen from '../../screens/Welcome'
 import LoginScreen from '../../screens/LoginScreen'
-import SignUpScreen from '../../screens/SignUpScreen'
+import { ForgotPasswordScreen, SignUpScreen } from '../../screens/'
 
 /* Reference:
 https://github.com/IjzerenHein/react-navigation-shared-element/blob/master/docs/Navigation5.md
 */
 
-const Stack = createSharedElementStackNavigator()
+const Stack = createSharedElementStackNavigator<WelcomeStackParamList>()
 
 export default function WelcomeStackNavigator() {
   return (
@@ -54,6 +56,22 @@ export default function WelcomeStackNavigator() {
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
+        sharedElements={(
+          route: SharedElementCompatRoute,
+          otherRoute: SharedElementCompatRoute,
+          showing: boolean,
+        ) => {
+          return [
+            {
+              id: 'logo',
+              animation: 'fade',
+            },
+          ]
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
         sharedElements={(
           route: SharedElementCompatRoute,
           otherRoute: SharedElementCompatRoute,

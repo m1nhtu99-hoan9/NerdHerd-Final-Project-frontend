@@ -7,6 +7,7 @@ import { SharedElement } from 'react-native-shared-element'
 import { useNavigation } from '@react-navigation/native'
 // import Animated, { useCode } from 'react-native-reanimated'
 
+import { WelcomeScreenNavigationProps } from '../@types/navigation'
 import LoginForm from '../components/forms/LoginForm'
 import { GradientContainer } from '../components/atomic/'
 import { Colours, Fonts } from '../styles'
@@ -21,13 +22,10 @@ const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
 export default function LoginScreen() {
   // const logoFontSize = useState(new Value(0))[0]
 
-  const nav = useNavigation()
-  const _transit = () => {
-    nav.goBack()
-  }
+  const nav = useNavigation<WelcomeScreenNavigationProps>()
 
   /* events triggered when `Sign Up` text link is clicked are defined here */
-  const _signUpTxtOnPressed = () => {
+  const _signInTxtOnPressed = () => {
     nav.navigate('SignUp')
   }
 
@@ -42,6 +40,7 @@ export default function LoginScreen() {
   return (
     <GradientContainer flexDirection={'column'}>
       <Content scrollEnabled={false} contentContainerStyle={styles.contentContainer}>
+        {/* Logo */}
         <View style={styles.logoContainer}>
           <SharedElement id="logo">
             <Image
@@ -52,22 +51,29 @@ export default function LoginScreen() {
             />
           </SharedElement>
         </View>
+        {/* END Logo */}
+        {/* Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
         <SignInNavContext.Provider value={nav}>
           <LoginForm />
         </SignInNavContext.Provider>
+        {/* END Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
         <View style={styles.signUpTxtContainer}>
+          {/* `Have no account yet?` text */}
           <View>
             <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
               {`${i18n.t('signIn.askSignUpTxt')}`}
             </Text>
           </View>
+          {/* END `Have no account yet?` text */}
+          {/* Link to `SignUp` screen */}
           <TouchableOpacity
-            style={styles.signUpTouchableTxt}
+            style={styles.signInTouchableTxt}
             activeOpacity={0.6}
-            onPress={_signUpTxtOnPressed}
+            onPress={_signInTxtOnPressed}
           >
             <Text style={styles.signUpTxt}>{i18n.t('signIn.signUpTxt')}</Text>
           </TouchableOpacity>
+          {/* END Link to `SignUp` screen */}
         </View>
       </Content>
     </GradientContainer>
@@ -93,7 +99,8 @@ const styles = StyleSheet.create({
     ...scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.8) 
   },
   logoContainer: {
-    flex: 1,
+    // PLEASE DO NOT EDIT THIS!
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 15 + '%',
@@ -108,7 +115,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'bottom',
   },
-  signUpTouchableTxt: {
+  signInTouchableTxt: {
     shadowOffset: {
       width: 1.25,
       height: 1.25,

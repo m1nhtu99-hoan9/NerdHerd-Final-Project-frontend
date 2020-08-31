@@ -15,7 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { HomeScreen, InformationScreen, SearchScreen } from '../screens/index'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { HomeStackNavigator } from '../navigation/index'
+import HomeStackNavigator from '../navigation/homeStackNavigator'
 import { useNavigation } from '@react-navigation/native'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()

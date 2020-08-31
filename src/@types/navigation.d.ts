@@ -4,7 +4,6 @@ import { NavigationProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { RouteProp } from '@react-navigation/native'
-import { type } from 'ramda'
 
 /* @Reference:  
     https://github.com/mnhthng-thms/News-Feeder-ReactNative/blob/master/src/%40types/navigation.d.ts
@@ -17,7 +16,14 @@ export type StackParamList = {
 
 export type HomeStackParamList = {
   Search: undefined
-  SearchResult: {phone: number | undefined}
+  SearchResult: { phone: number | undefined }
+}
+
+export type WelcomeStackParamList = {
+  Welcome: undefined
+  Login: undefined
+  SignUp: undefined
+  ForgotPassword: undefined
 }
 
 export type BottomTabParamList = {
@@ -50,16 +56,33 @@ export type SearchResultScreenNavigationProps = StackNavigationProp<
 >
 
 export type IndexScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Index'
 >
 export type SearchScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Search'
 >
 export type ProfileScreenNavigationProp = BottomTabNavigationProp<
-  BottomTabParamList, 
+  BottomTabParamList,
   'Profile'
+>
+
+export type WelcomeScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'Welcome'
+>
+export type LoginScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'Login'
+>
+export type SignUpScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'SignUp'
+>
+export type ForgotPasswordScreenNavigationProps = StackNavigationProp<
+  WelcomeStackParamList,
+  'ForgotPassword'
 >
 
 export type ScreenNavigation = NavigationProp<ParamListBase>

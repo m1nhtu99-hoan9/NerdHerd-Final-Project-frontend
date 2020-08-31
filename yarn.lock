@@ -6836,10 +6836,9 @@ react-native-tab-view@^2.15.0:
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.15.0.tgz#71b0c87f7cb2cde1d740f7130c17f213f2cbcaa0"
   integrity sha512-rCQPNp0N4t2IZHTVpdb/eddJ9kTLC8QlD/8Ce1+z2Fk3Evk0HPhuhTAW3mfa+thzRXkXYxxsS7QcIjJKs2Wu3w==
 
-react-native-textinput-effects@^0.6.1:
+react-native-textinput-effects@mnhthng-thms/react-native-textinput-effects#master:
   version "0.6.1"
-  resolved "https://registry.yarnpkg.com/react-native-textinput-effects/-/react-native-textinput-effects-0.6.1.tgz#d639acf50f60cc18242c3de4dd966cc06121d317"
-  integrity sha512-L4VCspAvxr6ug1OperVFnairQmSKes4dzRiHRzIOIJ7sJPDEpV3uSuvE5RiuNad6/SaPTLgfsjZSw4t7FWltRg==
+  resolved "https://codeload.github.com/mnhthng-thms/react-native-textinput-effects/tar.gz/b47fb2d5d51b0efcf3a801af3bc2d297fa09e55b"
   dependencies:
     "@types/react-native-vector-icons" "^6.4.5"
 
