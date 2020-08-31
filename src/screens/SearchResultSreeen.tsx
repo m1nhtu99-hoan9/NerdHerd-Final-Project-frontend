@@ -3,14 +3,16 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
-import RNFadedScrollView from 'rn-faded-scrollview'
+import { AntDesign } from '@expo/vector-icons'
 
+import RNFadedScrollView from 'rn-faded-scrollview'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 import GradientContainer from '../components/atomic/GradientContainer'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import StyledText from '../../src/components/atomic/StyledText'
 import { LoginScreen } from '.'
 
 //Import normalise
@@ -26,28 +28,38 @@ const SCREEN_WIDTH = Dimensions.get('window').width
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
 
+  const nav = useNavigation()
+  const _goBack = () => {
+    nav.goBack()
+  }
+
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
         <View style={styles.userInfoCardContainer}>
           <View style={styles.header}>
-            <Text style={styles.headerText}>{i18n.t('home.header')}</Text>
+            <TouchableOpacity
+              style={{ flexDirection: 'row' }}
+              onPress={_goBack}
+            >
+              <AntDesign
+                name="left"
+                size={normalise(16)}
+                color={'black'}
+                style={{ alignSelf: 'center' }}
+              />
+              <StyledText fontWeight='bold' style={styles.headerText}>
+                {i18n.t('signUp.backTxt')}
+              </StyledText>
+            </TouchableOpacity>
           </View>
           <View style={styles.content}>
             <RNFadedScrollView>
-            <UserCreditInfoCard phoneNumber="0967162652" />
+              <UserCreditInfoCard phoneNumber="0967162652" />
             </RNFadedScrollView>
           </View>
         </View>
-
-        <View style={styles.backButtonContainer}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-          <Text>Quay lai</Text>
-      </TouchableOpacity>
       </View>
-      </View>
-
-      
     </GradientContainer>
   )
 }
@@ -67,17 +79,18 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 0.15,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     backgroundColor: '#009591',
     borderTopEndRadius: 15,
+    paddingLeft: 10,
   },
   headerText: {
-    paddingBottom: normalise(20),
-    fontSize: normalise(28),
+    fontSize: normalise(20),
+    marginLeft: 8
   },
   content: {
-    flex: 0.85,
-    overflow: 'hidden'
+    flex: 1,
+    overflow: 'hidden',
   },
 
   userInfoCardContainer: {
@@ -100,15 +113,15 @@ const styles = StyleSheet.create({
   backButtonContainer: {
     flex: 0.1,
     alignItems: 'center',
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   backButton: {
-      width: 120,
-      height: 34,
-      borderWidth: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 20,
-      borderColor: 'white',
-  }
+    width: 120,
+    height: 34,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    borderColor: 'white',
+  },
 })
