@@ -11,6 +11,7 @@ import {
   Picker,
 } from 'react-native'
 import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
+import { Container } from 'native-base'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -36,7 +37,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   return (
     <>
       <RNFadedScrollView>
-        <View style={styles.content}>
+        <Container style={styles.content}>
           <KeyboardAvoidingView
             keyboardVerticalOffset={110}
             behavior="height"
@@ -133,7 +134,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               </View>
             </ScrollView>
           </KeyboardAvoidingView>
-        </View>
+        </Container>
       </RNFadedScrollView>
     </>
   )
