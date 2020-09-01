@@ -118,14 +118,15 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   logo: { 
-    ...scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.8) 
+    ...scaleImageByScreenDimensions(require(LOGO_IMAGE_PATH), 0.75) 
   },
   logoContainer: {
     // PLEASE DO NOT EDIT THIS!
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 15 + '%',
+    paddingTop: 17 + '%',
+    paddingBottom: '5%'
   },
   backContainer: {
     flex: 0.5, // !! DANGEROUR ZONE FOR EDITTING !!
