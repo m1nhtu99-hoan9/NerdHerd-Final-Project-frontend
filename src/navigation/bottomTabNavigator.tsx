@@ -152,12 +152,12 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBarIconContainer: {
-    width: normaliseH(310),
-    height: normaliseV(150),
+    width: normaliseH(280),
+    height: normaliseV(130),
     position: 'absolute',
-    bottom: normaliseV(-145),
+    bottom: normaliseV(-136),
     alignSelf: 'center',
-    borderRadius: normaliseH(90),
+    borderRadius:normaliseH(80),
     zIndex: -2,
   },
   tabbarButton: {
