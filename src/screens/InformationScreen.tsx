@@ -11,13 +11,16 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
 //Import normalise
 import { normalise } from '../../src/helpers/Constants'
+
+import StyledText from '../../src/components/atomic/StyledText'
+import { normaliseH, normaliseV } from '../helpers'
 
 type UserInfo = {
   fullName: string
@@ -43,22 +46,50 @@ export default function InformationScreen() {
 
   return (
     <GradientContainer flexDirection={'column'}>
+      <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>{i18n.t('aboutMe._nav')}</Text>
+          <StyledText fontWeight="bold" style={styles.headerText}>
+            {i18n.t('aboutMe._nav')}
+          </StyledText>
         </View>
+
         <View style={styles.information}>
-          <Text style={styles.name}>{userInfo.fullName}</Text>
-          <Text
-            style={styles.infoText}
-          >{`${i18n.t('aboutMe.bank')}: ${userInfo.bankName}`}</Text>
-          <Text
-            style={styles.infoText}
-          >{`${i18n.t('aboutMe.accStatus')}: ${userInfo.status}`}</Text>
-          <Text style={styles.infoText}>{`${i18n.t('aboutMe.email')}: ${userInfo.email}`}</Text>
-          <Text style={styles.infoText}>{`${i18n.t('aboutMe.phoneNum')}: ${userInfo.phone}`}</Text>
+
+          <View style={styles.nameContainer}>
+            <StyledText fontWeight="bold" style={styles.name}>
+              {userInfo.fullName}
+            </StyledText>
+            <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}}>
+              <StyledText fontWeight="bold" style={styles.addition}>
+              {i18n.t('aboutMe.additional')}
+              </StyledText>
+              <FontAwesome
+                  name="angle-right"
+                  size={17}
+                  color="#43B0FF"
+                  style={{ paddingLeft: 5 }}
+                />
+            </TouchableOpacity>
+          </View>
+
+          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+            'aboutMe.bank',
+          )}: ${userInfo.bankName}`}</StyledText>
+          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+            'aboutMe.accStatus',
+          )}: ${userInfo.status}`}</StyledText>
+          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+            'aboutMe.email',
+          )}: ${userInfo.email}`}</StyledText>
+          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+            'aboutMe.phoneNum',
+          )}: ${userInfo.phone}`}</StyledText>
         </View>
+        
+
         <Line></Line>
+
         <View style={styles.button}>
           <TouchableOpacity
             style={styles.logoutButton}
@@ -66,17 +97,19 @@ export default function InformationScreen() {
               navigation.replace('Login', { name: 0 })
             }}
           >
-            <Text>{i18n.t('aboutMe.signOutBtn')}</Text>
+            <StyledText fontWeight='bold' style={styles.buttonText}>{i18n.t('aboutMe.signOutBtn')}</StyledText>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.changePasswordButton}
             onPress={() => setModalVisible(true)}
           >
-            <Text>{i18n.t('aboutMe.changePassBtn')}</Text>
+            <StyledText fontWeight='bold' style={styles.buttonText}>{i18n.t('aboutMe.changePassBtn')}</StyledText>
           </TouchableOpacity>
         </View>
       </View>
+      </View>
+      
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.modalBackground}>
@@ -88,7 +121,9 @@ export default function InformationScreen() {
               >
                 <MaterialIcons name="arrow-back" size={32} color="black" />
               </TouchableOpacity>
-              <Text style={styles.modalContentHeaderText}>{i18n.t('aboutMe.changePassBtn')}</Text>
+              <Text style={styles.modalContentHeaderText}>
+                {i18n.t('aboutMe.changePassBtn')}
+              </Text>
             </View>
             <View style={styles.inputFieldContainer}>
               <TextInput
@@ -128,7 +163,7 @@ const styles = StyleSheet.create({
   line: {
     height: 3,
     borderRadius: 100,
-    width: 65 + '%', /////////////////////////////////////////
+    width: 75 + '%', /////////////////////////////////////////
     alignSelf: 'center',
     backgroundColor: '#e6e6e6',
     marginTop: normalise(20),
@@ -136,12 +171,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: 100 + '%', /////////////////////////////////////////
+    alignItems: 'center',
+    paddingTop: normaliseV(140)
   },
   content: {
     backgroundColor: 'white',
     width: (SCREEN_WIDTH / 10) * 9.4, ////////////////////////////////////
     height: (SCREEN_HEIGHT / 10) * 7, ////////////////////////////////////
-    alignSelf: 'center',
     borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: {
@@ -151,35 +187,49 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
+    paddingHorizontal: normaliseH(40),
   },
   header: {
-    flex: 0.1,
+    flex: 0.12,
     justifyContent: 'flex-end',
     paddingBottom: normalise(10),
   },
   headerText: {
-    fontSize: normalise(28),
-    fontWeight: '600',
+    fontSize: normalise(29),
+    paddingTop: normaliseV(40),
+    color: 'black',
   },
   information: {
-    flex: 0.4,
+    flex: 0.41,
     justifyContent: 'space-around',
+    marginTop: normaliseV(20),
   },
 
   button: {
-    flex: 0.5,
+    flex: 0.47,
   },
-
+  nameContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   name: {
-    fontSize: normalise(20),
+    fontSize: normalise(21),
+    color: 'black',
+  },
+  addition: {
+    fontSize: normalise(12.8),
+    color: '#43B0FF',
+    lineHeight: 20,
   },
   infoText: {
-    fontSize: normalise(17),
+    fontSize: normalise(14.4),
+    color: 'black',
   },
 
   logoutButton: {
     borderWidth: 2,
-    width: 80 + '%', //////////////////////////////////////
+    width: 100 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
@@ -189,12 +239,17 @@ const styles = StyleSheet.create({
   },
   changePasswordButton: {
     borderWidth: 2,
-    width: 80 + '%', //////////////////////////////////////
+    width: 100 + '%', //////////////////////////////////////
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 7,
+  },
+  buttonText: {
+    fontSize: normalise(18),
+    color: 'black',
+    lineHeight: 30
   },
 
   //Setting up modal

@@ -159,7 +159,6 @@ const BreadcrumbActiveDot = function () {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -168,17 +167,19 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
+    paddingTop: normaliseV(140),
   },
   header: {
     flex: 0.15,
-    justifyContent: 'flex-end',
     backgroundColor: Colours.White, // RIP Old Colour: '#009591',
     borderTopEndRadius: 15,
+    paddingHorizontal: normaliseH(40),
+
   },
   headerText: {
+    fontSize: normalise(29),
+    paddingTop: normaliseV(50),
     color: 'black',
-    paddingBottom: normalise(20),
-    fontSize: normalise(36),
   },
   content: {
     width: 400,

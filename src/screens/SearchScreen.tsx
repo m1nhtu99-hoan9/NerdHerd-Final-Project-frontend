@@ -10,6 +10,9 @@ import { HomeScreenNavigationProps } from '../@types/navigation'
 
 //Import normalise
 import { normalise } from '../../src/helpers/Constants'
+import { normaliseH, normaliseV } from '../helpers'
+
+import StyledText from '../../src/components/atomic/StyledText'
 
 //Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -20,44 +23,48 @@ export default function SeacrhScreen() {
 
   return (
     <GradientContainer flexDirection={'column'}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>{i18n.t('search._nav')}</Text>
-        </View>
-        <View style={styles.searchField}>
-          <TextInput style={styles.inputField} placeholder={i18n.t('search.phoneNumInput')} />
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <StyledText fontWeight='bold' style={styles.headerText}>{i18n.t('search._nav')}</StyledText>
+          </View>
+          <View style={styles.searchField}>
+            <TextInput
+              style={styles.inputField}
+              placeholder={i18n.t('search.phoneNumInput')}
+            />
 
-          <TextInput style={styles.inputField} placeholder={i18n.t('search.otpCodeInput')} />
+            <TextInput
+              style={styles.inputField}
+              placeholder={i18n.t('search.otpCodeInput')}
+            />
 
-          <TouchableOpacity style={styles.searchButton} onPress={() => navigation.navigate("SearchResult", {phone: undefined})}>
-            <Text>{i18n.t('search.submitBtn')}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() =>
+                navigation.navigate('SearchResult', { phone: undefined })
+              }
+            >
+              <StyledText fontWeight='bold' style={styles.searchText}>{i18n.t('search.submitBtn')}</StyledText>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </GradientContainer>
   )
 }
 
-const Line = () => {
-  return <View style={styles.line}></View>
-}
-
 const styles = StyleSheet.create({
-  line: {
-    height: 3,
-    borderRadius: 100,
-    width: 65 + '%',
-    alignSelf: 'center',
-    backgroundColor: '#e6e6e6',
-  },
+
   container: {
     flex: 1,
     width: 100 + '%',
+    paddingTop: normaliseV(140),
   },
   content: {
     backgroundColor: 'white',
-    width: (SCREEN_WIDTH / 10) * 9.4,
-    height: 60 + '%',
+    width: 94 + '%',
+    height: 50 + '%',
     alignSelf: 'center',
     borderRadius: 15,
     shadowColor: '#000',
@@ -68,40 +75,45 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
-    marginTop: 10 + '%',
+    paddingHorizontal: normaliseH(40),
   },
   header: {
-    flex: 0.15,
+    flex: 0.17,
     justifyContent: 'flex-end',
     paddingBottom: normalise(10),
   },
   searchField: {
-    flex: 0.85,
+    flex: 0.83,
   },
   headerText: {
-    fontSize: normalise(28),
-    fontWeight: '600',
+    fontSize: normalise(29),
+    paddingTop: normaliseV(40),
+    color: 'black',
   },
   inputField: {
     textAlign: 'center',
-    height: 50,
+    height: normalise(50),
     marginVertical: normalise(15),
-    width: 80 + '%',
+    width: 100 + '%',
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 30,
-    paddingHorizontal: 20,
+    paddingHorizontal: normaliseV(20),
     alignSelf: 'center',
   },
   searchButton: {
-    marginTop: normalise(20),
+    marginTop: normaliseV(70),
     borderWidth: 2,
-    width: 45 + '%',
-    height: 50,
+    width: 40 + '%',
+    height: normaliseV(140),
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
     borderRadius: 7,
   },
+  searchText: {
+    fontSize: normalise(13.6),
+    color: 'black'
+  }
 })

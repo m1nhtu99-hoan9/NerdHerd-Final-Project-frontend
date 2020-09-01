@@ -17,6 +17,8 @@ import { LoginScreen } from '.'
 
 //Import normalise
 import { normalise } from '../../src/helpers/Constants'
+import { normaliseH, normaliseV } from '../helpers'
+
 import Swiper from 'react-native-swiper'
 
 /* @TODOs: 
@@ -67,7 +69,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -76,6 +78,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
+    paddingTop: normaliseV(140),
+    alignItems: 'center'
   },
   header: {
     flex: 0.15,
@@ -96,8 +100,7 @@ const styles = StyleSheet.create({
   userInfoCardContainer: {
     overflow: 'hidden',
     width: (SCREEN_WIDTH / 10) * 9.4, //////////////////////////////////////////////
-    flex: 0.8, //////////////////////////////////////////////
-    alignSelf: 'center',
+    flex: 0.91, //////////////////////////////////////////////
     marginBottom: 22,
     backgroundColor: 'white',
     borderRadius: 15,
