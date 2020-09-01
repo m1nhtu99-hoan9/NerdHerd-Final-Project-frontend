@@ -17,7 +17,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import HomeStackNavigator from '../navigation/homeStackNavigator'
 import { useNavigation } from '@react-navigation/native'
-import { normalise, normaliseV } from '../helpers'
+import { normalise, normaliseV, normaliseH } from '../helpers'
 import { normaliseSizeVertical, SCREEN_WIDTH } from '../helpers/Constants'
 
 const Tab = createBottomTabNavigator<BottomTabParamList>()
@@ -28,11 +28,6 @@ const Tab = createBottomTabNavigator<BottomTabParamList>()
  */
 
 const BottomTabNavigator = () => {
-  const [tabbarColor, setTabbarColor] = useState(['transparent', 'transparent'])
-  const [tabbarColorDefault, setTabbarColorDefault] = useState([
-    'transparent',
-    'transparent',
-  ])
 
   const indexNavigation = useNavigation<IndexScreenNavigationProp>()
   const searchNavigation = useNavigation<SearchScreenNavigationProp>()
@@ -61,7 +56,7 @@ const BottomTabNavigator = () => {
           borderTopWidth: 0,
           position: 'absolute',
           elevation: 0,
-          height: 70,
+          height: normaliseV(210),
         },
       }}
     >
@@ -147,18 +142,18 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBarIconContainer: {
-    width: 92 + '%',
-    height: 50,
+    width: normaliseH(310),
+    height: normaliseV(150),
     position: 'absolute',
     bottom: normaliseV(-145),
     alignSelf: 'center',
-    borderRadius: 27,
+    borderRadius:normaliseH(90),
     zIndex: -2,
   },
   tabbarButton: {
-    height: 55,
+    height: normaliseV(145),
     borderRadius: 22,
-    width: 95,
+    width: normaliseH(350),
     alignItems: 'center',
     justifyContent: 'center',
   },

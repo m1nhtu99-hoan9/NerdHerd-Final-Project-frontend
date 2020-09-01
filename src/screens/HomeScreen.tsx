@@ -76,7 +76,7 @@ const NextButton = function () {
         width: 80,
         height: 55,
         marginRight: -60,
-        marginTop: normaliseV(-732),
+        marginTop: normaliseV(-706),
         borderRadius: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.45)',
       }}
@@ -100,7 +100,7 @@ const PrevButton = function () {
         width: 80,
         height: 55,
         marginLeft: -60,
-        marginTop: normaliseV(-732),
+        marginTop: normaliseV(-706),
         borderRadius: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.45)',
       }}
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   userInfoCardContainer: {
     overflow: 'hidden',
     width: (SCREEN_WIDTH / 10) * 9.4,
-    height: (SCREEN_HEIGHT / 10) * 8.5,
+    height: (SCREEN_HEIGHT / 10) * 8.2,
     alignSelf: 'center',
     marginBottom: 22,
     backgroundColor: 'white',
