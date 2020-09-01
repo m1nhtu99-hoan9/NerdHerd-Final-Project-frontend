@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.44,
     shadowRadius: 6.27,
     elevation: 10,
-    marginTop: 10 + '%',
   },
   header: {
     flex: 0.1,
