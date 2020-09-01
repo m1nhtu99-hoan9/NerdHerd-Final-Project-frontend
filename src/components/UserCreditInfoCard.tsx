@@ -14,6 +14,8 @@ import { TouchableOpacity, ScrollView } from 'react-native-gesture-handler'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
+import { normalise, normaliseV, normaliseH } from '../../src/helpers'
+import StyledText from '../../src/components/atomic/StyledText'
 
 import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
@@ -42,28 +44,41 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           >
             <ScrollView>
               <View style={styles.V_phoneNum}>
-                <Text style={styles.phoneNum}>{phoneNumber}</Text>
+                <StyledText fontWeight="regular" style={styles.phoneNum}>
+                  {phoneNumber}
+                </StyledText>
               </View>
 
               <Line></Line>
 
               <View style={styles.V_creditScore}>
-                <Text style={styles.T_creditScoreHeader}>
+                <StyledText
+                  fontWeight="bold"
+                  style={styles.T_creditScoreHeader}
+                >
                   {i18n.t('home.firstSubHeader')}
-                </Text>
+                </StyledText>
                 <RNSpeedometer value={creditScore} size={200} />
-                <Text style={styles.T_creditScoreNote}>
+                <StyledText
+                  fontWeight="regular"
+                  style={styles.T_creditScoreNote}
+                >
                   {i18n.t('home.suggestionContent.middle')}
-                </Text>
+                </StyledText>
               </View>
 
               <Line></Line>
 
               <View style={styles.V_loanDetail}>
-                <Text style={styles.T_loanDetailHeader}>
+                <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
                   {i18n.t('home.secondSubHeader')}
-                </Text>
-                <Text style={styles.T_loanDetailResult}>Content goes here</Text>
+                </StyledText>
+                <StyledText
+                  fontWeight="regular"
+                  style={styles.T_loanDetailResult}
+                >
+                  Content goes here
+                </StyledText>
 
                 <TextInput
                   style={styles.loanType}
@@ -76,9 +91,44 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 />
 
                 <TouchableOpacity style={styles.buttonNext}>
-                  <Text style={styles.buttonText}>
+                  <StyledText fontWeight="bold" style={styles.buttonText}>
                     {i18n.t('home.submitBtn')}
-                  </Text>
+                  </StyledText>
+                </TouchableOpacity>
+              </View>
+
+              <Line></Line>
+
+              <View style={styles.recommendContainer}>
+                <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
+                  {i18n.t('home.secondSubHeader')}
+                </StyledText>
+                <StyledText
+                  fontWeight="regular"
+                  style={styles.T_loanDetailResult}
+                >
+                  Content goes here
+                </StyledText>
+
+                <TextInput
+                  style={styles.loanType}
+                  placeholder={i18n.t('home.loanOptionsInput')}
+                />
+
+                <TextInput
+                  style={styles.loanAmount}
+                  placeholder={i18n.t('home.loanAmountInput')}
+                />
+
+                <TextInput
+                  style={styles.loanAmount}
+                  placeholder={i18n.t('home.loanAmountInput')}
+                />
+
+                <TouchableOpacity style={styles.buttonNext}>
+                  <StyledText fontWeight="bold" style={styles.buttonText}>
+                    {i18n.t('home.submitBtn')}
+                  </StyledText>
                 </TouchableOpacity>
               </View>
             </ScrollView>
@@ -109,8 +159,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   content: {
-    borderRightWidth: 2,
-    borderLeftWidth: 2,
     width: (SCREEN_WIDTH / 10) * 9.4,
     flexDirection: 'column',
     alignContent: 'center',
@@ -124,19 +172,23 @@ const styles = StyleSheet.create({
     width: 100 + '%',
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: normaliseH(40),
   },
   phoneNum: {
-    fontSize: 30,
+    fontSize: normalise(30),
+    color: 'black',
   },
   ////////
   V_creditScore: {
     width: 100 + '%',
     height: 320,
     justifyContent: 'space-between',
+    paddingHorizontal: normaliseH(40),
   },
   T_creditScoreHeader: {
-    fontSize: 22,
-    padding: 10,
+    fontSize: normalise(20),
+    paddingTop: normaliseV(30),
+    color: 'black',
   },
   Graph_CreditScore: {
     alignSelf: 'center',
@@ -144,6 +196,8 @@ const styles = StyleSheet.create({
   T_creditScoreNote: {
     paddingTop: 60,
     paddingBottom: 15,
+    fontSize: normalise(13),
+    color: 'black',
   },
 
   // V_creditScoreHistory: {
@@ -167,12 +221,18 @@ const styles = StyleSheet.create({
   V_loanDetail: {
     height: 380,
     width: 100 + '%',
+    paddingHorizontal: normaliseH(40),
   },
   T_loanDetailHeader: {
-    padding: 10,
-    fontSize: 22,
+    fontSize: normalise(20),
+    paddingTop: normaliseV(30),
+    color: 'black',
   },
-  T_loanDetailResult: {},
+  T_loanDetailResult: {
+    fontSize: normalise(13),
+    paddingTop: normaliseV(30),
+    color: 'black',
+  },
 
   loanType: {
     height: 50,
@@ -210,8 +270,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
+    color: 'black',
     alignSelf: 'center',
-    fontSize: 15,
+    fontSize: normalise(14),
+    lineHeight: 20,
     fontWeight: '600',
+  },
+  ////////
+  recommendContainer: {
+    height: 500,
+    width: 100 + '%',
+    paddingHorizontal: normaliseH(40),
   },
 })

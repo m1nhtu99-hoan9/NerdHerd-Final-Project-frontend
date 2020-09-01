@@ -57,6 +57,7 @@ const en = {
   },
   aboutMe: {
     _nav: 'About Me',
+    additional: 'Additional',
     bank: 'Bank',
     accId: 'Account ID',
     accStatus: 'Account Status',
