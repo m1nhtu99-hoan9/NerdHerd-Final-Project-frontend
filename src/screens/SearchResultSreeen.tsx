@@ -1,36 +1,24 @@
 import i18n from '../i18n'
 import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-
-import RNFadedScrollView from 'rn-faded-scrollview'
+import Swiper from 'react-native-swiper'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-import GradientContainer from '../components/atomic/GradientContainer'
+import RNFadedScrollView from 'rn-faded-scrollview'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import StyledText from '../../src/components/atomic/StyledText'
-import { LoginScreen } from '.'
+import { GradientContainer, StyledText } from '../../src/components/atomic/'
 
-//Import normalise
-import { normalise } from '../../src/helpers/Constants'
-import { normaliseH, normaliseV } from '../helpers'
+import { normaliseH, normaliseV, normalise, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
 
-import Swiper from 'react-native-swiper'
 
-/* @TODOs: 
-    - [x] (01/08/2020): Just mock-up
-*/
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
+export default function SearchResultScreen() {
+  const nav = useNavigation<HomeScreenNavigationProps>()
 
-export default function HomeScreen() {
-  const navigation = useNavigation<HomeScreenNavigationProps>()
-
-  const nav = useNavigation()
   const _goBack = () => {
     nav.goBack()
   }

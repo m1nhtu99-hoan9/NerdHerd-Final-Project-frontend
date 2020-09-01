@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { HomeStackParamList } from '../../src/@types/navigation'
-import { SearchScreen, SearchResultScreen } from '../screens/';
+import { SearchScreen, SearchResultScreen } from '../screens/'
 
 const Stack = createStackNavigator<HomeStackParamList>()
 

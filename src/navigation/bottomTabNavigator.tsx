@@ -41,7 +41,7 @@ const BottomTabNavigator = () => {
     }).start()
   }
 
-  /* Centralise OnPress behaviour factory */
+  /* Centralised OnPress behaviour factory */
   const _tabOnPressed = (name: 'Profile' | 'Index' | 'Search'): (() => void) => {
     switch (name) {
       case 'Profile':
