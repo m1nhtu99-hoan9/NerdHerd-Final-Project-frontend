@@ -24,7 +24,7 @@ export default function SignupScreen() {
   
   const _goBack = () => {
     /* see CHANGELOG of 01/09/2020 */
-    nav.navigate('Welcome')
+    nav.goBack()
   }
 
   return (

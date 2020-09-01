@@ -55,7 +55,7 @@ export default function HomeScreen() {
           </View>
           <View style={styles.content}>
             <RNFadedScrollView>
-              <UserCreditInfoCard phoneNumber="0967162652" />
+              <UserCreditInfoCard phoneNumber="0967162652" creditScore={45}/>
             </RNFadedScrollView>
           </View>
         </View>

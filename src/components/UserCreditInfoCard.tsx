@@ -19,7 +19,8 @@ import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
 
 interface UserCreditInfoCardProps {
-  phoneNumber: string
+  phoneNumber: string,
+  creditScore: number
 }
 
 const Line = function () {
@@ -27,8 +28,7 @@ const Line = function () {
 }
 
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
-  const { phoneNumber } = props
-  const [creditScore, setCreditScore] = useState(58)
+  const { phoneNumber, creditScore } = props
   const [selectedValue, setSelectedValue] = useState('abc')
 
   return (

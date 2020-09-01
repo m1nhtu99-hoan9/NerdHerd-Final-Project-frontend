@@ -54,11 +54,11 @@ export default function HomeScreen() {
             {/**@TODOs 
              * implment a history stack of `UserCreditInfoCard` here 
              * all of them are stored in SyncStorage */}
-            <UserCreditInfoCard phoneNumber="0967162652" />
+            <UserCreditInfoCard phoneNumber="0967162652" creditScore={58}/>
 
-            <UserCreditInfoCard phoneNumber="0904586221" />
+            <UserCreditInfoCard phoneNumber="0904586221" creditScore={75}/>
 
-            <UserCreditInfoCard phoneNumber="0955586221" />
+            <UserCreditInfoCard phoneNumber="0955586221" creditScore={12}/>
           </Swiper>
         </View>
 

@@ -7,7 +7,12 @@
  */ 
 declare module 'sync-storage'
 
-/** a hack declaring empty type module to avoid type warning regarding 
- * `rn-faded-scrollview`, which actually use Flow instead of TypeScript
+/** a hack declaring empty type module to avoid type warning 
+ *  regarding `rn-faded-scrollview`
  */ 
 declare module 'rn-faded-scrollview'
+
+/** a hack declaring empty type module to avoid type warning 
+ *  regarding `react-native-speedometer`
+ */ 
+declare module 'react-native-speedometer'
