@@ -91,6 +91,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   inputField: {
+    fontFamily: "ComfortaaRegular",                 // Test
+    lineHeight: 17,
     textAlign: 'center',
     height: normalise(50),
     marginVertical: normalise(15),

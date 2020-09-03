@@ -36,11 +36,10 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
 
   return (
     <>
-      <RNFadedScrollView>
         <Container style={styles.content}>
           <KeyboardAvoidingView
-            keyboardVerticalOffset={110}
-            behavior="height"
+            keyboardVerticalOffset={120}
+            behavior="padding"
             enabled
           >
             <ScrollView>
@@ -135,7 +134,6 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
             </ScrollView>
           </KeyboardAvoidingView>
         </Container>
-      </RNFadedScrollView>
     </>
   )
 }
@@ -160,6 +158,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
   },
   content: {
+    flex: 1,
     width: (SCREEN_WIDTH / 10) * 9.4,
     flexDirection: 'column',
     alignContent: 'center',

@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
+import { LinearGradient } from 'expo-linear-gradient'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 import { Colours, Fonts } from '../styles/'
@@ -62,7 +63,14 @@ export default function HomeScreen() {
           </Swiper>
         </View>
 
-        <View style={styles.footer}></View>
+        <View style={styles.footer}>
+        <LinearGradient
+    style={{position:'absolute', bottom: normaliseV(72), borderRadius: 15, width: 94 + '%', alignSelf: 'center', height:30}}
+    colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
+    pointerEvents={'none'}
+  />
+        </View>
+        
       </View>
     </GradientContainer>
   )

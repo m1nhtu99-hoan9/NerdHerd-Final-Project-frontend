@@ -44,9 +44,9 @@ export default function SearchResultScreen() {
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
-            <RNFadedScrollView>
+            {/* <RNFadedScrollView> */}
               <UserCreditInfoCard phoneNumber="0967162652" creditScore={45}/>
-            </RNFadedScrollView>
+            {/* </RNFadedScrollView> */}
           </View>
         </View>
       </View>
