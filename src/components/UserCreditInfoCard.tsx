@@ -20,9 +20,10 @@ import StyledText from '../../src/components/atomic/StyledText'
 
 import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
+import RNPickerSelect from 'react-native-picker-select'
 
 interface UserCreditInfoCardProps {
-  phoneNumber: string,
+  phoneNumber: string
   creditScore: number
 }
 
@@ -34,106 +35,146 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const { phoneNumber, creditScore } = props
   const [selectedValue, setSelectedValue] = useState('abc')
 
+  const placeholder = {
+    label: i18n.t('home.loanOptionsInput'),
+    value: null,
+    color: '#9EA0A4',
+  }
+
   return (
     <>
-        <Container style={styles.content}>
-          <KeyboardAvoidingView
-            keyboardVerticalOffset={120}
-            behavior="padding"
-            enabled
-          >
-            <ScrollView>
-              <View style={styles.V_phoneNum}>
-                <StyledText fontWeight="regular" style={styles.phoneNum}>
-                  {phoneNumber}
-                </StyledText>
+      <Container style={styles.content}>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={120}
+          behavior="padding"
+          enabled
+        >
+          <ScrollView>
+            <View style={styles.V_phoneNum}>
+              <StyledText fontWeight="regular" style={styles.phoneNum}>
+                {phoneNumber}
+              </StyledText>
+            </View>
+
+            <Line></Line>
+
+            <View style={styles.V_creditScore}>
+              <StyledText fontWeight="bold" style={styles.T_creditScoreHeader}>
+                {i18n.t('home.firstSubHeader')}
+              </StyledText>
+              <RNSpeedometer value={creditScore} size={200} />
+              <StyledText fontWeight="regular" style={styles.T_creditScoreNote}>
+                {i18n.t('home.suggestionContent.middle')}
+              </StyledText>
+            </View>
+
+            <Line></Line>
+
+            <View style={styles.V_loanDetail}>
+              <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
+                {i18n.t('home.secondSubHeader')}
+              </StyledText>
+              <StyledText
+                fontWeight="regular"
+                style={styles.T_loanDetailResult}
+              >
+                Content goes here
+              </StyledText>
+
+              <View style={styles.loanType}>
+                <RNPickerSelect
+                  placeholder={placeholder}
+                  onValueChange={(value) => console.log(value)}
+                  items={[
+                    { label: 'Football', value: 'football' },
+                    { label: 'Baseball', value: 'baseball' },
+                    { label: 'Hockey', value: 'hockey' },
+                  ]}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    zIndex: -1,
+                    borderLeftWidth: 1,
+                    width: 50,
+                    height: 48,
+                    borderTopRightRadius: 35,
+                    borderBottomRightRadius: 35,
+                    backgroundColor: 'pink',
+                  }}
+                ></View>
               </View>
 
-              <Line></Line>
+              <TextInput
+                style={styles.loanAmount}
+                placeholder={i18n.t('home.loanAmountInput')}
+              />
 
-              <View style={styles.V_creditScore}>
-                <StyledText
-                  fontWeight="bold"
-                  style={styles.T_creditScoreHeader}
-                >
-                  {i18n.t('home.firstSubHeader')}
+              <TouchableOpacity style={styles.buttonNext}>
+                <StyledText fontWeight="bold" style={styles.buttonText}>
+                  {i18n.t('home.submitBtn')}
                 </StyledText>
-                <RNSpeedometer value={creditScore} size={200} />
-                <StyledText
-                  fontWeight="regular"
-                  style={styles.T_creditScoreNote}
-                >
-                  {i18n.t('home.suggestionContent.middle')}
-                </StyledText>
+              </TouchableOpacity>
+            </View>
+
+            <Line></Line>
+
+            <View style={styles.recommendContainer}>
+              <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
+                {i18n.t('home.secondSubHeader')}
+              </StyledText>
+              <StyledText
+                fontWeight="regular"
+                style={styles.T_loanDetailResult}
+              >
+                Content goes here
+              </StyledText>
+
+              <View style={styles.loanType}>
+                <RNPickerSelect
+                  placeholder={placeholder}
+                  onValueChange={(value) => console.log(value)}
+                  items={[
+                    { label: 'Football', value: 'football' },
+                    { label: 'Baseball', value: 'baseball' },
+                    { label: 'Hockey', value: 'hockey' },
+                  ]}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    zIndex: -1,
+                    borderLeftWidth: 1,
+                    width: 50,
+                    height: 48,
+                    borderTopRightRadius: 35,
+                    borderBottomRightRadius: 35,
+                    backgroundColor: 'pink',
+                  }}
+                ></View>
               </View>
 
-              <Line></Line>
+              <TextInput
+                style={styles.loanAmount}
+                placeholder={i18n.t('home.loanAmountInput')}
+              />
 
-              <View style={styles.V_loanDetail}>
-                <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
-                  {i18n.t('home.secondSubHeader')}
+              <TextInput
+                style={styles.loanAmount}
+                placeholder={i18n.t('home.loanAmountInput')}
+              />
+
+              <TouchableOpacity style={styles.buttonNext}>
+                <StyledText fontWeight="bold" style={styles.buttonText}>
+                  {i18n.t('home.submitBtn')}
                 </StyledText>
-                <StyledText
-                  fontWeight="regular"
-                  style={styles.T_loanDetailResult}
-                >
-                  Content goes here
-                </StyledText>
-
-                <TextInput
-                  style={styles.loanType}
-                  placeholder={i18n.t('home.loanOptionsInput')}
-                />
-
-                <TextInput
-                  style={styles.loanAmount}
-                  placeholder={i18n.t('home.loanAmountInput')}
-                />
-
-                <TouchableOpacity style={styles.buttonNext}>
-                  <StyledText fontWeight="bold" style={styles.buttonText}>
-                    {i18n.t('home.submitBtn')}
-                  </StyledText>
-                </TouchableOpacity>
-              </View>
-
-              <Line></Line>
-
-              <View style={styles.recommendContainer}>
-                <StyledText fontWeight="bold" style={styles.T_loanDetailHeader}>
-                  {i18n.t('home.secondSubHeader')}
-                </StyledText>
-                <StyledText
-                  fontWeight="regular"
-                  style={styles.T_loanDetailResult}
-                >
-                  Content goes here
-                </StyledText>
-
-                <TextInput
-                  style={styles.loanType}
-                  placeholder={i18n.t('home.loanOptionsInput')}
-                />
-
-                <TextInput
-                  style={styles.loanAmount}
-                  placeholder={i18n.t('home.loanAmountInput')}
-                />
-
-                <TextInput
-                  style={styles.loanAmount}
-                  placeholder={i18n.t('home.loanAmountInput')}
-                />
-
-                <TouchableOpacity style={styles.buttonNext}>
-                  <StyledText fontWeight="bold" style={styles.buttonText}>
-                    {i18n.t('home.submitBtn')}
-                  </StyledText>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </Container>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </Container>
     </>
   )
 }
@@ -239,12 +280,16 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     width: 80 + '%',
     backgroundColor: 'transparent',
+    justifyContent: "space-between",
+    flexDirection: 'row',
+    overflow: 'hidden',
     borderWidth: 2,
     borderColor: 'black',
     borderRadius: 30,
-    paddingHorizontal: 20,
-    fontSize: 17,
+    paddingLeft: 20,
     alignSelf: 'center',
+    alignItems:'center',
+
   },
   loanAmount: {
     height: 50,
