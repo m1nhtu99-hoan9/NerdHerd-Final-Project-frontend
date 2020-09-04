@@ -72,13 +72,13 @@ const styles = StyleSheet.create({
   header: {
     flex: 0.15,
     justifyContent: 'center',
-    backgroundColor: '#009591',
     borderTopEndRadius: 15,
     paddingLeft: 10,
   },
   headerText: {
     fontSize: normalise(20),
-    marginLeft: 8
+    marginLeft: 8,
+    color: 'black'
   },
   content: {
     flex: 1,

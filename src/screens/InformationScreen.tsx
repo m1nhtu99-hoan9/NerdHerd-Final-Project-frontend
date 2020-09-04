@@ -112,7 +112,7 @@ export default function InformationScreen() {
       
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <View style={styles.modalBackground}>
+        <View style={styles.modalBackground} onTouchEnd={() => setModalVisible(false)}>
           <View style={styles.modalContent}>
             <View style={styles.modalContentHeader}>
               <TouchableOpacity
@@ -121,9 +121,9 @@ export default function InformationScreen() {
               >
                 <MaterialIcons name="arrow-back" size={32} color="black" />
               </TouchableOpacity>
-              <Text style={styles.modalContentHeaderText}>
+              <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>
                 {i18n.t('aboutMe.changePassBtn')}
-              </Text>
+              </StyledText>
             </View>
             <View style={styles.inputFieldContainer}>
               <TextInput
@@ -258,10 +258,12 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH, //////////////////////////////////////
     height: SCREEN_HEIGHT, //////////////////////////////////////
     backgroundColor: 'rgba(0, 0, 0, 0.57)',
+    zIndex: -1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
+    zIndex: 2,
     position: 'absolute',
     width: (SCREEN_WIDTH / 10) * 8.5, ////////////////////////////
     height: (SCREEN_HEIGHT / 10) * 6.5, ////////////////////////////
@@ -282,7 +284,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: normalise(10),
     flexDirection: 'row',
-    backgroundColor: '#009591',
     borderTopEndRadius: 20,
   },
   inputFieldContainer: {
@@ -314,8 +315,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
   },
   modalContentHeaderText: {
-    fontSize: normalise(28),
+    fontSize: normalise(24),
     fontWeight: '600',
+    color: 'black',
+    lineHeight: 50
   },
   backButton: {
     padding: 15,
