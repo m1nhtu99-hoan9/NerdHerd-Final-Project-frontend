@@ -112,7 +112,7 @@ export default function InformationScreen() {
       
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
-        <View style={styles.modalBackground} onTouchEnd={() => setModalVisible(false)}>
+        <View style={styles.modalBackground}>
           <View style={styles.modalContent}>
             <View style={styles.modalContentHeader}>
               <TouchableOpacity
@@ -258,12 +258,10 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH, //////////////////////////////////////
     height: SCREEN_HEIGHT, //////////////////////////////////////
     backgroundColor: 'rgba(0, 0, 0, 0.57)',
-    zIndex: -1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
-    zIndex: 2,
     position: 'absolute',
     width: (SCREEN_WIDTH / 10) * 8.5, ////////////////////////////
     height: (SCREEN_HEIGHT / 10) * 6.5, ////////////////////////////
