@@ -6784,10 +6784,9 @@ react-native-paper@^4.0.1:
     color "^3.1.2"
     react-native-safe-area-view "^0.14.9"
 
-react-native-picker-select@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.0.tgz#75d9e1fd982ea3cdbb9f47f327f33ce8007a5ef3"
-  integrity sha512-iX9Me6vzyQUcWiOwXXZoYBNzvMo5LJRMq3bu41aZd9I32XKd30x/apk0p8+2xtJKPa/eAdkQUQrULSCmxxuA/g==
+react-native-picker-select@duc1807/react-native-picker-select:
+  version "8.0.0-beta.2"
+  resolved "https://codeload.github.com/duc1807/react-native-picker-select/tar.gz/474069dbd0416e22962ef3c9991e7008c003fdff"
   dependencies:
     "@react-native-community/picker" "^1.6.0"
     lodash.isequal "^4.5.0"

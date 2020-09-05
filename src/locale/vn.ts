@@ -57,7 +57,11 @@ const vn = {
     ],
     loanOptionsInput: 'Chọn kiểu vay',
     loanAmountInput: 'Số tiền vay',
-    submitBtn: 'Tiếp tục >',
+    recommendContent: {
+      header: 'Đề xuất khoản vay',
+      submitBtn: 'Xác nhận'
+    },
+    submitBtn: 'Tiếp tục',
   },
   search: {
     _nav: 'Tra cứu',

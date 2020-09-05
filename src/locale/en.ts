@@ -40,7 +40,11 @@ const en = {
     consultationContent: [],
     loanOptionsInput: 'Pick your loan type',
     loanAmountInput: 'Your loan amount',
-    submitBtn: 'Process >',
+    recommendContent: {
+      header: 'Loan proposal',
+      submitBtn: 'Confirm'
+    },
+    submitBtn: 'Process',
   },
   search: {
     _nav: 'Search',
