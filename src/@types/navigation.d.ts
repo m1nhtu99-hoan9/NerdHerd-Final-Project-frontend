@@ -17,6 +17,7 @@ export type StackParamList = {
 export type HomeStackParamList = {
   Search: undefined
   SearchResult: { phone: number | undefined }
+  Approval: { phone: number | undefined }                           //////Test
 }
 
 export type WelcomeStackParamList = {
@@ -53,6 +54,11 @@ export type SearchScreenNavigationProps = StackNavigationProp<
 export type SearchResultScreenNavigationProps = StackNavigationProp<
   HomeStackParamList,
   'SearchResult'
+>
+
+export type ApprovalScreenNavigationProps = StackNavigationProp<    /////////Test
+  HomeStackParamList,
+  'Approval'
 >
 
 export type IndexScreenNavigationProp = BottomTabNavigationProp<
