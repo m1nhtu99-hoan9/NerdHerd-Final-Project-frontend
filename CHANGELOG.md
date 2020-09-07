@@ -7,6 +7,7 @@
 - [x] Hoàn thiện giao diện
 - [x] Hoàn thiện transition animation
 
+
 ## Log: 01/09/2020 (End of Week 9)
 
 Fixes based on PM's feedback:
