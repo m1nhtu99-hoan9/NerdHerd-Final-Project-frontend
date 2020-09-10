@@ -47,6 +47,9 @@ export default function LoginForm() {
     <View style={styles.container}>
       <Form style={styles.formContainer}>
         {/* <TextInput
+                  onChangeText={(text) => {
+            setValue('phoneNum', text)
+          }}
           i18nPlaceholderContent={'signIn.usernameInput'}
           keyboardType="number-pad"
           style={styles.input}
@@ -64,7 +67,7 @@ export default function LoginForm() {
         <Hideo
           onChangeText={(text) => {
             setValue('phoneNum', text)
-          }}
+          }}       
           style={styles.input}
           placeholder={i18n.t('signIn.usernameInput')}
           iconClass={FontAwesomeIcon}
