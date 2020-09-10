@@ -1,8 +1,9 @@
 import i18n from '../../i18n'
+import { useForm } from 'react-hook-form'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet } from 'react-native'
-import { Input, Item, Text, View } from 'native-base'
+import { StyleSheet, Alert } from 'react-native'
+import { Input, Item, Text, View, Form } from 'native-base'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
@@ -14,21 +15,37 @@ import { SignInNavContext } from '../../contexts'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { Hideo } from 'react-native-textinput-effects'
 
+interface FormInput {
+  data: 
+  { 
+    password: string, 
+    phoneNum: number,
+  }
+}
+
 export default function LoginForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
-  const _signInFormOnSubmitted = () => {
+  const _signInFormOnSubmitted = (data: Object) => {
     /* login authentication pushed here */
-    nav.navigate('Home')
+    //nav.navigate('Home')
+    console.log(data)
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
   }
 
+  const { register, handleSubmit, setValue } = useForm<FormInput>()
+
+  useEffect(() => {
+    register('phoneNum')
+    register('password')
+  }, [register])
+
   return (
     <View style={styles.container}>
-      <View style={styles.formContainer}>
+      <Form style={styles.formContainer}>
         {/* <TextInput
           i18nPlaceholderContent={'signIn.usernameInput'}
           keyboardType="number-pad"
@@ -45,6 +62,9 @@ export default function LoginForm() {
 
         {/* Phone Number input field */}
         <Hideo
+          onChangeText={(text) => {
+            setValue('phoneNum', text)
+          }}
           style={styles.input}
           placeholder={i18n.t('signIn.usernameInput')}
           iconClass={FontAwesomeIcon}
@@ -59,6 +79,9 @@ export default function LoginForm() {
         {/* END Phone Number input field */}
         {/* Password input field */}
         <Hideo
+          onChangeText={(text) => {
+            setValue('password', text)
+          }}
           secureTextEntry
           placeholder={i18n.t('signIn.passwordInput')}
           iconClass={FontAwesomeIcon}
@@ -70,7 +93,7 @@ export default function LoginForm() {
           inputStyle={{ color: '#464949' }}
         />
         {/* END Password input field */}
-      </View>
+      </Form>
       <View style={{ flex: 2, justifyContent: 'center' }}>
         {/* Link to `ForgotPassword` screen */}
         <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
@@ -89,7 +112,7 @@ export default function LoginForm() {
       >
         <TouchableOpacity
           style={styles.btnContainer}
-          onPress={_signInFormOnSubmitted}
+          onPress={handleSubmit(_signInFormOnSubmitted)}
         >
           <GradientText style={styles.btnTxt}>
             {i18n.t('signIn.submitBtn')}
