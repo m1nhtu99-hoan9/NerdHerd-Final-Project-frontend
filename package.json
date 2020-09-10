@@ -59,7 +59,7 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-shared-element": "0.7.0",
-    "react-native-speedometer": "^1.0.3",
+    "react-native-speedometer": "duc1807/react-native-speedometer",
     "react-native-styled-text": "^1.0.1",
     "react-native-swiper": "^1.6.0",
     "react-native-tab-view": "^2.15.0",

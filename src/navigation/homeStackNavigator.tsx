@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 import { HomeStackParamList } from '../../src/@types/navigation'
-import { SearchScreen, SearchResultScreen, ApprovalScreen } from '../screens/'
+import { SearchScreen, SearchResultScreen } from '../screens/'
 
 const Stack = createStackNavigator<HomeStackParamList>()
 
@@ -18,12 +18,6 @@ const HomeStackNavigator = () => {
         name="SearchResult"
         options={{ headerShown: false }}
         component={SearchResultScreen}
-        initialParams={{phone: undefined}}
-      />
-      <Stack.Screen
-        name="Approval"
-        options={{ headerShown: false }}
-        component={ApprovalScreen}
         initialParams={{phone: undefined}}
       />
     </Stack.Navigator>

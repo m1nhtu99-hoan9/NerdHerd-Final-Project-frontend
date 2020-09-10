@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Picker,
   TouchableOpacity,
+  Image,
 } from 'react-native'
 import {
   ScrollView,
@@ -71,7 +72,22 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               <StyledText fontWeight="bold" style={styles.creditScoreHeader}>
                 {i18n.t('home.firstSubHeader')}
               </StyledText>
-              <RNSpeedometer value={creditScore} size={200} />
+              
+              
+              <RNSpeedometer value={creditScore} size={normalise(220)} />
+              <View style={styles.speedometerContainer}>
+              <View
+                style={{
+                }}
+              >
+                <Image
+                  source={require('../images/bar.png')}
+                  style={{ width: 220, height: 185, position: 'relative' }}
+                ></Image>
+                <StyledText style={styles.score} fontWeight='bold'>{String(creditScore)}</StyledText>
+              </View>
+              </View>
+
               <StyledText fontWeight="regular" style={styles.creditScoreNote}>
                 {i18n.t('home.suggestionContent.middle')}
               </StyledText>
@@ -297,4 +313,16 @@ const styles = StyleSheet.create({
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
+  speedometerContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: normaliseV(140)
+  },
+  score: {
+    color: 'black',
+    fontSize: normalise(28),
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: normalise(111)
+  }
 })
