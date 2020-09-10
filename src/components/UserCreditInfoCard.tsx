@@ -38,6 +38,7 @@ const Line = function () {
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const { phoneNumber, creditScore } = props
   const [selectedValue, setSelectedValue] = useState('abc')
+  const [editable, setEditable] = useState(true)
 
   const placeholderLoanType = {
     label: i18n.t('home.loanOptionsInput'),
@@ -117,6 +118,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               </View>
 
               <TextInput
+                editable={editable}
                 style={styles.loanAmount}
                 placeholder={i18n.t('home.loanAmountInput')}
               />
@@ -168,6 +170,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               </View>
 
               <TextInput
+                editable={editable}
                 style={styles.loanAmount}
                 placeholder={i18n.t('home.loanAmountInput')}
               />
