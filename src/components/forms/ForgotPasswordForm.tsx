@@ -1,4 +1,5 @@
 import i18n from '../../i18n'
+import { useForm, Controller } from 'react-hook-form'
 
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet } from 'react-native'
@@ -10,11 +11,17 @@ import { Colours, Fonts } from '../../styles/index'
 import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
 import { GradientText, TextInput } from '../atomic/index'
 import { SignInNavContext } from '../../contexts'
+import { normaliseH } from '../../helpers'
 
-/**@TODOs 
+/**@TODOs
  *  - Form validation
  *  - Routing
-*/
+ */
+
+interface FormInput {
+  phoneNum: number
+}
+
 export default function ForgotPasswordForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
@@ -23,10 +30,45 @@ export default function ForgotPasswordForm() {
     /* implementation for submission handling */
   }
 
+  const { control, handleSubmit, errors } = useForm<FormInput>()
+
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        <TextInput i18nPlaceholderContent={'forgotPassword.usernameInput'} />
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <TextInput
+            // validation code-block
+            onChangeText={(value) => onChange(value)}
+            onBlur={onBlur}
+            value={value}
+            maxLength={11}
+            // End of validation code-block
+              keyboardType="number-pad"
+              style={styles.forgotInput}
+              i18nPlaceholderContent={'forgotPassword.usernameInput'}
+            />
+          )}
+          name="phoneNum"
+          rules={{ required: true, minLength: 10, pattern: /^0[0-9]+$/ }}
+          defaultValue=""
+        />
+        {errors.phoneNum?.type === 'required' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.required')}
+          </Text>
+        )}
+        {errors.phoneNum?.type === 'minLength' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )}
+        {errors.phoneNum?.type === 'pattern' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )}
       </View>
       {/* Forgot Password submit button */}
       <View
@@ -36,7 +78,7 @@ export default function ForgotPasswordForm() {
       >
         <TouchableOpacity
           style={styles.btnContainer}
-          onPress={_forgotPasswordFormOnSubmitted}
+          onPress={handleSubmit(_forgotPasswordFormOnSubmitted)}
         >
           <GradientText style={styles.btnTxt}>
             {i18n.t('forgotPassword.submitBtn')}
@@ -81,5 +123,12 @@ const styles = StyleSheet.create({
     fontSize: normalise(18),
     fontFamily: Fonts.PrimaryBold,
     textAlign: 'center',
+  },
+  forgotInput: {
+    paddingLeft: normaliseH(80),
+  },
+  validationText: {
+    fontSize: normalise(14),
+    color: 'rgba(242, 38, 19, 1)'
   },
 })

@@ -228,5 +228,6 @@ const styles = StyleSheet.create({
   },
   validationText: {
     fontSize: normalise(14),
+    color: 'rgba(242, 38, 19, 1)'
   },
 })
