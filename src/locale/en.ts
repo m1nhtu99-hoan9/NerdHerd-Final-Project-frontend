@@ -14,7 +14,7 @@ const en = {
     signUpTxt: 'Sign Up',
     validation: {
       required: 'This field is required',
-      invalid: 'Invalid phone number (10 digits)',
+      invalid: 'Invalid phone number',
       wrongPassword: 'Wrong password'
 
     }
@@ -57,6 +57,9 @@ const en = {
     phoneNumInput: 'Phone Number',
     otpCodeInput: 'OTP Code',
     submitBtn: 'Process >',
+    validation: {
+      otpIncorrect: "The OTP code is invalid"
+    }
   },
   changePassword: {
     _nav: 'Change Password',

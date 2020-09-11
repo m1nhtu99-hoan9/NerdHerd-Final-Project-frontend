@@ -46,6 +46,24 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
     color: '#9EA0A4',
   }
 
+  const loanTypeContent = [
+    { label: 'Vay tiêu dùng', value: 'consumption' },
+    { label: 'Vay trả góp', value: 'installment' },
+    { label: 'Vay mua ô tô', value: 'buyCar' },
+  ]
+
+  const loanDurationContent = [
+    { label: '1 Tháng', value: 'consumption' },
+    { label: '2 Tháng', value: 'installment' },
+    { label: '3 Tháng', value: 'buyCar' },
+    { label: '6 Tháng', value: 'buyCar' },
+    { label: '9 Tháng', value: 'buyCar' },
+    { label: '12 Tháng', value: 'buyCar' },
+    { label: '16 Tháng', value: 'buyCar' },
+    { label: '24 Tháng', value: 'buyCar' },
+    { label: '36 Tháng', value: 'buyCar' },
+  ]
+
   const placeholderDuration = {
     label: 'Chọn thời hạn vay',
     value: null,
@@ -108,11 +126,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <RNPickerSelect
                   placeholder={placeholderLoanType}
                   onValueChange={(value: string) => console.log(value)}
-                  items={[
-                    { label: 'Football', value: 'football' },
-                    { label: 'Baseball', value: 'baseball' },
-                    { label: 'Hockey', value: 'hockey' },
-                  ]}
+                  items={loanTypeContent}
                 />
                 <TextInputIcon></TextInputIcon>
               </View>
@@ -147,11 +161,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <RNPickerSelect
                   placeholder={placeholderLoanType}
                   onValueChange={(value: undefined) => console.log(value)}
-                  items={[
-                    { label: 'Football', value: 'football' },
-                    { label: 'Baseball', value: 'baseball' },
-                    { label: 'Hockey', value: 'hockey' },
-                  ]}
+                  items={loanTypeContent}
                 />
                 <TextInputIcon></TextInputIcon>
               </View>
@@ -160,11 +170,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <RNPickerSelect
                   placeholder={placeholderDuration}
                   onValueChange={(value: string) => console.log(value)}
-                  items={[
-                    { label: 'Football', value: 'football' },
-                    { label: 'Baseball', value: 'baseball' },
-                    { label: 'Hockey', value: 'hockey' },
-                  ]}
+                  items={loanDurationContent}
                 />
                 <TextInputIcon></TextInputIcon>
               </View>

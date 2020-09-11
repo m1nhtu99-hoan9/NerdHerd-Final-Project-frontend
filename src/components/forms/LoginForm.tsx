@@ -14,7 +14,7 @@ import { SignInNavContext } from '../../contexts'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { Hideo } from 'react-native-textinput-effects'
-import { normaliseV } from '../../helpers'
+import { normaliseV, PATTERN } from '../../helpers'
 
 interface FormInput {
   password: string
@@ -66,7 +66,7 @@ export default function LoginForm() {
               onChangeText={(value) => onChange(value)}
               onBlur={onBlur}
               value={value}
-              maxLength={11}
+              maxLength={10}
               // End of validation code-block
               style={styles.input}
               placeholder={i18n.t('signIn.usernameInput')}
@@ -81,7 +81,7 @@ export default function LoginForm() {
             />
           )}
           name="phoneNum"
-          rules={{ required: true, minLength: 10, pattern: /^0[0-9]+$/ }}
+          rules={{ required: true, minLength: 10, pattern: PATTERN }}
           defaultValue=""
         />
         {errors.phoneNum?.type === 'required' && (

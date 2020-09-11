@@ -8,7 +8,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as f from 'formik'
 
 import { Colours, Fonts } from '../../styles/index'
-import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
+import { normalise, normaliseSizeVertical, PATTERN } from '../../helpers/Constants'
 import { GradientText, TextInput } from '../atomic/index'
 import { SignInNavContext } from '../../contexts'
 import { normaliseH } from '../../helpers'
@@ -51,7 +51,7 @@ export default function ForgotPasswordForm() {
             />
           )}
           name="phoneNum"
-          rules={{ required: true, minLength: 10, pattern: /^0[0-9]+$/ }}
+          rules={{ required: true, minLength: 10, pattern: PATTERN }}
           defaultValue=""
         />
         {errors.phoneNum?.type === 'required' && (

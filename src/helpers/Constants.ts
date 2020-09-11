@@ -15,6 +15,8 @@ import { Image } from 'react-native'
 import { ImageAsset } from '../utils'
 import { RFValue } from 'react-native-responsive-fontsize'
 
+const PATTERN = /(086|098|097|096|032|033|034|035|036|037|038|039|089|090|093|070|076|077|078|079|088|091|094|081|082|083|084|085|092|056|058|099|059)+([0-9]{7})/
+
 const isIPad = () => Device.osName === 'iPadOS'
 const window = Dimensions.get('window')
 
@@ -74,6 +76,7 @@ const scaleImageByScreenDimensions = (
 }
 
 export {
+  PATTERN,
   SCREEN_WIDTH,
   SCREEN_HEIGHT,
   STATUS_BAR_HEIGHT,

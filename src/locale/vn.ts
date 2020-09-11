@@ -21,7 +21,7 @@ const vn = {
     signUpTxt: 'Đăng Ký',
     validation: {
       required: 'Trường này không được để trống',
-      invalid: 'Số điện thoại không hợp lệ (10 số)',
+      invalid: 'Số điện thoại không hợp lệ',
       wrongPassword: 'Mật khẩu không chính xác'
     }
   },
@@ -74,6 +74,9 @@ const vn = {
     // New input
     otpCodeInput: 'Mã OTP',
     submitBtn: 'Tra cứu >',
+    validation: {
+      otpIncorrect: "Mã OTP không hợp lệ"
+    }
   },
   changePassword: {
     _nav: 'Đổi mật khẩu',
