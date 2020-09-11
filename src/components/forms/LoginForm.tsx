@@ -1,5 +1,5 @@
 import i18n from '../../i18n'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 
 import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, Alert } from 'react-native'
@@ -14,13 +14,11 @@ import { SignInNavContext } from '../../contexts'
 
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { Hideo } from 'react-native-textinput-effects'
+import { normaliseV } from '../../helpers'
 
 interface FormInput {
-  data: 
-  { 
-    password: string, 
-    phoneNum: number,
-  }
+  password: string
+  phoneNum: number
 }
 
 export default function LoginForm() {
@@ -29,23 +27,18 @@ export default function LoginForm() {
 
   const _signInFormOnSubmitted = (data: Object) => {
     /* login authentication pushed here */
-    //nav.navigate('Home')
+    nav.navigate('Home')
     console.log(data)
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
   }
 
-  const { register, handleSubmit, setValue } = useForm<FormInput>()
-
-  useEffect(() => {
-    register('phoneNum')
-    register('password')
-  }, [register])
+  const { control, handleSubmit, errors } = useForm<FormInput>()
 
   return (
     <View style={styles.container}>
-      <Form style={styles.formContainer}>
+      <View style={styles.formContainer}>
         {/* <TextInput
                   onChangeText={(text) => {
             setValue('phoneNum', text)
@@ -64,39 +57,94 @@ export default function LoginForm() {
         /> */}
 
         {/* Phone Number input field */}
-        <Hideo
-          onChangeText={(text) => {
-            setValue('phoneNum', text)
-          }}       
-          style={styles.input}
-          placeholder={i18n.t('signIn.usernameInput')}
-          iconClass={FontAwesomeIcon}
-          iconName={'mobile-phone'}
-          iconColor={'grey'}
-          iconSize={30}
-          keyboardType={'number-pad'}
-          // this is used as backgroundColor of icon container view.
-          iconBackgroundColor={'white'}
-          inputStyle={{ color: '#464949' }}
+
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <Hideo
+              // validation code-block
+              onChangeText={(value) => onChange(value)}
+              onBlur={onBlur}
+              value={value}
+              maxLength={11}
+              // End of validation code-block
+              style={styles.input}
+              placeholder={i18n.t('signIn.usernameInput')}
+              iconClass={FontAwesomeIcon}
+              iconName={'mobile-phone'}
+              iconColor={'grey'}
+              iconSize={30}
+              keyboardType={'number-pad'}
+              // this is used as backgroundColor of icon container view.
+              iconBackgroundColor={'white'}
+              inputStyle={{ color: '#464949' }}
+            />
+          )}
+          name="phoneNum"
+          rules={{ required: true, minLength: 10, pattern: /^0[0-9]+$/ }}
+          defaultValue=""
         />
+        {errors.phoneNum?.type === 'required' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.required')}
+          </Text>
+        )}
+        {errors.phoneNum?.type === 'minLength' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )}
+        {errors.phoneNum?.type === 'pattern' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )}
+
         {/* END Phone Number input field */}
         {/* Password input field */}
-        <Hideo
-          onChangeText={(text) => {
-            setValue('password', text)
-          }}
-          secureTextEntry
-          placeholder={i18n.t('signIn.passwordInput')}
-          iconClass={FontAwesomeIcon}
-          iconName={'lock'}
-          iconColor={'grey'}
-          iconSize={22}
-          // this is used as backgroundColor of icon container view.
-          iconBackgroundColor={'white'}
-          inputStyle={{ color: '#464949' }}
+        <Controller
+          control={control}
+          render={({ onChange, onBlur, value }) => (
+            <Hideo
+              // validation code-block
+              onChangeText={(value) => onChange(value)}
+              onBlur={onBlur}
+              value={value}
+              maxLength={14}
+              // End of validation code-block
+              secureTextEntry
+              placeholder={i18n.t('signIn.passwordInput')}
+              iconClass={FontAwesomeIcon}
+              iconName={'lock'}
+              iconColor={'grey'}
+              iconSize={22}
+              // this is used as backgroundColor of icon container view.
+              iconBackgroundColor={'white'}
+              inputStyle={{ color: '#464949' }}
+            />
+          )}
+          name="password"
+          rules={{ required: true, minLength: 6, pattern: /^[a-zA-Z0-9]+$/ }}
+          defaultValue=""
         />
+        {errors.password?.type === 'required' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.required')}
+          </Text>
+        )}
+        {errors.password?.type === 'minLength' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.wrongPassword')}
+          </Text>
+        )}
+        {errors.password?.type === 'pattern' && (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.wrongPassword')}
+          </Text>
+        )}
+
         {/* END Password input field */}
-      </Form>
+      </View>
       <View style={{ flex: 2, justifyContent: 'center' }}>
         {/* Link to `ForgotPassword` screen */}
         <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
@@ -177,5 +225,8 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 30,
     marginBottom: -50,
+  },
+  validationText: {
+    fontSize: normalise(14),
   },
 })

@@ -11,7 +11,13 @@ const en = {
     forgetPassword: 'Forget Password?',
     submitBtn: 'Sign In',
     askSignUpTxt: 'Don\'t have an account?',
-    signUpTxt: 'Sign Up'
+    signUpTxt: 'Sign Up',
+    validation: {
+      required: 'This field is required',
+      invalid: 'Invalid phone number (10 digits)',
+      wrongPassword: 'Wrong password'
+
+    }
   },
   signUp: {
     _nav: 'Sign Up', 

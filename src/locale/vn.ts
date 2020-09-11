@@ -19,6 +19,11 @@ const vn = {
     submitBtn: 'Đăng Nhập',
     askSignUpTxt: 'Chưa có tài khoản?',
     signUpTxt: 'Đăng Ký',
+    validation: {
+      required: 'Trường này không được để trống',
+      invalid: 'Số điện thoại không hợp lệ (10 số)',
+      wrongPassword: 'Mật khẩu không chính xác'
+    }
   },
   signUp: {
     _nav: 'Sign Up',
