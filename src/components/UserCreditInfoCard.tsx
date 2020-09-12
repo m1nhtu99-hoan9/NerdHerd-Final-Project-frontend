@@ -101,18 +101,22 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
     reset({ loanAmount_calculate: null })
+    console.log('ok')
+    return (<ModalField isVisible={calculateModalVisible} icon={<Text>OK</Text>} headerText="ij" contentText="ok" color="ok"></ModalField>)
+
   }
 
   const offerFormOnSubmitted = (data: Object) => {
     setOfferModalVisible(true)
     reset({ loanAmount_offer: null })
+    
   }
 
   return (
     <>
       <Container style={styles.content}>
         {/*Information Modal for loanCalculated field*/}
-        <Modal
+        {/* <Modal
           animationType="fade"
           transparent={true}
           visible={calculateModalVisible}
@@ -121,7 +125,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
             <View style={styles.modalContent}>
               <View style={styles.informationIconContainer}>
                 <Text style={styles.informationIcon}>!</Text>
-                {/* <FontAwesome5 name="check" size={32} color="white" /> */}
+                <FontAwesome5 name="check" size={32} color="white" />
               </View>
               <View style={styles.modalText}>
                 <StyledText
@@ -147,7 +151,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               </TouchableOpacity>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
 
         {/*Offer Modal for loanOffer field*/}
         <Modal

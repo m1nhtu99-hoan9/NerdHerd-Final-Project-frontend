@@ -18,21 +18,26 @@ import { normalise, normaliseV, normaliseH } from '../../src/helpers'
 import StyledText from '../../src/components/atomic/StyledText'
 import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
+import { setStatusBarBackgroundColor } from 'expo-status-bar'
 
 type ModalFieldProps = {
   headerText: string
-  contentText: string
+  contentText: string,
+  color: string,
+  icon: JSX.Element,
+  isVisible: boolean
 }
 
 const ModalField = (props: ModalFieldProps) => {
-  const { headerText, contentText } = props
+  const { headerText, contentText, color, icon, isVisible } = props
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
-  const [offerModalVisible, setOfferModalVisible] = useState(false)
+  const [offerModalVisible, setOfferModalVisible] = useState(true)
+
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={calculateModalVisible}
+      visible={offerModalVisible}
     >
       <View style={styles.modalBackground}>
         <View style={styles.modalContent}>
@@ -46,14 +51,14 @@ const ModalField = (props: ModalFieldProps) => {
             {/* <FontAwesome5 name="check" size={32} color="white" /> */}
           </View>
           <View style={styles.modalText}>
-            <Text style={styles.modalContentHeaderText}>Result</Text>
-            <Text style={styles.modalContentText}>
+              
+           <Text style={styles.modalContentText}>
               Khoan vay cua ban co xac suat thanh cong la 67%
             </Text>
           </View>
           <TouchableOpacity
             style={styles.calculateModalConfirmButton}
-            onPress={() => setCalculateModalVisible(false)}
+            onPress={() => setOfferModalVisible(false)}
           >
             <Text style={styles.formConfirmText}>OK</Text>
           </TouchableOpacity>
