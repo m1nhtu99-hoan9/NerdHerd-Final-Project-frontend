@@ -90,9 +90,13 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const [offerPickerValue, setOfferPickerValue] = useState(null)
   const [durationPickerValue, setOfferPickerDuration] = useState(null)
 
-  const [calculatePickerWarning, setCalculatePickerWarning] = useState(<Text></Text>)
+  const [calculatePickerWarning, setCalculatePickerWarning] = useState(
+    <Text></Text>,
+  )
   const [offerPickerWarning, setOfferPickerWarning] = useState(<Text></Text>)
-  const [durationPickerWarning, setDurationPickerWarning] = useState(<Text></Text>)
+  const [durationPickerWarning, setDurationPickerWarning] = useState(
+    <Text></Text>,
+  )
 
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
@@ -120,8 +124,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {/* <FontAwesome5 name="check" size={32} color="white" /> */}
               </View>
               <View style={styles.modalText}>
-                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Result</StyledText>
-                <StyledText fontWeight='regular' style={styles.modalContentText}>
+                <StyledText
+                  fontWeight="bold"
+                  style={styles.modalContentHeaderText}
+                >
+                  Result
+                </StyledText>
+                <StyledText
+                  fontWeight="regular"
+                  style={styles.modalContentText}
+                >
                   Khoan vay cua ban co xac suat thanh cong la 67%
                 </StyledText>
               </View>
@@ -129,7 +141,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 style={styles.calculateModalConfirmButton}
                 onPress={() => setCalculateModalVisible(false)}
               >
-                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
+                <StyledText fontWeight="bold" style={styles.formConfirmText}>
+                  OK
+                </StyledText>
               </TouchableOpacity>
             </View>
           </View>
@@ -147,7 +161,12 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <FontAwesome5 name="check" size={32} color="white" />
               </View>
               <View style={styles.modalText}>
-                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Success</StyledText>
+                <StyledText
+                  fontWeight="bold"
+                  style={styles.modalContentHeaderText}
+                >
+                  Success
+                </StyledText>
                 <StyledText style={styles.modalContentText}>
                   Khoan vay cua ban co xac suat thanh cong la 67%
                 </StyledText>
@@ -156,7 +175,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 style={styles.offerModalConfirmButton}
                 onPress={() => setOfferModalVisible(false)}
               >
-                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
+                <StyledText fontWeight="bold" style={styles.formConfirmText}>
+                  OK
+                </StyledText>
               </TouchableOpacity>
             </View>
           </View>
@@ -281,7 +302,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   style={styles.buttonNext}
                   onPress={async () => {
                     if (calculatePickerValue == null) {
-                      setCalculatePickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setCalculatePickerWarning(
+                        <Text>{i18n.t('home.validation.required')}</Text>,
+                      )
                     } else {
                       setCalculatePickerWarning(<Text></Text>)
                       if (await trigger('loanAmount_calculate')) {
@@ -393,14 +416,20 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       durationPickerValue == null &&
                       offerPickerValue == null
                     ) {
-                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
-                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setOfferPickerWarning(
+                        <Text>{i18n.t('home.validation.required')}</Text>,
+                      )
+                      setDurationPickerWarning(
+                        <Text>{i18n.t('home.validation.required')}</Text>,
+                      )
                     }
                     if (
                       durationPickerValue == null &&
                       offerPickerValue != null
                     ) {
-                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setDurationPickerWarning(
+                        <Text>{i18n.t('home.validation.required')}</Text>,
+                      )
                       setOfferPickerWarning(<Text></Text>)
                     }
                     if (
@@ -408,12 +437,17 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       offerPickerValue == null
                     ) {
                       setDurationPickerWarning(<Text></Text>)
-                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
-                    } if (durationPickerValue != null &&
-                      offerPickerValue != null) {
+                      setOfferPickerWarning(
+                        <Text>{i18n.t('home.validation.required')}</Text>,
+                      )
+                    }
+                    if (
+                      durationPickerValue != null &&
+                      offerPickerValue != null
+                    ) {
                       setDurationPickerWarning(<Text></Text>)
-                        setOfferPickerWarning(<Text></Text>)
-                      if (await trigger('loanAmount_offer')) {       
+                      setOfferPickerWarning(<Text></Text>)
+                      if (await trigger('loanAmount_offer')) {
                         offerFormOnSubmitted('cf')
                       }
                     }

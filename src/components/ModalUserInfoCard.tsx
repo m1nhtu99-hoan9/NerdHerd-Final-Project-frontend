@@ -19,10 +19,15 @@ import StyledText from '../../src/components/atomic/StyledText'
 import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
 
+type ModalFieldProps = {
+  headerText: string
+  contentText: string
+}
 
-const ModalField = (headerText: string, contentText: string) => {
-    const [calculateModalVisible, setCalculateModalVisible] = useState(false)
-    const [offerModalVisible, setOfferModalVisible] = useState(false)
+const ModalField = (props: ModalFieldProps) => {
+  const { headerText, contentText } = props
+  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
+  const [offerModalVisible, setOfferModalVisible] = useState(false)
   return (
     <Modal
       animationType="fade"
