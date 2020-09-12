@@ -120,16 +120,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {/* <FontAwesome5 name="check" size={32} color="white" /> */}
               </View>
               <View style={styles.modalText}>
-                <Text style={styles.modalContentHeaderText}>Result</Text>
-                <Text style={styles.modalContentText}>
+                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Result</StyledText>
+                <StyledText fontWeight='regular' style={styles.modalContentText}>
                   Khoan vay cua ban co xac suat thanh cong la 67%
-                </Text>
+                </StyledText>
               </View>
               <TouchableOpacity
                 style={styles.calculateModalConfirmButton}
                 onPress={() => setCalculateModalVisible(false)}
               >
-                <Text style={styles.formConfirmText}>OK</Text>
+                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
               </TouchableOpacity>
             </View>
           </View>
@@ -147,16 +147,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <FontAwesome5 name="check" size={32} color="white" />
               </View>
               <View style={styles.modalText}>
-                <Text style={styles.modalContentHeaderText}>Success</Text>
-                <Text style={styles.modalContentText}>
+                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Success</StyledText>
+                <StyledText style={styles.modalContentText}>
                   Khoan vay cua ban co xac suat thanh cong la 67%
-                </Text>
+                </StyledText>
               </View>
               <TouchableOpacity
                 style={styles.offerModalConfirmButton}
                 onPress={() => setOfferModalVisible(false)}
               >
-                <Text style={styles.formConfirmText}>OK</Text>
+                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
               </TouchableOpacity>
             </View>
           </View>
