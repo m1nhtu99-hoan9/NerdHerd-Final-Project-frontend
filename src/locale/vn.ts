@@ -62,6 +62,11 @@ const vn = {
     ],
     loanOptionsInput: 'Chọn kiểu vay',
     loanAmountInput: 'Số tiền vay',
+    validation: {
+      required: 'Trường này không được để trống',
+      invalidAmount: 'Số tiền vay phải > 1 triệu đồng và < 100 tỷ đồng',
+      invalidCharacter: 'Số tiền không hợp lệ',
+    },
     recommendContent: {
       header: 'Đề xuất khoản vay',
       submitBtn: 'Xác nhận'

@@ -46,6 +46,11 @@ const en = {
     consultationContent: [],
     loanOptionsInput: 'Pick your loan type',
     loanAmountInput: 'Your loan amount',
+    validation: {
+      required: 'This field is required',
+      invalidAmount: 'The loan amount must > 1 million VND and < 100 billion VND',
+      invalidCharacter: 'Invalid amount'
+    },
     recommendContent: {
       header: 'Loan proposal',
       submitBtn: 'Confirm'

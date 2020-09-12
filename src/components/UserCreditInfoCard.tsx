@@ -19,7 +19,7 @@ import { Container, Form } from 'native-base'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
-import { normalise, normaliseV, normaliseH } from '../../src/helpers'
+import { normalise, normaliseV, normaliseH, PATTERN } from '../../src/helpers'
 import StyledText from '../../src/components/atomic/StyledText'
 import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -31,10 +31,11 @@ import RNPickerSelect from 'react-native-picker-select'
 import { useForm, Controller } from 'react-hook-form'
 
 import ModalField from '../components/ModalUserInfoCard'
+import { reset } from 'i18n-js'
 
 interface FormInput {
-  loanAmount_calculate: number
-  loanAmount_offer: number
+  loanAmount_calculate: number | null
+  loanAmount_offer: number | null
 }
 
 interface UserCreditInfoCardProps {
@@ -63,15 +64,15 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   ]
 
   const loanDurationContent = [
-    { label: '1 Tháng', value: 'consumption' },
-    { label: '2 Tháng', value: 'installment' },
-    { label: '3 Tháng', value: 'buyCar' },
-    { label: '6 Tháng', value: 'buyCar' },
-    { label: '9 Tháng', value: 'buyCar' },
-    { label: '12 Tháng', value: 'buyCar' },
-    { label: '16 Tháng', value: 'buyCar' },
-    { label: '24 Tháng', value: 'buyCar' },
-    { label: '36 Tháng', value: 'buyCar' },
+    { label: '1 Tháng', value: '1month' },
+    { label: '2 Tháng', value: '2months' },
+    { label: '3 Tháng', value: '3months' },
+    { label: '6 Tháng', value: '6months' },
+    { label: '9 Tháng', value: '9months' },
+    { label: '12 Tháng', value: '12months' },
+    { label: '16 Tháng', value: '16months' },
+    { label: '24 Tháng', value: '24months' },
+    { label: '36 Tháng', value: '36months' },
   ]
 
   const placeholderDuration = {
@@ -80,13 +81,27 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
     color: '#9EA0A4',
   }
 
-  const { control, handleSubmit, errors } = useForm<FormInput>()
+  const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
   const [offerModalVisible, setOfferModalVisible] = useState(false)
 
+  const [calculatePickerValue, setCalculatePickerValue] = useState(null)
+  const [offerPickerValue, setOfferPickerValue] = useState(null)
+  const [durationPickerValue, setOfferPickerDuration] = useState(null)
+
+  const [calculatePickerWarning, setCalculatePickerWarning] = useState(<Text></Text>)
+  const [offerPickerWarning, setOfferPickerWarning] = useState(<Text></Text>)
+  const [durationPickerWarning, setDurationPickerWarning] = useState(<Text></Text>)
+
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
+    reset({ loanAmount_calculate: null })
+  }
+
+  const offerFormOnSubmitted = (data: Object) => {
+    setOfferModalVisible(true)
+    reset({ loanAmount_offer: null })
   }
 
   return (
@@ -100,23 +115,21 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         >
           <View style={styles.modalBackground}>
             <View style={styles.modalContent}>
-              <View
-                style={styles.informationIconContainer}
-              >
+              <View style={styles.informationIconContainer}>
                 <Text style={styles.informationIcon}>!</Text>
                 {/* <FontAwesome5 name="check" size={32} color="white" /> */}
               </View>
               <View style={styles.modalText}>
-                <Text style={styles.modalContentHeaderText}>Result</Text>
-                <Text style={styles.modalContentText}>
+                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Result</StyledText>
+                <StyledText fontWeight='regular' style={styles.modalContentText}>
                   Khoan vay cua ban co xac suat thanh cong la 67%
-                </Text>
+                </StyledText>
               </View>
               <TouchableOpacity
                 style={styles.calculateModalConfirmButton}
                 onPress={() => setCalculateModalVisible(false)}
               >
-                <Text style={styles.formConfirmText}>OK</Text>
+                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
               </TouchableOpacity>
             </View>
           </View>
@@ -134,16 +147,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <FontAwesome5 name="check" size={32} color="white" />
               </View>
               <View style={styles.modalText}>
-                <Text style={styles.modalContentHeaderText}>Success</Text>
-                <Text style={styles.modalContentText}>
+                <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>Success</StyledText>
+                <StyledText style={styles.modalContentText}>
                   Khoan vay cua ban co xac suat thanh cong la 67%
-                </Text>
+                </StyledText>
               </View>
               <TouchableOpacity
                 style={styles.offerModalConfirmButton}
                 onPress={() => setOfferModalVisible(false)}
               >
-                <Text style={styles.formConfirmText}>OK</Text>
+                <StyledText fontWeight='bold' style={styles.formConfirmText}>OK</StyledText>
               </TouchableOpacity>
             </View>
           </View>
@@ -206,11 +219,15 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <View style={styles.loanType}>
                   <RNPickerSelect
                     placeholder={placeholderLoanType}
-                    onValueChange={(value: string) => console.log(value)}
+                    onValueChange={(value) => setCalculatePickerValue(value)}
                     items={loanTypeContent}
+                    value={calculatePickerValue}
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
+                <Text style={styles.validationText}>
+                  {calculatePickerWarning}
+                </Text>
 
                 <Controller
                   control={control}
@@ -222,6 +239,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       value={value}
                       maxLength={12}
                       // End of validation code-block
+                      keyboardType={'number-pad'}
                       editable={editable}
                       style={styles.loanAmount}
                       placeholder={i18n.t('home.loanAmountInput')}
@@ -231,20 +249,46 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   rules={{
                     required: true,
                     minLength: 6,
-                    min: 500000,
+                    min: 1000000,
                     max: 100000000000,
+                    pattern: /^(1|2|3|4|5|6|7|8|9)+([0-9])/,
                   }}
                   defaultValue=""
                 />
                 {errors.loanAmount_calculate?.type === 'required' && (
                   <Text style={styles.validationText}>
-                    {i18n.t('signIn.validation.required')}
+                    {i18n.t('home.validation.required')}
+                  </Text>
+                )}
+
+                {errors.loanAmount_calculate?.type === 'min' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidAmount')}
+                  </Text>
+                )}
+                {errors.loanAmount_calculate?.type === 'max' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidAmount')}
+                  </Text>
+                )}
+                {errors.loanAmount_calculate?.type === 'pattern' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidAmount')}
                   </Text>
                 )}
 
                 <TouchableOpacity
                   style={styles.buttonNext}
-                  onPress={calculateFormOnSubmitted}
+                  onPress={async () => {
+                    if (calculatePickerValue == null) {
+                      setCalculatePickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                    } else {
+                      setCalculatePickerWarning(<Text></Text>)
+                      if (await trigger('loanAmount_calculate')) {
+                        calculateFormOnSubmitted('ok')
+                      }
+                    }
+                  }}
                   //onPress={handleSubmit(calculateFormOnSubmitted)}
                 >
                   <StyledText fontWeight="bold" style={styles.buttonText}>
@@ -274,25 +318,38 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 >
                   <RNPickerSelect
                     placeholder={placeholderLoanType}
-                    onValueChange={(value: undefined) => console.log(value)}
+                    onValueChange={(value) => setOfferPickerValue(value)}
                     items={loanTypeContent}
+                    value={offerPickerValue}
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
+                <Text style={styles.validationText}>{offerPickerWarning}</Text>
 
                 <View style={styles.loanType}>
                   <RNPickerSelect
                     placeholder={placeholderDuration}
-                    onValueChange={(value: string) => console.log(value)}
+                    onValueChange={(value) => setOfferPickerDuration(value)}
                     items={loanDurationContent}
+                    value={durationPickerValue}
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
+                <Text style={styles.validationText}>
+                  {durationPickerWarning}
+                </Text>
 
                 <Controller
                   control={control}
                   render={({ onChange, onBlur, value }) => (
                     <TextInput
+                      // validation code-block
+                      onChangeText={(value) => onChange(value)}
+                      onBlur={onBlur}
+                      value={value}
+                      maxLength={12}
+                      // End of validation code-block
+                      keyboardType="number-pad"
                       editable={editable}
                       style={styles.loanAmount}
                       placeholder={i18n.t('home.loanAmountInput')}
@@ -302,20 +359,65 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   rules={{
                     required: true,
                     minLength: 6,
-                    min: 500000,
+                    min: 1000000,
                     max: 100000000000,
+                    pattern: /^(1|2|3|4|5|6|7|8|9)+([0-9])/,
                   }}
                   defaultValue=""
                 />
                 {errors.loanAmount_offer?.type === 'required' && (
                   <Text style={styles.validationText}>
-                    {i18n.t('signIn.validation.required')}
+                    {i18n.t('home.validation.required')}
+                  </Text>
+                )}
+                {errors.loanAmount_offer?.type === 'min' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidAmount')}
+                  </Text>
+                )}
+                {errors.loanAmount_offer?.type === 'max' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidAmount')}
+                  </Text>
+                )}
+                {errors.loanAmount_offer?.type === 'pattern' && (
+                  <Text style={styles.validationText}>
+                    {i18n.t('home.validation.invalidCharacter')}
                   </Text>
                 )}
 
                 <TouchableOpacity
                   style={styles.buttonNext}
-                  onPress={() => setOfferModalVisible(true)}
+                  onPress={async () => {
+                    if (
+                      durationPickerValue == null &&
+                      offerPickerValue == null
+                    ) {
+                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                    }
+                    if (
+                      durationPickerValue == null &&
+                      offerPickerValue != null
+                    ) {
+                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setOfferPickerWarning(<Text></Text>)
+                    }
+                    if (
+                      durationPickerValue != null &&
+                      offerPickerValue == null
+                    ) {
+                      setDurationPickerWarning(<Text></Text>)
+                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                    } if (durationPickerValue != null &&
+                      offerPickerValue != null) {
+                      setDurationPickerWarning(<Text></Text>)
+                        setOfferPickerWarning(<Text></Text>)
+                      if (await trigger('loanAmount_offer')) {       
+                        offerFormOnSubmitted('cf')
+                      }
+                    }
+                  }}
                 >
                   <StyledText fontWeight="bold" style={styles.buttonText}>
                     {i18n.t('home.recommendContent.submitBtn')}
@@ -458,7 +560,7 @@ const styles = StyleSheet.create({
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 500,
+    height: 550,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
