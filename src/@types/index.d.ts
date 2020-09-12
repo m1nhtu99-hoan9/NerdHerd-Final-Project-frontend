@@ -17,6 +17,11 @@ declare module 'rn-faded-scrollview'
  */ 
 declare module 'react-native-speedometer'
 
+/** a hack declaring empty type module to avoid type warning 
+ *  regarding `Base64`
+ */ 
+declare module 'Base64'
+
 type PhoneNum = string
 
 type SearchResult = {

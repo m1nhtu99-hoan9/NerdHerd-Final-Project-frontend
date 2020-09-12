@@ -5,7 +5,6 @@ module.exports = function(api) {
     env: {
       production: {
         // reference: https://callstack.github.io/react-native-paper/getting-started.html
-        plugins: ['react-native-paper/babel']
       }
     }
   };

@@ -16,6 +16,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 import { Hideo } from 'react-native-textinput-effects'
 import { normaliseV, PATTERN } from '../../helpers'
 
+import { asyncLogin } from '../../machines'
+
 interface FormInput {
   password: string
   phoneNum: number
@@ -24,38 +26,71 @@ interface FormInput {
 export default function LoginForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
+  const { control, handleSubmit, errors } = useForm<FormInput>()
 
   const _signInFormOnSubmitted = (data: Object) => {
-    /* login authentication pushed here */
-    nav.navigate('Home')
+    // @ts-ignore
+    asyncLogin('0967162652', 'aacc1234').then(console.log)
+    // nav.navigate('Home')
     console.log(data)
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
   }
 
-  const { control, handleSubmit, errors } = useForm<FormInput>()
+  const _showPhoneErrorMessage = function (): JSX.Element | undefined {
+    /* each call forms (wordplay intended) closure around `errors` object */
+    switch (errors.phoneNum?.type) {
+      case 'required':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.required')}
+          </Text>
+        )
+      case 'minLength':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )
+      // input phone number doesn't comply with required Regex pattern
+      case 'pattern':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.invalid')}
+          </Text>
+        )
+      /* implicitly, in `default`, return `undefined` */
+    }
+  }
+
+  const _showPasswordErrorMessage = function (): JSX.Element | undefined {
+    switch (errors.password?.type) {
+      case 'required':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.required')}
+          </Text>
+        )
+      case 'minLength':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.wrongPassword')}
+          </Text>
+        )
+      // input password doesn't comply with required Regex pattern
+      case 'pattern':
+        return (
+          <Text style={styles.validationText}>
+            {i18n.t('signIn.validation.wrongPassword')}
+          </Text>
+        )
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.formContainer}>
-        {/* <TextInput
-                  onChangeText={(text) => {
-            setValue('phoneNum', text)
-          }}
-          i18nPlaceholderContent={'signIn.usernameInput'}
-          keyboardType="number-pad"
-          style={styles.input}
-          clearButtonMode="always"
-        /> */}
-
-        {/* <TextInput
-          i18nPlaceholderContent={'signIn.usernameInput'}
-          secureTextEntry
-          style={styles.input}
-          clearButtonMode="always"
-        /> */}
-
         {/* Phone Number input field */}
 
         <Controller
@@ -84,21 +119,7 @@ export default function LoginForm() {
           rules={{ required: true, minLength: 10, pattern: PATTERN }}
           defaultValue=""
         />
-        {errors.phoneNum?.type === 'required' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.required')}
-          </Text>
-        )}
-        {errors.phoneNum?.type === 'minLength' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.invalid')}
-          </Text>
-        )}
-        {errors.phoneNum?.type === 'pattern' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.invalid')}
-          </Text>
-        )}
+        {_showPhoneErrorMessage()}
 
         {/* END Phone Number input field */}
         {/* Password input field */}
@@ -127,21 +148,7 @@ export default function LoginForm() {
           rules={{ required: true, minLength: 6, pattern: /^[a-zA-Z0-9]+$/ }}
           defaultValue=""
         />
-        {errors.password?.type === 'required' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.required')}
-          </Text>
-        )}
-        {errors.password?.type === 'minLength' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.wrongPassword')}
-          </Text>
-        )}
-        {errors.password?.type === 'pattern' && (
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.wrongPassword')}
-          </Text>
-        )}
+        {_showPasswordErrorMessage()}
 
         {/* END Password input field */}
       </View>
@@ -228,6 +235,6 @@ const styles = StyleSheet.create({
   },
   validationText: {
     fontSize: normalise(14),
-    color: 'rgba(242, 38, 19, 1)'
+    color: 'rgba(242, 38, 19, 1)',
   },
 })

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/sync-storage
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add @types/Base64
 
 PATH: 
   /home/mnhthng/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/mnhthng/.yarn/bin:/home/mnhthng/Android/Sdk/tools/bin:/home/mnhthng/Android/Sdk/platform-tools:/home/mnhthng/Android/Sdk/emulator:/snap/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fsync-storage: Not found
+  Error: https://registry.yarnpkg.com/@types%2fBase64: Not found
       at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66987:18)
       at Request.self.callback (/usr/share/yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:198:13)
@@ -64,12 +64,15 @@ npm manifest:
       "@react-navigation/stack": "^5.9.0",
       "@types/i18n-js": "^3.0.3",
       "@types/ramda": "^0.27.12",
+      "@types/react-native-base64": "^0.1.0",
       "@xstate/react": "^0.8.1",
-      "axios": "^0.19.2",
+      "Base64": "^1.1.0",
+      "apisauce": "^1.1.2",
       "expo": "~38.0.8",
       "expo-asset": "~8.1.7",
       "expo-device": "^2.2.1",
       "expo-font": "~8.2.1",
+      "expo-linear-gradient": "^8.2.1",
       "expo-status-bar": "^1.0.2",
       "formik": "^2.1.5",
       "i18n-js": "^3.7.1",
@@ -77,20 +80,26 @@ npm manifest:
       "ramda": "^0.27.0",
       "react": "~16.11.0",
       "react-dom": "~16.11.0",
+      "react-hook-form": "^6.8.1",
       "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
       "react-native-gesture-handler": "~1.6.0",
-      "react-native-paper": "^4.0.1",
+      "react-native-linear-gradient": "^2.5.6",
+      "react-native-picker-select": "duc1807/react-native-picker-select",
       "react-native-reanimated": "~1.9.0",
+      "react-native-responsive-fontsize": "^0.4.3",
       "react-native-safe-area-context": "~3.0.7",
       "react-native-screens": "~2.9.0",
       "react-native-shared-element": "0.7.0",
-      "react-native-speedometer": "^1.0.3",
+      "react-native-speedometer": "duc1807/react-native-speedometer",
+      "react-native-styled-text": "^1.0.1",
       "react-native-swiper": "^1.6.0",
       "react-native-tab-view": "^2.15.0",
+      "react-native-textinput-effects": "mnhthng-thms/react-native-textinput-effects#master",
       "react-native-web": "~0.11.7",
       "react-navigation": "^4.4.0",
       "react-navigation-shared-element": "^3.0.0",
       "react-navigation-stack": "^2.8.2",
+      "rn-faded-scrollview": "mnhthng-thms/rn-faded-scrollview#master",
       "sync-storage": "^0.4.2",
       "xstate": "^4.11.0"
     },
@@ -1123,14 +1132,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
     integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
   
-  "@callstack/react-theme-provider@^3.0.5":
-    version "3.0.5"
-    resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.5.tgz#a173e455e9603c9c45357a3b6ace1273086527ca"
-    integrity sha512-Iec+ybWN0FvNj87sD3oWo/49edGUP0UOSdMnzCJEFJIDYr992ECIuOV89burAAh2/ibPCxgLiK6dmgv2mO/8Tg==
-    dependencies:
-      deepmerge "^3.2.0"
-      hoist-non-react-statics "^3.3.0"
-  
   "@cnakazawa/watch@^1.0.3":
     version "1.0.4"
     resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -1580,6 +1581,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
     integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
   
+  "@react-native-community/picker@^1.6.0":
+    version "1.6.6"
+    resolved "https://registry.yarnpkg.com/@react-native-community/picker/-/picker-1.6.6.tgz#827edfbcb6c2e3f6f5c68674f52249fd7d03a0bc"
+    integrity sha512-R2QUEcpdOClgvCsTUzfJcb/qcRy40ikHoJslvnRRj2iP8zCaB1k/3XK3JKCo3e+Alux1fR5o7edlDOIOtwx1YQ==
+  
   "@react-navigation/bottom-tabs@^5.8.0":
     version "5.8.0"
     resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.8.0.tgz#d7386809bceeead0adcaacf61b6563be9cefd5cb"
@@ -1769,6 +1775,26 @@ Lockfile:
     dependencies:
       ts-toolbelt "^6.3.3"
   
+  "@types/react-native-base64@^0.1.0":
+    version "0.1.0"
+    resolved "https://registry.yarnpkg.com/@types/react-native-base64/-/react-native-base64-0.1.0.tgz#e26b579c34f9840f43b5e97ddb5200c04e84fc3a"
+    integrity sha512-i93+Zir+aL65XYo8FYEJj/jJXucqoNnKZVqWzZtjoPuXQ39orYDlGL2/2djUbiB8efYa9TXPfE70aCXc5CEk+g==
+  
+  "@types/react-native-vector-icons@^6.4.5":
+    version "6.4.5"
+    resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.5.tgz#74cbfc564bd8435e43ad6728572a0e5b49c335d1"
+    integrity sha512-JBpcjWQE4n0GlE0p6HpDDclT+uXpFC453T5k4h+B38q0utlGJhvgNr8899BoJGc1xOktA2cgqFKmFMJd0h7YaA==
+    dependencies:
+      "@types/react" "*"
+      "@types/react-native" "*"
+  
+  "@types/react-native@*":
+    version "0.63.11"
+    resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.63.11.tgz#0965552aa4cfe8a7c0c64f1afb1c101d2fa7510a"
+    integrity sha512-OjYwDiMZGENGd5P+su0OZY0t0ctTnmmToS/mJOAErktpZWqfDj99Q2hy3M09tQj+h2KnpsT+WUPozUKoossSxw==
+    dependencies:
+      "@types/react" "*"
+  
   "@types/react-native@~0.62.13":
     version "0.62.18"
     resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.62.18.tgz#ad63691e7c44edef2beeb6af52b2eb942c3ed8a1"
@@ -1828,6 +1854,11 @@ Lockfile:
     version "0.8.1"
     resolved "https://registry.yarnpkg.com/@xstate/react/-/react-0.8.1.tgz#df200547cca24c909572b7aef1ddab8bca3a0603"
     integrity sha512-8voZm4GX3x70lNQVvoGedoObPYapkQIbgMhE+xOQEsm8Ait4Zto6R01SZ6WJD4qvLl8JPV6uq96OcFRdEsVESg==
+  
+  Base64@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/Base64/-/Base64-1.1.0.tgz#810ef21afa8357df92ad7b5389188c446b9cb956"
+    integrity sha512-qeacf8dvGpf+XAT27ESHMh7z84uRzj/ua2pQdJg483m3bEXv/kVFtDnMgvf70BQGqzbZhR9t6BmASzKvqfJf3Q==
   
   abab@^2.0.3:
     version "2.0.4"
@@ -2006,6 +2037,14 @@ Lockfile:
     dependencies:
       normalize-path "^3.0.0"
       picomatch "^2.0.4"
+  
+  apisauce@^1.1.2:
+    version "1.1.2"
+    resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-1.1.2.tgz#1778156802ea8cb07e27ad4ec87cd0c9990a51d1"
+    integrity sha512-AqOrOVk71JPSqugA6PdrkE2S0w1GC/f3xPZPMHJ1O+Z73pwT2uoGnr8JbfmB/gvO2cnygYzlBOnkD/mN6W1FMQ==
+    dependencies:
+      axios "^0.19.0"
+      ramda "^0.25.0"
   
   argparse@^1.0.7:
     version "1.0.10"
@@ -2192,7 +2231,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
     integrity sha512-5P0QZ6J5xGikH780pghEdbEKijCTrruK9KxtPZCFWUpef0f6GipO+xEZ5GKCb020mmqgbiNO6TcA55CriL784Q==
   
-  axios@^0.19.2:
+  axios@^0.19.0:
     version "0.19.2"
     resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
     integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -3672,7 +3711,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.2.1.tgz#a7956ad0fa80eb6ac6a28bb7242408e87c493677"
     integrity sha512-m644YH7R/3n6dcn03aZcmHGTk4hDDIiEiImTKsSjbXIIRuW5tfdRqLCHnja5DwBT+4sxUn58wTpK6QnTfXichA==
   
-  expo-linear-gradient@~8.2.1:
+  expo-linear-gradient@^8.2.1, expo-linear-gradient@~8.2.1:
     version "8.2.1"
     resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-8.2.1.tgz#4b44649560e1dd694b6a540781c9214abe35b035"
     integrity sha512-GY0N4DDxuIeFALtcLUmHyy/yS3uPvd7R03Qmch+vZKEL7pH+h8qAeuYpSiUXEWRqsMZf2DSMBxOhVFjyg/X7DA==
@@ -5599,6 +5638,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.15.tgz#21bd96839354412f23d7a10340e5eac6ee455d78"
     integrity sha512-rlrc3yU3+JNOpZ9zj5pQtxnx2THmvRykwL4Xlxoa8I9lHBlVbbyPhgyPMioxVZ4NqyxaVVtaJnzsyOidQIhyyQ==
   
+  lodash.isequal@^4.5.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+    integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+  
   lodash.sortby@^4.7.0:
     version "4.7.0"
     resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -6725,7 +6769,7 @@ Lockfile:
       kleur "^3.0.3"
       sisteransi "^1.0.4"
   
-  prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+  prop-types@*, prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6788,6 +6832,11 @@ Lockfile:
     dependencies:
       performance-now "^2.1.0"
   
+  ramda@^0.25.0:
+    version "0.25.0"
+    resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+    integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+  
   ramda@^0.27.0:
     version "0.27.1"
     resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
@@ -6820,6 +6869,11 @@ Lockfile:
     version "2.0.4"
     resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
     integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
+  
+  react-hook-form@^6.8.1:
+    version "6.8.1"
+    resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-6.8.1.tgz#eb2f78ddd5ae468082259f772d072c820a6fda46"
+    integrity sha512-ORHf4Ee2AuPPotJjGjqOjD5GrLVkWV/d+yeUimXndx2pVYj/3qzqF9RIyTszIAWfuLNJ4SZt4Oi29UTnT2kx5A==
   
   react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
     version "16.13.1"
@@ -6860,19 +6914,22 @@ Lockfile:
       invariant "^2.2.4"
       prop-types "^15.7.2"
   
-  react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
+  react-native-iphone-x-helper@^1.0.2, react-native-iphone-x-helper@^1.0.3, react-native-iphone-x-helper@^1.2.1:
     version "1.2.1"
     resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.2.1.tgz#645e2ffbbb49e80844bb4cbbe34a126fda1e6772"
     integrity sha512-/VbpIEp8tSNNHIvstuA3Swx610whci1Zpc9mqNkqn14DkMbw+ORviln2u0XyHG1kPvvwTNGZY6QpeFwxYaSdbQ==
   
-  react-native-paper@^4.0.1:
-    version "4.0.1"
-    resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.0.1.tgz#13d2272757fb738113582e900787f365cfa77c74"
-    integrity sha512-C1kHZ5sS3QU2XdmdHnLAzp88T+FWtkOa+43wYjBClevsDvi72aRf6H9PTs8GS69E8tlNHym3kbVcENgnDPMqhQ==
+  react-native-linear-gradient@^2.5.6:
+    version "2.5.6"
+    resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+    integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+  
+  react-native-picker-select@duc1807/react-native-picker-select:
+    version "8.0.0-beta.2"
+    resolved "https://codeload.github.com/duc1807/react-native-picker-select/tar.gz/474069dbd0416e22962ef3c9991e7008c003fdff"
     dependencies:
-      "@callstack/react-theme-provider" "^3.0.5"
-      color "^3.1.2"
-      react-native-safe-area-view "^0.14.9"
+      "@react-native-community/picker" "^1.6.0"
+      lodash.isequal "^4.5.0"
   
   react-native-reanimated@~1.9.0:
     version "1.9.0"
@@ -6880,6 +6937,13 @@ Lockfile:
     integrity sha512-Aj+spgIHRiVv7ezGADxnSH1EoKrQRD2+XaSiGY0MiB/pvRNNrZPSJ+3NVpvLwWf9lZMOP7dwqqyJIzoZgBDt8w==
     dependencies:
       fbjs "^1.0.0"
+  
+  react-native-responsive-fontsize@^0.4.3:
+    version "0.4.3"
+    resolved "https://registry.yarnpkg.com/react-native-responsive-fontsize/-/react-native-responsive-fontsize-0.4.3.tgz#87bb9ea0093d74e30518547e443b3218abb5fa80"
+    integrity sha512-Xsy2Rmx6F6RP1YOY56NdttC/NdpeA1wX+aabTLXjeKw2MF0NilL9Vsqx3mf/gR8/PbU/c/FQMpCV2Ogt8rHNGQ==
+    dependencies:
+      react-native-iphone-x-helper "^1.0.2"
   
   react-native-safe-area-context@~3.0.7:
     version "3.0.7"
@@ -6903,12 +6967,18 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-shared-element/-/react-native-shared-element-0.7.0.tgz#c5e02eb372f6e38e48eb1030fd59be8f3d8c7a1f"
     integrity sha512-TJTGwQceABYete+vH3ahNSgzVzXz7X2SPv3thT91gdcFCrm7ht7IKXBXJiYjOA+4TfdqnGEAWkspCy80oEnOgw==
   
-  react-native-speedometer@^1.0.3:
-    version "1.0.3"
-    resolved "https://registry.yarnpkg.com/react-native-speedometer/-/react-native-speedometer-1.0.3.tgz#d4fc26861f3882aa008b8c1b349e0c1e667bd588"
-    integrity sha512-34Ne/ptaWv97jbSOq87b+gKHvGKeZ4AjYXZvovbEnQMnYNzCBWZbQNJqWWzOxyFZXbzeDsfiQ6d4xpq2pc1Tfw==
+  react-native-speedometer@duc1807/react-native-speedometer:
+    version "1.0.5"
+    resolved "https://codeload.github.com/duc1807/react-native-speedometer/tar.gz/8ba286d277eec067d881ee8359359de4befff6fb"
     dependencies:
       prop-types "^15.6.2"
+  
+  react-native-styled-text@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/react-native-styled-text/-/react-native-styled-text-1.0.1.tgz#143427c7158737952e606a9f8e5e57157ea0bbaa"
+    integrity sha512-DmWT6nBK8Fxxylav6pdkRZ+lRYoDQy8zGItUfapTBy0jh6jZVfA2UYfDTU0I5zHHhu+PYuQk2aR5dRtfNmSi4A==
+    dependencies:
+      prop-types "*"
   
   react-native-swiper@^1.6.0:
     version "1.6.0"
@@ -6921,6 +6991,12 @@ Lockfile:
     version "2.15.0"
     resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-2.15.0.tgz#71b0c87f7cb2cde1d740f7130c17f213f2cbcaa0"
     integrity sha512-rCQPNp0N4t2IZHTVpdb/eddJ9kTLC8QlD/8Ce1+z2Fk3Evk0HPhuhTAW3mfa+thzRXkXYxxsS7QcIjJKs2Wu3w==
+  
+  react-native-textinput-effects@mnhthng-thms/react-native-textinput-effects#master:
+    version "0.6.1"
+    resolved "https://codeload.github.com/mnhthng-thms/react-native-textinput-effects/tar.gz/b47fb2d5d51b0efcf3a801af3bc2d297fa09e55b"
+    dependencies:
+      "@types/react-native-vector-icons" "^6.4.5"
   
   react-native-vector-icons@^7.0.0:
     version "7.0.0"
@@ -7299,6 +7375,12 @@ Lockfile:
     version "2.2.8"
     resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
     integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+  
+  rn-faded-scrollview@mnhthng-thms/rn-faded-scrollview#master:
+    version "1.0.8"
+    resolved "https://codeload.github.com/mnhthng-thms/rn-faded-scrollview/tar.gz/2f50d0bc295cca7626b508d6cf1f413c2cac613f"
+    dependencies:
+      expo-linear-gradient "^8.2.1"
   
   rsvp@^4.8.4:
     version "4.8.5"

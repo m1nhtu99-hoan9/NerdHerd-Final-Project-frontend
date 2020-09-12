@@ -1003,14 +1003,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@callstack/react-theme-provider@^3.0.5":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.5.tgz#a173e455e9603c9c45357a3b6ace1273086527ca"
-  integrity sha512-Iec+ybWN0FvNj87sD3oWo/49edGUP0UOSdMnzCJEFJIDYr992ECIuOV89burAAh2/ibPCxgLiK6dmgv2mO/8Tg==
-  dependencies:
-    deepmerge "^3.2.0"
-    hoist-non-react-statics "^3.3.0"
-
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"
@@ -1654,6 +1646,11 @@
   dependencies:
     ts-toolbelt "^6.3.3"
 
+"@types/react-native-base64@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-base64/-/react-native-base64-0.1.0.tgz#e26b579c34f9840f43b5e97ddb5200c04e84fc3a"
+  integrity sha512-i93+Zir+aL65XYo8FYEJj/jJXucqoNnKZVqWzZtjoPuXQ39orYDlGL2/2djUbiB8efYa9TXPfE70aCXc5CEk+g==
+
 "@types/react-native-vector-icons@^6.4.5":
   version "6.4.5"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.5.tgz#74cbfc564bd8435e43ad6728572a0e5b49c335d1"
@@ -1728,6 +1725,11 @@
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@xstate/react/-/react-0.8.1.tgz#df200547cca24c909572b7aef1ddab8bca3a0603"
   integrity sha512-8voZm4GX3x70lNQVvoGedoObPYapkQIbgMhE+xOQEsm8Ait4Zto6R01SZ6WJD4qvLl8JPV6uq96OcFRdEsVESg==
+
+Base64@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/Base64/-/Base64-1.1.0.tgz#810ef21afa8357df92ad7b5389188c446b9cb956"
+  integrity sha512-qeacf8dvGpf+XAT27ESHMh7z84uRzj/ua2pQdJg483m3bEXv/kVFtDnMgvf70BQGqzbZhR9t6BmASzKvqfJf3Q==
 
 abab@^2.0.3:
   version "2.0.4"
@@ -1906,6 +1908,14 @@ anymatch@^3.0.3:
   dependencies:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
+
+apisauce@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/apisauce/-/apisauce-1.1.2.tgz#1778156802ea8cb07e27ad4ec87cd0c9990a51d1"
+  integrity sha512-AqOrOVk71JPSqugA6PdrkE2S0w1GC/f3xPZPMHJ1O+Z73pwT2uoGnr8JbfmB/gvO2cnygYzlBOnkD/mN6W1FMQ==
+  dependencies:
+    axios "^0.19.0"
+    ramda "^0.25.0"
 
 argparse@^1.0.7:
   version "1.0.10"
@@ -2092,7 +2102,7 @@ axe-core@^3.5.4:
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-3.5.5.tgz#84315073b53fa3c0c51676c588d59da09a192227"
   integrity sha512-5P0QZ6J5xGikH780pghEdbEKijCTrruK9KxtPZCFWUpef0f6GipO+xEZ5GKCb020mmqgbiNO6TcA55CriL784Q==
 
-axios@^0.19.2:
+axios@^0.19.0:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -6693,6 +6703,11 @@ raf@^3.1.0:
   dependencies:
     performance-now "^2.1.0"
 
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+  integrity sha512-GXpfrYVPwx3K7RQ6aYT8KPS8XViSXUVJT1ONhoKPE9VAleW42YE+U+8VEyGWt41EnEQW7gwecYJriTI0pKoecQ==
+
 ramda@^0.27.0:
   version "0.27.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.27.1.tgz#66fc2df3ef873874ffc2da6aa8984658abacf5c9"
@@ -6779,15 +6794,6 @@ react-native-linear-gradient@^2.5.6:
   version "2.5.6"
   resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
   integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
-
-react-native-paper@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-4.0.1.tgz#13d2272757fb738113582e900787f365cfa77c74"
-  integrity sha512-C1kHZ5sS3QU2XdmdHnLAzp88T+FWtkOa+43wYjBClevsDvi72aRf6H9PTs8GS69E8tlNHym3kbVcENgnDPMqhQ==
-  dependencies:
-    "@callstack/react-theme-provider" "^3.0.5"
-    color "^3.1.2"
-    react-native-safe-area-view "^0.14.9"
 
 react-native-picker-select@duc1807/react-native-picker-select:
   version "8.0.0-beta.2"
