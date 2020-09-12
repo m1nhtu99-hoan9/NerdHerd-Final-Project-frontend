@@ -48,7 +48,7 @@ const en = {
     loanAmountInput: 'Your loan amount',
     validation: {
       required: 'This field is required',
-      invalidAmount: 'The loan amount must > 1 million VND and < 100 billion VND',
+      invalidAmount: 'The loan amount must > 1 million VND',
       invalidCharacter: 'Invalid amount'
     },
     recommendContent: {

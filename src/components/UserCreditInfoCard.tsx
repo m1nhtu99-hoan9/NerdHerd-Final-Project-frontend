@@ -101,18 +101,22 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
     reset({ loanAmount_calculate: null })
+    console.log('ok')
+    return (<ModalField isVisible={calculateModalVisible} icon={<Text>OK</Text>} headerText="ij" contentText="ok" color="ok"></ModalField>)
+
   }
 
   const offerFormOnSubmitted = (data: Object) => {
     setOfferModalVisible(true)
     reset({ loanAmount_offer: null })
+    
   }
 
   return (
     <>
       <Container style={styles.content}>
         {/*Information Modal for loanCalculated field*/}
-        <Modal
+        {/* <Modal
           animationType="fade"
           transparent={true}
           visible={calculateModalVisible}
@@ -121,7 +125,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
             <View style={styles.modalContent}>
               <View style={styles.informationIconContainer}>
                 <Text style={styles.informationIcon}>!</Text>
-                {/* <FontAwesome5 name="check" size={32} color="white" /> */}
+                <FontAwesome5 name="check" size={32} color="white" />
               </View>
               <View style={styles.modalText}>
                 <StyledText
@@ -147,7 +151,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               </TouchableOpacity>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
 
         {/*Offer Modal for loanOffer field*/}
         <Modal
@@ -230,12 +234,13 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <StyledText fontWeight="bold" style={styles.loanDetailHeader}>
                   {i18n.t('home.secondSubHeader')}
                 </StyledText>
-                <StyledText
+
+                {/* <StyledText
                   fontWeight="regular"
                   style={styles.loanDetailResult}
                 >
                   Content goes here
-                </StyledText>
+                </StyledText> */}
 
                 <View style={styles.loanType}>
                   <RNPickerSelect
@@ -246,6 +251,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
+
                 <Text style={styles.validationText}>
                   {calculatePickerWarning}
                 </Text>
@@ -277,25 +283,33 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   defaultValue=""
                 />
                 {errors.loanAmount_calculate?.type === 'required' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.required')}
-                  </Text>
+                  <View style={styles.validationTextContainer}>
+                    <Text style={styles.validationText}>
+                      {i18n.t('home.validation.required')}
+                    </Text>
+                  </View>
                 )}
 
                 {errors.loanAmount_calculate?.type === 'min' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidAmount')}
-                  </Text>
+                  <View style={styles.validationTextContainer}>
+                    <Text style={styles.validationText}>
+                      {i18n.t('home.validation.invalidAmount')}
+                    </Text>
+                  </View>
                 )}
                 {errors.loanAmount_calculate?.type === 'max' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidAmount')}
-                  </Text>
+                  <View style={styles.validationTextContainer}>
+                    <Text style={styles.validationText}>
+                      {i18n.t('home.validation.invalidAmount')}
+                    </Text>
+                  </View>
                 )}
                 {errors.loanAmount_calculate?.type === 'pattern' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidAmount')}
-                  </Text>
+                  <View style={styles.validationTextContainer}>
+                    <Text style={styles.validationText}>
+                      {i18n.t('home.validation.invalidAmount')}
+                    </Text>
+                  </View>
                 )}
 
                 <TouchableOpacity
@@ -328,12 +342,13 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <StyledText fontWeight="bold" style={styles.loanDetailHeader}>
                   {i18n.t('home.recommendContent.header')}
                 </StyledText>
-                <StyledText
+                
+                {/* <StyledText
                   fontWeight="regular"
                   style={styles.loanDetailResult}
                 >
                   Content goes here
-                </StyledText>
+                </StyledText> */}
 
                 <View
                   style={styles.loanType}
@@ -347,7 +362,11 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
-                <Text style={styles.validationText}>{offerPickerWarning}</Text>
+                <View style={styles.validationTextContainer}>
+                  <Text style={styles.validationText}>
+                    {offerPickerWarning}
+                  </Text>
+                </View>
 
                 <View style={styles.loanType}>
                   <RNPickerSelect
@@ -358,9 +377,11 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
-                <Text style={styles.validationText}>
-                  {durationPickerWarning}
-                </Text>
+                <View style={styles.validationTextContainer}>
+                  <Text style={styles.validationText}>
+                    {durationPickerWarning}
+                  </Text>
+                </View>
 
                 <Controller
                   control={control}
@@ -528,7 +549,7 @@ const styles = StyleSheet.create({
 
   // ------------------------------------ Loan detail field
   loanDetailContainer: {
-    height: 380,
+    height: 350,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
@@ -588,13 +609,19 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '600',
   },
+  validationTextContainer: {
+    alignItems: 'center',
+  },
   validationText: {
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
+    paddingHorizontal: normaliseH(80),
+    marginTop: normaliseV(-40),
+    alignSelf: 'center',
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 550,
+    height: 480,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
