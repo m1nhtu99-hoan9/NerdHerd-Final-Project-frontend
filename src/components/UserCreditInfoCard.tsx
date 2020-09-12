@@ -90,9 +90,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const [offerPickerValue, setOfferPickerValue] = useState(null)
   const [durationPickerValue, setOfferPickerDuration] = useState(null)
 
-  const [calculatePickerWarning, setCalculatePickerWarning] = useState('')
-  const [offerPickerWarning, setOfferPickerWarning] = useState('')
-  const [durationPickerWarning, setDurationPickerWarning] = useState('')
+  const [calculatePickerWarning, setCalculatePickerWarning] = useState(<Text></Text>)
+  const [offerPickerWarning, setOfferPickerWarning] = useState(<Text></Text>)
+  const [durationPickerWarning, setDurationPickerWarning] = useState(<Text></Text>)
 
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
@@ -226,7 +226,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   <TextInputIcon></TextInputIcon>
                 </View>
                 <Text style={styles.validationText}>
-                  {i18n.t('home.validation.required')}
+                  {calculatePickerWarning}
                 </Text>
 
                 <Controller
@@ -281,9 +281,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   style={styles.buttonNext}
                   onPress={async () => {
                     if (calculatePickerValue == null) {
-                      setCalculatePickerWarning('Error')
+                      setCalculatePickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
                     } else {
-                      setCalculatePickerWarning('')
+                      setCalculatePickerWarning(<Text></Text>)
                       if (await trigger('loanAmount_calculate')) {
                         calculateFormOnSubmitted('ok')
                       }
@@ -324,9 +324,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
-                <Text style={styles.validationText}>
-                  {i18n.t('home.validation.required')}
-                </Text>
+                <Text style={styles.validationText}>{offerPickerWarning}</Text>
 
                 <View style={styles.loanType}>
                   <RNPickerSelect
@@ -338,7 +336,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   <TextInputIcon></TextInputIcon>
                 </View>
                 <Text style={styles.validationText}>
-                  {i18n.t('home.validation.required')}
+                  {durationPickerWarning}
                 </Text>
 
                 <Controller
@@ -395,30 +393,27 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       durationPickerValue == null &&
                       offerPickerValue == null
                     ) {
-                      setOfferPickerWarning('error')
-                      setDurationPickerWarning('error')
+                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
                     }
                     if (
                       durationPickerValue == null &&
                       offerPickerValue != null
                     ) {
-                      setDurationPickerWarning('error')
-                      setOfferPickerWarning('')
+                      setDurationPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                      setOfferPickerWarning(<Text></Text>)
                     }
                     if (
                       durationPickerValue != null &&
                       offerPickerValue == null
                     ) {
-                      setDurationPickerWarning('')
-                      setOfferPickerWarning('Error')
-                    }
-                    if (
-                      durationPickerValue != null &&
-                      offerPickerValue != null
-                    ) {
-                      setDurationPickerWarning('')
-                      setOfferPickerWarning('')
-                      if (await trigger('loanAmount_offer')) {
+                      setDurationPickerWarning(<Text></Text>)
+                      setOfferPickerWarning(<Text>{i18n.t('home.validation.required')}</Text>)
+                    } if (durationPickerValue != null &&
+                      offerPickerValue != null) {
+                      setDurationPickerWarning(<Text></Text>)
+                        setOfferPickerWarning(<Text></Text>)
+                      if (await trigger('loanAmount_offer')) {       
                         offerFormOnSubmitted('cf')
                       }
                     }
