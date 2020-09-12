@@ -16,3 +16,10 @@ declare module 'rn-faded-scrollview'
  *  regarding `react-native-speedometer`
  */ 
 declare module 'react-native-speedometer'
+
+type PhoneNum = string
+
+type SearchResult = {
+  phone: PhoneNum
+  score?: number
+}
