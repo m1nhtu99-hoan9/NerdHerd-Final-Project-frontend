@@ -99,9 +99,7 @@ export default function SeacrhScreen() {
   const [buttonText, setButtonText] = useState('Gửi mã OTP')
   const [isEnabled, setTextInputStatus] = useState(false)
   const [otpCode, setOtpCode] = useState('')
-  const [otpWarn, setOtpWarn] = useState(
-    i18n.t('search.validation.otpIncorrect'),
-  )
+  const [otpWarn, setOtpWarn] = useState('')
 
   const isIncorrect = (otpCode: string) => {
     if (otpCode == '') {

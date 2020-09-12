@@ -37,7 +37,6 @@ const Line = function () {
 
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const { phoneNumber, creditScore } = props
-  const [selectedValue, setSelectedValue] = useState('abc')
   const [editable, setEditable] = useState(true)
 
   const placeholderLoanType = {
@@ -78,7 +77,10 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           behavior="padding"
           enabled
         >
-          <ScrollView>
+          <ScrollView
+            onTouchMove={() => setEditable(false)}
+            onTouchEnd={() => setEditable(true)}
+          >
             <View style={styles.phoneNumContainer}>
               <StyledText fontWeight="regular" style={styles.phoneNum}>
                 {phoneNumber}
@@ -91,20 +93,18 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
               <StyledText fontWeight="bold" style={styles.creditScoreHeader}>
                 {i18n.t('home.firstSubHeader')}
               </StyledText>
-              
-              
+
               <RNSpeedometer value={creditScore} size={normalise(220)} />
               <View style={styles.speedometerContainer}>
-              <View
-                style={{
-                }}
-              >
-                <Image
-                  source={require('../images/bar.png')}
-                  style={{ width: 220, height: 185, position: 'relative' }}
-                ></Image>
-                <StyledText style={styles.score} fontWeight='bold'>{String(creditScore)}</StyledText>
-              </View>
+                <View style={{}}>
+                  <Image
+                    source={require('../images/bar.png')}
+                    style={{ width: 220, height: 185, position: 'relative' }}
+                  ></Image>
+                  <StyledText style={styles.score} fontWeight="bold">
+                    {String(creditScore)}
+                  </StyledText>
+                </View>
               </View>
 
               <StyledText fontWeight="regular" style={styles.creditScoreNote}>
@@ -325,13 +325,13 @@ const styles = StyleSheet.create({
   speedometerContainer: {
     position: 'absolute',
     alignSelf: 'center',
-    marginTop: normaliseV(140)
+    marginTop: normaliseV(140),
   },
   score: {
     color: 'black',
     fontSize: normalise(28),
     position: 'absolute',
     alignSelf: 'center',
-    marginTop: normalise(111)
-  }
+    marginTop: normalise(111),
+  },
 })
