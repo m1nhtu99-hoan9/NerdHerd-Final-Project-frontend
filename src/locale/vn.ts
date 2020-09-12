@@ -65,7 +65,7 @@ const vn = {
     validation: {
       required: 'Trường này không được để trống',
       invalidAmount: 'Số tiền vay phải > 1 triệu đồng và < 100 tỷ đồng',
-      invalidCharacter: 'Số tiền không hợp lệ'
+      invalidCharacter: 'Số tiền không hợp lệ',
     },
     recommendContent: {
       header: 'Đề xuất khoản vay',

@@ -226,7 +226,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   <TextInputIcon></TextInputIcon>
                 </View>
                 <Text style={styles.validationText}>
-                  {calculatePickerWarning}
+                  {i18n.t('home.validation.required')}
                 </Text>
 
                 <Controller
@@ -324,7 +324,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   />
                   <TextInputIcon></TextInputIcon>
                 </View>
-                <Text style={styles.validationText}>{offerPickerWarning}</Text>
+                <Text style={styles.validationText}>
+                  {i18n.t('home.validation.required')}
+                </Text>
 
                 <View style={styles.loanType}>
                   <RNPickerSelect
@@ -336,7 +338,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   <TextInputIcon></TextInputIcon>
                 </View>
                 <Text style={styles.validationText}>
-                  {durationPickerWarning}
+                  {i18n.t('home.validation.required')}
                 </Text>
 
                 <Controller
@@ -409,11 +411,14 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                     ) {
                       setDurationPickerWarning('')
                       setOfferPickerWarning('Error')
-                    } if (durationPickerValue != null &&
-                      offerPickerValue != null) {
+                    }
+                    if (
+                      durationPickerValue != null &&
+                      offerPickerValue != null
+                    ) {
                       setDurationPickerWarning('')
-                        setOfferPickerWarning('')
-                      if (await trigger('loanAmount_offer')) {       
+                      setOfferPickerWarning('')
+                      if (await trigger('loanAmount_offer')) {
                         offerFormOnSubmitted('cf')
                       }
                     }
@@ -560,7 +565,7 @@ const styles = StyleSheet.create({
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 500,
+    height: 550,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
