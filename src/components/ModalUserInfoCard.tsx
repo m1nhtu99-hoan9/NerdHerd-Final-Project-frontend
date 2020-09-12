@@ -20,7 +20,7 @@ import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
 
 
-const ModalField = (icon: React.ReactNode, headerText: string, contentText: string) => {
+const ModalField = (headerText: string, contentText: string) => {
     const [calculateModalVisible, setCalculateModalVisible] = useState(false)
     const [offerModalVisible, setOfferModalVisible] = useState(false)
   return (

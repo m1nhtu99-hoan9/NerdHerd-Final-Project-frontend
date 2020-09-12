@@ -30,6 +30,8 @@ import RNPickerSelect from 'react-native-picker-select'
 
 import { useForm, Controller } from 'react-hook-form'
 
+import ModalField from '../components/ModalUserInfoCard'
+
 interface FormInput {
   loanAmount_calculate: number
   loanAmount_offer: number
@@ -80,12 +82,12 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
 
   const { control, handleSubmit, errors } = useForm<FormInput>()
 
-  const calculateFormOnSubmitted = (data: Object) => {
-    console.log(data)
-  }
-
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
   const [offerModalVisible, setOfferModalVisible] = useState(false)
+
+  const calculateFormOnSubmitted = (data: Object) => {
+    setCalculateModalVisible(true)
+  }
 
   return (
     <>
@@ -98,7 +100,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         >
           <View style={styles.modalBackground}>
             <View style={styles.modalContent}>
-              <View style={[styles.informationIconContainer, {backgroundColor: 'red'}]}>
+              <View
+                style={styles.informationIconContainer}
+              >
                 <Text style={styles.informationIcon}>!</Text>
                 {/* <FontAwesome5 name="check" size={32} color="white" /> */}
               </View>
@@ -217,6 +221,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       onBlur={onBlur}
                       value={value}
                       maxLength={12}
+                      // End of validation code-block
                       editable={editable}
                       style={styles.loanAmount}
                       placeholder={i18n.t('home.loanAmountInput')}
@@ -239,7 +244,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
 
                 <TouchableOpacity
                   style={styles.buttonNext}
-                  onPress={() => setCalculateModalVisible(true)}
+                  onPress={calculateFormOnSubmitted}
                   //onPress={handleSubmit(calculateFormOnSubmitted)}
                 >
                   <StyledText fontWeight="bold" style={styles.buttonText}>
