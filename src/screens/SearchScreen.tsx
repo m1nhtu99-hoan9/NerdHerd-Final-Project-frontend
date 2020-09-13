@@ -133,6 +133,34 @@ export default function SeacrhScreen() {
     }
   }
 
+  const _showErrorMessage = function (props: any): JSX.Element | undefined {
+    switch (props) {
+      case 'required':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('signIn.validation.required')}
+            </Text>
+          </View>
+        )
+      case 'minLength':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('signIn.validation.invalid')}
+            </Text>
+          </View>
+        )
+      case 'pattern':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('signIn.validation.invalid')}
+            </Text>
+          </View>
+        )
+    }
+  }
   // use react-hook-form
   const { control, handleSubmit, errors, reset } = useForm<FormInput>()
 
@@ -163,21 +191,11 @@ export default function SeacrhScreen() {
             rules={{ required: true, minLength: 10, pattern: PATTERN }}
             defaultValue=""
           />
-          {errors.phoneNum?.type === 'required' && (
-            <Text style={styles.validationText}>
-              {i18n.t('signIn.validation.required')}
-            </Text>
-          )}
-          {errors.phoneNum?.type === 'minLength' && (
-            <Text style={styles.validationText}>
-              {i18n.t('signIn.validation.invalid')}
-            </Text>
-          )}
-          {errors.phoneNum?.type === 'pattern' && (
-            <Text style={styles.validationText}>
-              {i18n.t('signIn.validation.invalid')}
-            </Text>
-          )}
+
+          <View style={styles.validationTextContainer}>
+            {_showErrorMessage(errors.phoneNum?.type)}
+          </View>
+
           {/* END Phone Number input field */}
 
           <Animated.View style={{ opacity: opacity }}>
@@ -204,7 +222,9 @@ export default function SeacrhScreen() {
               }}
               placeholder={i18n.t('search.otpCodeInput')}
             />
-            <Text style={styles.validationText}>{otpWarn}</Text>
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>{otpWarn}</Text>
+            </View>
           </Animated.View>
 
           <Animated.View
@@ -278,5 +298,8 @@ const styles = StyleSheet.create({
     marginTop: normaliseV(-40),
     marginLeft: normaliseH(70),
     color: 'rgba(242, 38, 19, 1)',
+  },
+  validationTextContainer: {
+    alignItems: 'center',
   },
 })

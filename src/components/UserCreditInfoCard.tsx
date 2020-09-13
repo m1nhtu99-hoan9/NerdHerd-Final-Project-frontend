@@ -157,8 +157,8 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         >
           <ModalContent
             icon="!"
-            headerText={'Result'}
-            contentText={'Khoan vay cua ban co xac suat thanh cong la 67%'}
+            headerText={'Kết quả'}
+            contentText={'Khoản vay của bạn có xác suất thành công là 67%'}
             color="#3282b8"
           ></ModalContent>
           <TouchableOpacity
@@ -177,8 +177,8 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         >
           <ModalContent
             icon="check"
-            headerText={'Sucess'}
-            contentText={'Ban co the vay voi han muc x%'}
+            headerText={'Thành công'}
+            contentText={'Đã đề xuất khoản vay thành công với lãi suất x%/năm'}
             color="#36ad51"
           ></ModalContent>
           <TouchableOpacity
@@ -587,7 +587,7 @@ const styles = StyleSheet.create({
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
     paddingHorizontal: normaliseH(80),
-    marginTop: normaliseV(-40),
+    marginTop: normaliseV(-50),
     alignSelf: 'center',
   },
   // ------------------------------------ Recommend field
