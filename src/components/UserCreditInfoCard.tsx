@@ -27,11 +27,12 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
 import RNPickerSelect from 'react-native-picker-select'
+import Slider from '@react-native-community/slider';
 
-import { useForm, Controller } from 'react-hook-form'
 
-import ModalField from '../components/ModalUserInfoCard'
-import { reset } from 'i18n-js'
+import { useForm, Controller, DeepMap, FieldError } from 'react-hook-form'
+
+import ModalContent from '../components/ModalUserInfoCard'
 
 interface FormInput {
   loanAmount_calculate: number | null
@@ -49,10 +50,15 @@ const Line = function () {
 
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const { phoneNumber, creditScore } = props
-  const [editable, setEditable] = useState(true)
 
   const placeholderLoanType = {
     label: i18n.t('home.loanOptionsInput'),
+    value: null,
+    color: '#9EA0A4',
+  }
+
+  const placeholderDuration = {
+    label: 'Chọn thời hạn vay',
     value: null,
     color: '#9EA0A4',
   }
@@ -75,21 +81,21 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
     { label: '36 Tháng', value: '36months' },
   ]
 
-  const placeholderDuration = {
-    label: 'Chọn thời hạn vay',
-    value: null,
-    color: '#9EA0A4',
-  }
-
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
+  // State of modal
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
   const [offerModalVisible, setOfferModalVisible] = useState(false)
 
+  // Picker values
   const [calculatePickerValue, setCalculatePickerValue] = useState(null)
   const [offerPickerValue, setOfferPickerValue] = useState(null)
   const [durationPickerValue, setOfferPickerDuration] = useState(null)
 
+  // Slider value
+  const [sliderValue, setSliderValue] = useState(4.5)
+
+  // Validation warnings
   const [calculatePickerWarning, setCalculatePickerWarning] = useState(
     <Text></Text>,
   )
@@ -101,57 +107,72 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const calculateFormOnSubmitted = (data: Object) => {
     setCalculateModalVisible(true)
     reset({ loanAmount_calculate: null })
-    console.log('ok')
-    return (<ModalField isVisible={calculateModalVisible} icon={<Text>OK</Text>} headerText="ij" contentText="ok" color="ok"></ModalField>)
-
   }
 
   const offerFormOnSubmitted = (data: Object) => {
     setOfferModalVisible(true)
     reset({ loanAmount_offer: null })
-    
+  }
+
+  const _showErrorMessage = function (props: any): JSX.Element | undefined {
+    switch (props) {
+      case 'required':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('home.validation.required')}
+            </Text>
+          </View>
+        )
+      case 'min':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('home.validation.invalidAmount')}
+            </Text>
+          </View>
+        )
+      case 'max':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('home.validation.invalidAmount')}
+            </Text>
+          </View>
+        )
+      case 'pattern':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('home.validation.invalidAmount')}
+            </Text>
+          </View>
+        )
+    }
   }
 
   return (
     <>
       <Container style={styles.content}>
         {/*Information Modal for loanCalculated field*/}
-        {/* <Modal
+        <Modal
           animationType="fade"
           transparent={true}
           visible={calculateModalVisible}
         >
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContent}>
-              <View style={styles.informationIconContainer}>
-                <Text style={styles.informationIcon}>!</Text>
-                <FontAwesome5 name="check" size={32} color="white" />
-              </View>
-              <View style={styles.modalText}>
-                <StyledText
-                  fontWeight="bold"
-                  style={styles.modalContentHeaderText}
-                >
-                  Result
-                </StyledText>
-                <StyledText
-                  fontWeight="regular"
-                  style={styles.modalContentText}
-                >
-                  Khoan vay cua ban co xac suat thanh cong la 67%
-                </StyledText>
-              </View>
-              <TouchableOpacity
-                style={styles.calculateModalConfirmButton}
-                onPress={() => setCalculateModalVisible(false)}
-              >
-                <StyledText fontWeight="bold" style={styles.formConfirmText}>
-                  OK
-                </StyledText>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal> */}
+          <ModalContent
+            icon="!"
+            headerText={'Kết quả'}
+            contentText={'Khoản vay của bạn có xác suất thành công là 67%'}
+            color="#3282b8"
+          ></ModalContent>
+          <TouchableOpacity
+            style={styles.calculateModalConfirmButton}
+            onPress={() => setCalculateModalVisible(false)}
+          >
+            <Text style={styles.formConfirmText}>OK</Text>
+          </TouchableOpacity>
+        </Modal>
 
         {/*Offer Modal for loanOffer field*/}
         <Modal
@@ -159,32 +180,18 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           transparent={true}
           visible={offerModalVisible}
         >
-          <View style={styles.modalBackground}>
-            <View style={styles.modalContent}>
-              <View style={styles.successIconContainer}>
-                <FontAwesome5 name="check" size={32} color="white" />
-              </View>
-              <View style={styles.modalText}>
-                <StyledText
-                  fontWeight="bold"
-                  style={styles.modalContentHeaderText}
-                >
-                  Success
-                </StyledText>
-                <StyledText style={styles.modalContentText}>
-                  Khoan vay cua ban co xac suat thanh cong la 67%
-                </StyledText>
-              </View>
-              <TouchableOpacity
-                style={styles.offerModalConfirmButton}
-                onPress={() => setOfferModalVisible(false)}
-              >
-                <StyledText fontWeight="bold" style={styles.formConfirmText}>
-                  OK
-                </StyledText>
-              </TouchableOpacity>
-            </View>
-          </View>
+          <ModalContent
+            icon="check"
+            headerText={'Thành công'}
+            contentText={'Đã đề xuất khoản vay thành công với lãi suất x%/năm'}
+            color="#36ad51"
+          ></ModalContent>
+          <TouchableOpacity
+            style={styles.offerModalConfirmButton}
+            onPress={() => setOfferModalVisible(false)}
+          >
+            <Text style={styles.formConfirmText}>OK</Text>
+          </TouchableOpacity>
         </Modal>
 
         <KeyboardAvoidingView
@@ -192,10 +199,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           behavior="padding"
           enabled
         >
-          <ScrollView
-            onTouchMove={() => setEditable(false)}
-            onTouchEnd={() => setEditable(true)}
-          >
+          <ScrollView>
             <View style={styles.phoneNumContainer}>
               <StyledText fontWeight="regular" style={styles.phoneNum}>
                 {phoneNumber}
@@ -267,7 +271,6 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       maxLength={12}
                       // End of validation code-block
                       keyboardType={'number-pad'}
-                      editable={editable}
                       style={styles.loanAmount}
                       placeholder={i18n.t('home.loanAmountInput')}
                     />
@@ -282,49 +285,21 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   }}
                   defaultValue=""
                 />
-                {errors.loanAmount_calculate?.type === 'required' && (
-                  <View style={styles.validationTextContainer}>
-                    <Text style={styles.validationText}>
-                      {i18n.t('home.validation.required')}
-                    </Text>
-                  </View>
-                )}
-
-                {errors.loanAmount_calculate?.type === 'min' && (
-                  <View style={styles.validationTextContainer}>
-                    <Text style={styles.validationText}>
-                      {i18n.t('home.validation.invalidAmount')}
-                    </Text>
-                  </View>
-                )}
-                {errors.loanAmount_calculate?.type === 'max' && (
-                  <View style={styles.validationTextContainer}>
-                    <Text style={styles.validationText}>
-                      {i18n.t('home.validation.invalidAmount')}
-                    </Text>
-                  </View>
-                )}
-                {errors.loanAmount_calculate?.type === 'pattern' && (
-                  <View style={styles.validationTextContainer}>
-                    <Text style={styles.validationText}>
-                      {i18n.t('home.validation.invalidAmount')}
-                    </Text>
-                  </View>
-                )}
+                {_showErrorMessage(errors.loanAmount_calculate?.type)}
 
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={async () => {
-                    if (calculatePickerValue == null) {
-                      setCalculatePickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    } else {
-                      setCalculatePickerWarning(<Text></Text>)
-                      if (await trigger('loanAmount_calculate')) {
-                        calculateFormOnSubmitted('ok')
-                      }
-                    }
+                    calculatePickerValue == null
+                      ? setCalculatePickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setCalculatePickerWarning(<Text></Text>)
+                    if (
+                      (await trigger('loanAmount_calculate')) == true &&
+                      calculatePickerValue != null
+                    )
+                      calculateFormOnSubmitted('ok')
                   }}
                   //onPress={handleSubmit(calculateFormOnSubmitted)}
                 >
@@ -342,7 +317,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <StyledText fontWeight="bold" style={styles.loanDetailHeader}>
                   {i18n.t('home.recommendContent.header')}
                 </StyledText>
-                
+
                 {/* <StyledText
                   fontWeight="regular"
                   style={styles.loanDetailResult}
@@ -394,7 +369,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       maxLength={12}
                       // End of validation code-block
                       keyboardType="number-pad"
-                      editable={editable}
+                      editable={true}
                       style={styles.loanAmount}
                       placeholder={i18n.t('home.loanAmountInput')}
                     />
@@ -409,69 +384,84 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                   }}
                   defaultValue=""
                 />
-                {errors.loanAmount_offer?.type === 'required' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.required')}
-                  </Text>
-                )}
-                {errors.loanAmount_offer?.type === 'min' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidAmount')}
-                  </Text>
-                )}
-                {errors.loanAmount_offer?.type === 'max' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidAmount')}
-                  </Text>
-                )}
-                {errors.loanAmount_offer?.type === 'pattern' && (
-                  <Text style={styles.validationText}>
-                    {i18n.t('home.validation.invalidCharacter')}
-                  </Text>
-                )}
+                {_showErrorMessage(errors.loanAmount_offer?.type)}
+
+                <View style={styles.sliderContainer}>
+                  <Text>Lai suat</Text>
+                  <Text>{sliderValue}%</Text>
+                  <Slider
+                    style={{ width: 240, height: 40 }}
+                    minimumValue={4.5}
+                    maximumValue={13.5}
+                    step={0.5}
+                    minimumTrackTintColor="green"
+                    maximumTrackTintColor="lightgrey"
+                    onValueChange={(value) => setSliderValue(value)}
+                  />
+                </View>
 
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={async () => {
+                    durationPickerValue == null
+                      ? setDurationPickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setDurationPickerWarning(<Text></Text>)
+
+                    offerPickerValue == null
+                      ? setOfferPickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setOfferPickerWarning(<Text></Text>)
+
                     if (
-                      durationPickerValue == null &&
-                      offerPickerValue == null
-                    ) {
-                      setOfferPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                      setDurationPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    }
-                    if (
-                      durationPickerValue == null &&
-                      offerPickerValue != null
-                    ) {
-                      setDurationPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                      setOfferPickerWarning(<Text></Text>)
-                    }
-                    if (
-                      durationPickerValue != null &&
-                      offerPickerValue == null
-                    ) {
-                      setDurationPickerWarning(<Text></Text>)
-                      setOfferPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    }
-                    if (
+                      (await trigger('loanAmount_offer')) == true &&
                       durationPickerValue != null &&
                       offerPickerValue != null
                     ) {
-                      setDurationPickerWarning(<Text></Text>)
-                      setOfferPickerWarning(<Text></Text>)
-                      if (await trigger('loanAmount_offer')) {
-                        offerFormOnSubmitted('cf')
-                      }
+                      offerFormOnSubmitted('cf')
                     }
+
+                    // if (
+                    //   durationPickerValue == null &&
+                    //   offerPickerValue == null
+                    // ) {
+                    //   setOfferPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    //   setDurationPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    // }
+                    // if (
+                    //   durationPickerValue == null &&
+                    //   offerPickerValue != null
+                    // ) {
+                    //   setDurationPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    //   setOfferPickerWarning(<Text></Text>)
+                    // }
+                    // if (
+                    //   durationPickerValue != null &&
+                    //   offerPickerValue == null
+                    // ) {
+                    //   setDurationPickerWarning(<Text></Text>)
+                    //   setOfferPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    // }
+                    // if (
+                    //   durationPickerValue != null &&
+                    //   offerPickerValue != null
+                    // ) {
+                    //   setDurationPickerWarning(<Text></Text>)
+                    //   setOfferPickerWarning(<Text></Text>)
+                    //   if (await trigger('loanAmount_offer')) {
+                    //     offerFormOnSubmitted('cf')
+                    //   }
+                    // }
                   }}
                 >
                   <StyledText fontWeight="bold" style={styles.buttonText}>
@@ -616,12 +606,12 @@ const styles = StyleSheet.create({
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
     paddingHorizontal: normaliseH(80),
-    marginTop: normaliseV(-40),
+    marginTop: normaliseV(-50),
     alignSelf: 'center',
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 480,
+    height: 550,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
@@ -637,12 +627,44 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: normalise(111),
   },
+  sliderContainer: {
+    alignItems: 'center',
+  },
+
   //Setting up modal
+
+
+  // modalBackground: {
+  //   position: 'absolute',
+  //   width: SCREEN_WIDTH, //////////////////////////////////////
+  //   height: SCREEN_HEIGHT, //////////////////////////////////////
+  //   backgroundColor: 'rgba(0, 0, 0, 0.57)',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // modalContent: {
+  //   position: 'absolute',
+  //   width: (SCREEN_WIDTH / 10) * 7.5, ////////////////////////////
+  //   height: (SCREEN_HEIGHT / 10) * 3, ////////////////////////////
+  //   backgroundColor: 'white',
+  //   borderRadius: 4,
+  //   shadowColor: '#000',
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 9,
+  //   },
+  //   shadowOpacity: 0.5,
+  //   shadowRadius: 12.35,
+
+  //   elevation: 19,
+  //   alignItems: 'center',
+  // },
+
   modalBackground: {
     position: 'absolute',
     width: SCREEN_WIDTH, //////////////////////////////////////
     height: SCREEN_HEIGHT, //////////////////////////////////////
-    backgroundColor: 'rgba(0, 0, 0, 0.57)',
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -650,17 +672,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: (SCREEN_WIDTH / 10) * 7.5, ////////////////////////////
     height: (SCREEN_HEIGHT / 10) * 3, ////////////////////////////
-    backgroundColor: 'white',
-    borderRadius: 4,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 9,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 12.35,
-
-    elevation: 19,
+    backgroundColor: 'transparent',
     alignItems: 'center',
   },
 
@@ -689,14 +701,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   calculateModalConfirmButton: {
-    width: 90 + '%',
-    height: 22 + '%',
+    width: 70 + '%',
+    height: 7 + '%',
     backgroundColor: '#3282b8',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
     position: 'absolute',
-    bottom: normaliseV(40),
+    bottom: normaliseV(735),
+    left: normaliseH(207),
   },
   formConfirmText: {
     color: 'white',
@@ -713,14 +726,15 @@ const styles = StyleSheet.create({
 
   // Offer modal style
   offerModalConfirmButton: {
-    width: 90 + '%',
-    height: 22 + '%',
+    width: 70 + '%',
+    height: 7 + '%',
     backgroundColor: '#36ad51',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
     position: 'absolute',
-    bottom: normaliseV(40),
+    bottom: normaliseV(735),
+    left: normaliseH(207),
   },
   successIconContainer: {
     width: SCREEN_WIDTH / 4.5,

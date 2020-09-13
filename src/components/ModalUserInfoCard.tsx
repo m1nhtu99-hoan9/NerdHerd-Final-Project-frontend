@@ -1,74 +1,54 @@
 import i18n from '../i18n'
-import React, { useState } from 'react'
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Dimensions,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-  Image,
-  Text,
-  Modal,
-} from 'react-native'
+import React from 'react'
+import { StyleSheet, View, Dimensions, Text } from 'react-native'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
 import { normalise, normaliseV, normaliseH } from '../../src/helpers'
 import StyledText from '../../src/components/atomic/StyledText'
-import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
-import { setStatusBarBackgroundColor } from 'expo-status-bar'
 
-type ModalFieldProps = {
+type ModalContentProps = {
   headerText: string
-  contentText: string,
-  color: string,
-  icon: JSX.Element,
-  isVisible: boolean
+  contentText: string
+  color: string
+  icon: string
 }
 
-const ModalField = (props: ModalFieldProps) => {
-  const { headerText, contentText, color, icon, isVisible } = props
-  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
-  const [offerModalVisible, setOfferModalVisible] = useState(true)
+const ModalContent = (props: ModalContentProps) => {
+  const { headerText, contentText, color, icon } = props
+
+  let finalIcon
+
+  switch (icon) {
+    case '!':
+      finalIcon = <Text style={styles.informationIcon}>!</Text>
+      break
+    case 'check':
+      finalIcon = <FontAwesome5 name="check" size={32} color="white" />
+      break
+  }
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={offerModalVisible}
-    >
-      <View style={styles.modalBackground}>
-        <View style={styles.modalContent}>
-          <View
-            style={[
-              styles.informationIconContainer,
-              { backgroundColor: 'red' },
-            ]}
-          >
-            <Text style={styles.informationIcon}>!</Text>
-            {/* <FontAwesome5 name="check" size={32} color="white" /> */}
-          </View>
-          <View style={styles.modalText}>
-              
-           <Text style={styles.modalContentText}>
-              Khoan vay cua ban co xac suat thanh cong la 67%
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={styles.calculateModalConfirmButton}
-            onPress={() => setOfferModalVisible(false)}
-          >
-            <Text style={styles.formConfirmText}>OK</Text>
-          </TouchableOpacity>
+    <View style={styles.modalBackground}>
+      <View style={styles.modalContent}>
+        <View
+          style={[styles.informationIconContainer, { backgroundColor: color }]}
+        >
+          {finalIcon}
+        </View>
+        <View style={styles.modalText}>
+          <StyledText fontWeight="bold" style={styles.modalContentHeaderText}>
+            {headerText}
+          </StyledText>
+          <StyledText style={styles.modalContentText}>{contentText}</StyledText>
         </View>
       </View>
-    </Modal>
+    </View>
   )
 }
 
-export default ModalField
+export default ModalContent
 
 const styles = StyleSheet.create({
   //Setting up modal
@@ -121,21 +101,6 @@ const styles = StyleSheet.create({
     fontSize: normalise(40),
     color: 'white',
     fontWeight: '700',
-  },
-  calculateModalConfirmButton: {
-    width: 90 + '%',
-    height: 22 + '%',
-    backgroundColor: '#3282b8',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 4,
-    position: 'absolute',
-    bottom: normaliseV(40),
-  },
-  formConfirmText: {
-    color: 'white',
-    fontSize: normalise(16),
-    fontWeight: '600',
   },
   modalText: {
     height: 38 + '%',
