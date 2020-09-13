@@ -54,7 +54,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
     value: null,
     color: '#9EA0A4',
   }
-  
+
   const placeholderDuration = {
     label: 'Chọn thời hạn vay',
     value: null,
@@ -96,7 +96,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   )
   const [offerPickerWarning, setOfferPickerWarning] = useState(<Text></Text>)
   const [durationPickerWarning, setDurationPickerWarning] = useState(
-    <Text></Text>
+    <Text></Text>,
   )
 
   const calculateFormOnSubmitted = (data: Object) => {
@@ -285,16 +285,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={async () => {
-                    if (calculatePickerValue == null) {
-                      setCalculatePickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    } else {
-                      setCalculatePickerWarning(<Text></Text>)
-                      if (await trigger('loanAmount_calculate')) {
-                        calculateFormOnSubmitted('ok')
-                      }
-                    }
+                    calculatePickerValue == null
+                      ? setCalculatePickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setCalculatePickerWarning(<Text></Text>)
+                    if (
+                      (await trigger('loanAmount_calculate')) == true &&
+                      calculatePickerValue != null
+                    )
+                      calculateFormOnSubmitted('ok')
                   }}
                   //onPress={handleSubmit(calculateFormOnSubmitted)}
                 >
@@ -384,45 +384,65 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={async () => {
+                    durationPickerValue == null
+                      ? setDurationPickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setDurationPickerWarning(<Text></Text>)
+
+                    offerPickerValue == null
+                      ? setOfferPickerWarning(
+                          <Text>{i18n.t('home.validation.required')}</Text>,
+                        )
+                      : setOfferPickerWarning(<Text></Text>)
+
                     if (
-                      durationPickerValue == null &&
-                      offerPickerValue == null
-                    ) {
-                      setOfferPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                      setDurationPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    }
-                    if (
-                      durationPickerValue == null &&
-                      offerPickerValue != null
-                    ) {
-                      setDurationPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                      setOfferPickerWarning(<Text></Text>)
-                    }
-                    if (
-                      durationPickerValue != null &&
-                      offerPickerValue == null
-                    ) {
-                      setDurationPickerWarning(<Text></Text>)
-                      setOfferPickerWarning(
-                        <Text>{i18n.t('home.validation.required')}</Text>,
-                      )
-                    }
-                    if (
+                      (await trigger('loanAmount_offer')) == true &&
                       durationPickerValue != null &&
                       offerPickerValue != null
                     ) {
-                      setDurationPickerWarning(<Text></Text>)
-                      setOfferPickerWarning(<Text></Text>)
-                      if (await trigger('loanAmount_offer')) {
-                        offerFormOnSubmitted('cf')
-                      }
+                      offerFormOnSubmitted('cf')
                     }
+
+                    // if (
+                    //   durationPickerValue == null &&
+                    //   offerPickerValue == null
+                    // ) {
+                    //   setOfferPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    //   setDurationPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    // }
+                    // if (
+                    //   durationPickerValue == null &&
+                    //   offerPickerValue != null
+                    // ) {
+                    //   setDurationPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    //   setOfferPickerWarning(<Text></Text>)
+                    // }
+                    // if (
+                    //   durationPickerValue != null &&
+                    //   offerPickerValue == null
+                    // ) {
+                    //   setDurationPickerWarning(<Text></Text>)
+                    //   setOfferPickerWarning(
+                    //     <Text>{i18n.t('home.validation.required')}</Text>,
+                    //   )
+                    // }
+                    // if (
+                    //   durationPickerValue != null &&
+                    //   offerPickerValue != null
+                    // ) {
+                    //   setDurationPickerWarning(<Text></Text>)
+                    //   setOfferPickerWarning(<Text></Text>)
+                    //   if (await trigger('loanAmount_offer')) {
+                    //     offerFormOnSubmitted('cf')
+                    //   }
+                    // }
                   }}
                 >
                   <StyledText fontWeight="bold" style={styles.buttonText}>

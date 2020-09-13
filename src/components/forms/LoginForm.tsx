@@ -31,7 +31,7 @@ export default function LoginForm() {
   const _signInFormOnSubmitted = (data: Object) => {
     // @ts-ignore
     asyncLogin('0967162652', 'aacc1234').then(console.log)
-    // nav.navigate('Home')
+    nav.navigate('Home')
     console.log(data)
   }
   const _forgotPassTxtOnClicked = () => {
