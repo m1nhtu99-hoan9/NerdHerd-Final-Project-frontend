@@ -27,6 +27,8 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
 import RNPickerSelect from 'react-native-picker-select'
+import Slider from '@react-native-community/slider';
+
 
 import { useForm, Controller, DeepMap, FieldError } from 'react-hook-form'
 
@@ -89,6 +91,9 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const [calculatePickerValue, setCalculatePickerValue] = useState(null)
   const [offerPickerValue, setOfferPickerValue] = useState(null)
   const [durationPickerValue, setOfferPickerDuration] = useState(null)
+
+  // Slider value
+  const [sliderValue, setSliderValue] = useState(4.5)
 
   // Validation warnings
   const [calculatePickerWarning, setCalculatePickerWarning] = useState(
@@ -381,6 +386,20 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 />
                 {_showErrorMessage(errors.loanAmount_offer?.type)}
 
+                <View style={styles.sliderContainer}>
+                  <Text>Lai suat</Text>
+                  <Text>{sliderValue}%</Text>
+                  <Slider
+                    style={{ width: 240, height: 40 }}
+                    minimumValue={4.5}
+                    maximumValue={13.5}
+                    step={0.5}
+                    minimumTrackTintColor="green"
+                    maximumTrackTintColor="lightgrey"
+                    onValueChange={(value) => setSliderValue(value)}
+                  />
+                </View>
+
                 <TouchableOpacity
                   style={styles.buttonNext}
                   onPress={async () => {
@@ -592,7 +611,7 @@ const styles = StyleSheet.create({
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 480,
+    height: 550,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
@@ -608,7 +627,13 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: normalise(111),
   },
+  sliderContainer: {
+    alignItems: 'center',
+  },
+
   //Setting up modal
+
+
   // modalBackground: {
   //   position: 'absolute',
   //   width: SCREEN_WIDTH, //////////////////////////////////////

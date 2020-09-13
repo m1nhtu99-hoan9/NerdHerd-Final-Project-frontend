@@ -41,7 +41,7 @@ export default function HomeScreen() {
           </View>
 
           <Swiper
-            scrollEnabled={true}
+            scrollEnabled={false}
             showsButtons
             nextButton={<NextButton />}
             prevButton={<PrevButton />}
@@ -81,10 +81,9 @@ const NextButton = function () {
     <View
       style={{
         justifyContent: 'center',
-        width: 80,
-        height: 55,
-        marginRight: -60,
-        marginTop: normaliseV(-706),
+        width: normaliseH(280),
+        height: normaliseV(180),
+        marginRight: normaliseH(-195),
         borderRadius: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.45)',
       }}
@@ -93,7 +92,7 @@ const NextButton = function () {
         name="chevron-right"
         size={normalise(29)}
         color="white"
-        style={{ paddingLeft: normalise(2) }}
+        style={{ paddingLeft: normalise(4) }}
       />
     </View>
   )
@@ -105,10 +104,9 @@ const PrevButton = function () {
       style={{
         justifyContent: 'center',
         alignItems: 'flex-end',
-        width: 80,
-        height: 55,
-        marginLeft: -60,
-        marginTop: normaliseV(-706),
+        width: normaliseH(280),
+        height: normaliseV(180),
+        marginLeft: normaliseH(-195),
         borderRadius: 50,
         backgroundColor: 'rgba(0, 0, 0, 0.45)',
       }}
@@ -122,9 +120,9 @@ const PrevButton = function () {
 
       <Entypo
         name="chevron-left"
-        size={normalise(29)}
+        size={normalise(32)}
         color="white"
-        style={{ paddingRight: normalise(2) }}
+        style={{ paddingRight: normalise(4) }}
       />
     </View>
   )
