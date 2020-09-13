@@ -1,21 +1,20 @@
 import i18n from '../../i18n'
-import { useForm, Controller } from 'react-hook-form'
-
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useLayoutEffect, useContext } from 'react'
 import { StyleSheet, Alert } from 'react-native'
-import { Input, Item, Text, View, Form } from 'native-base'
+import { Text, View } from 'native-base'
+import { Hideo } from 'react-native-textinput-effects'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+
+import { useForm, Controller } from 'react-hook-form'
+import SyncStorage from 'sync-storage'
+
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import * as f from 'formik'
 
 import { Colours, Fonts } from '../../styles/index'
-import { normalise, normaliseSizeVertical } from '../../helpers/Constants'
-import { GradientText, TextInput, StyledText } from '../atomic/index'
-import { SignInNavContext } from '../../contexts'
+import { normalise, normaliseV, PATTERN } from '../../helpers'
+import { GradientText, StyledText } from '../atomic/index'
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
-import { Hideo } from 'react-native-textinput-effects'
-import { normaliseV, PATTERN } from '../../helpers'
-
+import { SignInNavContext, AppMachineContext } from '../../contexts'
 import { asyncLogin } from '../../machines'
 
 interface FormInput {
@@ -24,15 +23,36 @@ interface FormInput {
 }
 
 export default function LoginForm() {
+  // get & consume AppService hooks
+  const [appMState, appMSend] = useContext(AppMachineContext)
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
+
   const { control, handleSubmit, errors } = useForm<FormInput>()
 
-  const _signInFormOnSubmitted = (data: Object) => {
-    // @ts-ignore
-    asyncLogin('0967162652', 'aacc1234').then(console.log)
-    //nav.navigate('Home')
-    console.log(data)
+  const [apiErrorMessage, setApiErrorMessage] = useState<string | undefined>(
+    undefined,
+  )
+
+  const _signInFormOnSubmitted = (data: SignInFormFields) => {
+    /* set loading indicator up */
+
+    const _onSuccess = function (jwt: string) {
+      /* set loading indicator state to false */
+
+      /* progress to Home screen */
+      nav.navigate('Home')
+      /* store access token on SyncStorage */
+      SyncStorage.set('token', jwt)
+      /* update AppService accordingly */
+      appMState.send('Login')
+    }
+    asyncLogin('0967162652', 'aacc1234')(_onSuccess, setApiErrorMessage)
+    
+    // console.log(data)
+    // console.log('submit btn on click -> sync storage: ', SyncStorage.getAllKeys())
+    // console.log('this access token', SyncStorage.get('token'))
+    // console.log('on Login screen: ', appMState.value)
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')

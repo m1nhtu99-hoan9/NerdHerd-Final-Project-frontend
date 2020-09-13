@@ -32,6 +32,11 @@ type RegisterOkResponse = { db_user_id: string }
 type OtpOkResponse = { otp_code: string }
 type ScoreOkResponse = { score: string }
 
+type SignInFormFields = {
+  phoneNum: string
+  password: string
+}
+
 type RegisterForm = {
   full_name: string
   phone: string

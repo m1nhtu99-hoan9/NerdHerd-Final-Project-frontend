@@ -4,6 +4,11 @@ import {
   DoneEventObject,
   MachineConfig,
   ActionObject,
+  StateMachine,
+  Interpreter,
+  Event,
+  EventData,
+  SCXML,
 } from 'xstate'
 
 export interface AppMachineContext {
@@ -41,11 +46,42 @@ export interface AppMachineStateSchema extends StateSchema {
   }
 }
 
+/* after every changes made on `AppMachineEvent`, 
+  `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
   type: 'Login'
   payload?: object
 }
 
+/** Type of `AppMachine` */
+export type TAppMachine = StateMachine<
+  AppMachineContext,
+  AppMachineStateSchema,
+  AppMachineEvent,
+  any
+>
+export type InterpreterAppMachine = Interpreter<
+  AppMachineContext,
+  AppMachineStateSchema,
+  AppMachineEvent,
+  any
+>
+
+/** Type definitions for AppMachine service hook */
+export type TAppMachineState = State<
+  AppMachineContext,
+  AppMachineEvent,
+  any,
+  { value: any; context: AppMachineContext }
+>
+export type TAppMachineSender = (
+  event:
+    | AppMachineEvent
+    | 'Login'
+    | SCXML.Event<AppMachineEvent>
+    | Event<AppMachineEvent>[],
+  payload?: EventData | undefined,
+) => TAppMachineState
 export interface OtpMachineContext {
   otp?: string
 }

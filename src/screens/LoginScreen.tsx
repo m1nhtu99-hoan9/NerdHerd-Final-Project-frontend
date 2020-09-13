@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StyleSheet, Text, Image } from 'react-native'
 import { Content, View } from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
@@ -21,8 +21,6 @@ import { getCachedImageUri, runReanimatedTiming as runTiming } from '../utils/'
 const LOGO_IMAGE_PATH = '../../assets/images/logo.png'
 
 export default function LoginScreen() {
-  // const logoFontSize = useState(new Value(0))[0]
-
   const nav = useNavigation<WelcomeScreenNavigationProps>()
 
   /* events triggered when `Sign Up` text link is clicked are defined here */
@@ -34,14 +32,6 @@ export default function LoginScreen() {
     /* see CHANGELOG of 01/09/2020 */
     nav.navigate('Welcome')
   }
-
-  /**@TODO on the first run, shrink the logo font size
-   useCode(
-     // @ts-ignore
-     set(logoFontSize, runTiming(80, 60)),
-     [],
-     )
-  */
 
   return (
     <GradientContainer flexDirection={'column'}>

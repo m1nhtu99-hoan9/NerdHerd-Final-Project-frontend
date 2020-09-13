@@ -24,6 +24,7 @@ const AppMachine = Machine<
       entry: entryActions("resetContext"),
       on: {
         "Login": {
+          // invoke login promise as a state machine
           target: "AUTHENTICATING"
         }
       }

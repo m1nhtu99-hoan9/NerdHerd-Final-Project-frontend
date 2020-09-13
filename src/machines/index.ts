@@ -1,5 +1,22 @@
-import { asyncLogin } from './API'
+/* (─‿‿─) If you really think about it, 
+   isn't that Promise is a kind of state machine? */
+import {
+  asyncLogin,
+  asyncGetCrescore,
+  asyncGetOtp,
+  asyncLogout,
+  asyncGetUserProfile,
+  asyncRegister,
+} from './API'
+
+import AppMachine from './AppMachine'
 
 export {
-  asyncLogin
+  AppMachine,
+  asyncLogin,
+  asyncGetCrescore,
+  asyncGetOtp,
+  asyncLogout,
+  asyncGetUserProfile,
+  asyncRegister,
 }

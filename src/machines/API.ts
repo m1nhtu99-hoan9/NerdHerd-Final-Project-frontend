@@ -1,10 +1,15 @@
-import { create, ApiResponse } from 'apisauce'
+import { create } from 'apisauce'
 import { btoa as b64_encode } from 'Base64'
+
+/* (─‿‿─) If you really think about it, 
+   isn't that Promise is a kind of state machine? */
 
 const BASE_URI = 'https://nerdherd-crescorex.herokuapp.com/'
 const api = create({
   baseURL: BASE_URI,
 })
+
+type ReactStateSetter<T> = React.Dispatch<React.SetStateAction<T>>
 
 /** Asynchronously request to login (public route)
  * @param phoneNum: user's input phone number as string
@@ -14,7 +19,7 @@ const api = create({
  */
 const asyncLogin = (phoneNum: string, rawPassword: string) => (
   onSuccess: (receivedToken: string) => void,
-  onProblem: (errorMessage: string) => void,
+  onProblem: (errorMessage: string) => void | ReactStateSetter<string>,
 ) => {
   const decodedCreds = b64_encode(`${phoneNum}:${rawPassword}`)
 
