@@ -386,13 +386,10 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {_showErrorMessage(errors.loanAmount_offer?.type)}
 
                 <View style={styles.sliderContainer}>
-                  <StyledText fontWeight="bold" style={{...styles.loanDetailHeader}}>Lai suat</StyledText>
-                  <StyledText fontWeight='bold' style={{...styles.modalContentText, alignSelf: 'center', marginTop: normaliseV(20), fontSize: normalise(16), textDecorationLine:'underline'}}>{`${sliderValue}%`}</StyledText>
-
+                  <StyledText fontWeight="bold" style={{...styles.loanDetailHeader, paddingLeft: normaliseH(150)}}>Lãi suất</StyledText>
                   <View
-                    style={{ width: 100 + '%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}
+                    style={{ width: 100 + '%', marginTop: normaliseV(30), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
                   >
-                    <StyledText style={{...styles.modalContentText, fontSize: normalise(12)}}>4.5%</StyledText>
                     <Slider
                       style={{ width: 200, height: 40 }}
                       minimumValue={4.5}
@@ -402,7 +399,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       maximumTrackTintColor="lightgrey"
                       onValueChange={(value) => setSliderValue(value)}
                     />
-                    <StyledText style={{...styles.modalContentText, fontSize: normalise(12)}}>13.5%</StyledText>
+                    <StyledText fontWeight='bold' style={{...styles.modalContentText, fontSize: normalise(14), right: normaliseH(70), position:'absolute'}}>{`${sliderValue}%`}</StyledText>
                   </View>
                 </View>
 
@@ -617,7 +614,7 @@ const styles = StyleSheet.create({
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 570,
+    height: 540,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
