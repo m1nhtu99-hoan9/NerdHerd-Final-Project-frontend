@@ -11,6 +11,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { SearchScreenNavigationProps } from '../@types/navigation'
+import { any, all } from 'ramda'
 
 import GradientContainer from '../components/atomic/GradientContainer'
 import { HomeScreenNavigationProps } from '../@types/navigation'
@@ -102,9 +103,10 @@ export default function SeacrhScreen() {
   const [otpWarn, setOtpWarn] = useState('')
 
   const isIncorrect = (otpCode: string) => {
-    if (otpCode == '') {
-      return true
-    }
+    const _isNumDigit = (c: string) => any(x => x == c && x != ' ')([0,1,2,3,4,5,6,7,8,9])
+    const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
+
+    return (otpCode.length < 6) || (!_isValidOtp(otpCode))
   }
 
   const showOtpInput = (data: Object) => {
@@ -202,7 +204,7 @@ export default function SeacrhScreen() {
             <TextInput
               // validation code-block
               onChangeText={(value) => setOtpCode(value)}
-              maxLength={10}
+              maxLength={6}
               // End of validation code-block
               editable={isEnabled}
               value={otpCode}

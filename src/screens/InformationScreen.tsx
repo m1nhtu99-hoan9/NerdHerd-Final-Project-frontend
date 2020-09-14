@@ -22,6 +22,9 @@ import { normalise } from '../../src/helpers/Constants'
 import StyledText from '../../src/components/atomic/StyledText'
 import { normaliseH, normaliseV } from '../helpers'
 
+//Import validation
+import { useForm, Controller } from 'react-hook-form'
+
 type UserInfo = {
   fullName: string
   bankName: string
@@ -42,74 +45,148 @@ export default function InformationScreen() {
     email: 'phatxxxxx@gmail.com',
     phone: '094345xxx',
   })
+
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+
+  interface FormInput {
+    oldPassword: string
+    newPassword: string
+    repeatNewPassword: string
+  }
+
   const navigation = useNavigation<HomeScreenNavigationProps>()
+  const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
+
+  const _showErrorMessage = function (props: any, type: string): JSX.Element | undefined {
+    switch (props) {
+      case 'required':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('signIn.validation.required')}
+            </Text>
+          </View>
+        )
+      case 'minLength':
+        if(type != 'repeatPassword') {
+          return (
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>
+                {i18n.t('signIn.validation.invalid')}
+              </Text>
+            </View>
+          )
+              
+        }
+        else {
+          return (
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>
+              Mật khẩu nhập lại không chính xác
+              </Text>
+            </View>
+          )
+        }
+        
+      case 'pattern':
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              {i18n.t('signIn.validation.invalid')}
+            </Text>
+          </View>
+        )
+    }
+    if(type != 'oldPassword')
+    {
+      if (repeatPassword != newPassword)
+      {
+        if(type == 'repeatPassword')
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              Mật khẩu nhập lại không chính xác
+            </Text>
+          </View>)
+      }
+    }   
+  }
+
+  const _confirmButtonOnSubmit = () => {
+    setModalVisible(false)
+  }
 
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.header}>
-          <StyledText fontWeight="bold" style={styles.headerText}>
-            {i18n.t('aboutMe._nav')}
-          </StyledText>
-        </View>
-
-        <View style={styles.information}>
-
-          <View style={styles.nameContainer}>
-            <StyledText fontWeight="bold" style={styles.name}>
-              {userInfo.fullName}
+        <View style={styles.content}>
+          <View style={styles.header}>
+            <StyledText fontWeight="bold" style={styles.headerText}>
+              {i18n.t('aboutMe._nav')}
             </StyledText>
-            <TouchableOpacity style={{flexDirection: 'row', alignItems: "center"}}>
-              <StyledText fontWeight="bold" style={styles.addition}>
-              {i18n.t('aboutMe.additional')}
+          </View>
+
+          <View style={styles.information}>
+            <View style={styles.nameContainer}>
+              <StyledText fontWeight="bold" style={styles.name}>
+                {userInfo.fullName}
               </StyledText>
-              <FontAwesome
+              <TouchableOpacity
+                style={{ flexDirection: 'row', alignItems: 'center' }}
+              >
+                <StyledText fontWeight="bold" style={styles.addition}>
+                  {i18n.t('aboutMe.additional')}
+                </StyledText>
+                <FontAwesome
                   name="angle-right"
                   size={17}
                   color="#43B0FF"
                   style={{ paddingLeft: 5 }}
                 />
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
+
+            <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+              'aboutMe.bank',
+            )}: ${userInfo.bankName}`}</StyledText>
+            <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+              'aboutMe.accStatus',
+            )}: ${userInfo.status}`}</StyledText>
+            <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+              'aboutMe.email',
+            )}: ${userInfo.email}`}</StyledText>
+            <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
+              'aboutMe.phoneNum',
+            )}: ${userInfo.phone}`}</StyledText>
           </View>
 
-          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
-            'aboutMe.bank',
-          )}: ${userInfo.bankName}`}</StyledText>
-          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
-            'aboutMe.accStatus',
-          )}: ${userInfo.status}`}</StyledText>
-          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
-            'aboutMe.email',
-          )}: ${userInfo.email}`}</StyledText>
-          <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
-            'aboutMe.phoneNum',
-          )}: ${userInfo.phone}`}</StyledText>
-        </View>
-        
+          <Line></Line>
 
-        <Line></Line>
+          <View style={styles.button}>
+            <TouchableOpacity
+              style={styles.logoutButton}
+              onPress={() => {
+                navigation.replace('Login', { name: 0 })
+              }}
+            >
+              <StyledText fontWeight="bold" style={styles.buttonText}>
+                {i18n.t('aboutMe.signOutBtn')}
+              </StyledText>
+            </TouchableOpacity>
 
-        <View style={styles.button}>
-          <TouchableOpacity
-            style={styles.logoutButton}
-            onPress={() => {
-              navigation.replace('Login', { name: 0 })
-            }}
-          >
-            <StyledText fontWeight='bold' style={styles.buttonText}>{i18n.t('aboutMe.signOutBtn')}</StyledText>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.changePasswordButton}
-            onPress={() => setModalVisible(true)}
-          >
-            <StyledText fontWeight='bold' style={styles.buttonText}>{i18n.t('aboutMe.changePassBtn')}</StyledText>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.changePasswordButton}
+              onPress={() => setModalVisible(true)}
+            >
+              <StyledText fontWeight="bold" style={styles.buttonText}>
+                {i18n.t('aboutMe.changePassBtn')}
+              </StyledText>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-      </View>
-      
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
         <View style={styles.modalBackground}>
@@ -121,30 +198,93 @@ export default function InformationScreen() {
               >
                 <MaterialIcons name="arrow-back" size={32} color="black" />
               </TouchableOpacity>
-              <StyledText fontWeight='bold' style={styles.modalContentHeaderText}>
+              <StyledText
+                fontWeight="bold"
+                style={styles.modalContentHeaderText}
+              >
                 {i18n.t('aboutMe.changePassBtn')}
               </StyledText>
             </View>
             <View style={styles.inputFieldContainer}>
-              <TextInput
-                style={styles.inputField}
-                placeholder={i18n.t('changePassword.oldPassInput')}
-                secureTextEntry
+              <Controller
+                control={control}
+                render={({ onChange, onBlur, value }) => (
+                  <TextInput
+                    // validation code-block
+                    onChangeText={(value) => onChange(value)}
+                    onBlur={onBlur}
+                    value={value}
+                    maxLength={14}
+                    // End of validation code-block
+                    style={styles.inputField}
+                    placeholder={i18n.t('changePassword.oldPassInput')}
+                    secureTextEntry
+                  />
+                )}
+                name="oldPassword"
+                rules={{
+                  required: true,
+                  minLength: 6,
+                  pattern: /([0-9])/,
+                }}
+                defaultValue=""
               />
+              {_showErrorMessage(errors.oldPassword?.type, 'oldPassword')}
 
-              <TextInput
-                style={styles.inputField}
-                placeholder={i18n.t('changePassword.newPassInput')}
-                secureTextEntry
+              <Controller
+                control={control}
+                render={({ onChange, onBlur, value }) => (
+                  <TextInput
+                    // validation code-block
+                    onChangeText={(value) => {onChange(value); setNewPassword(value)} }
+                    onBlur={onBlur}
+                    value={value}
+                    maxLength={14}
+                    // End of validation code-block
+                    style={styles.inputField}
+                    placeholder={i18n.t('changePassword.newPassInput')}
+                    secureTextEntry
+                  />
+                )}
+                name="newPassword"
+                rules={{
+                  required: true,
+                  minLength: 6,
+                  pattern: /([0-9])/,
+                }}
+                defaultValue=""
               />
+              {_showErrorMessage(errors.newPassword?.type, 'newPassword')}
 
-              <TextInput
-                style={styles.inputField}
-                placeholder={i18n.t('changePassword.confirmPassInput')}
-                secureTextEntry
+              <Controller
+                control={control}
+                render={({ onChange, onBlur, value }) => (
+                  <TextInput
+                    // validation code-block
+                    onChangeText={(value) => {onChange(value); setRepeatPassword(value)} }
+                    onBlur={onBlur}
+                    value={value}
+                    maxLength={14}
+                    // End of validation code-block
+                    style={styles.inputField}
+                    placeholder={i18n.t('changePassword.confirmPassInput')}
+                    secureTextEntry
+                  />
+                )}
+                name="repeatNewPassword"
+                rules={{
+                  required: true,
+                  minLength: 6,
+                  pattern: /([0-9])/,
+                }}
+                defaultValue=""
               />
+              {_showErrorMessage(errors.repeatNewPassword?.type, 'repeatPassword')}
 
-              <TouchableOpacity style={styles.modalContentButton}>
+              <TouchableOpacity
+                style={styles.modalContentButton}
+                onPress={handleSubmit(_confirmButtonOnSubmit)}
+              >
                 <Text>{i18n.t('changePassword.submitBtn')}</Text>
               </TouchableOpacity>
             </View>
@@ -172,7 +312,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: 100 + '%', /////////////////////////////////////////
     alignItems: 'center',
-    paddingTop: normaliseV(140)
+    paddingTop: normaliseV(140),
   },
   content: {
     backgroundColor: 'white',
@@ -249,7 +389,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: normalise(18),
     color: 'black',
-    lineHeight: 30
+    lineHeight: 30,
   },
 
   //Setting up modal
@@ -316,9 +456,18 @@ const styles = StyleSheet.create({
     fontSize: normalise(24),
     fontWeight: '600',
     color: 'black',
-    lineHeight: 50
+    lineHeight: 50,
   },
   backButton: {
     padding: 15,
+  },
+  validationText: {
+    fontSize: normalise(14),
+    marginTop: normaliseV(-40),
+    marginLeft: normaliseH(70),
+    color: 'rgba(242, 38, 19, 1)',
+  },
+  validationTextContainer: {
+    alignItems: 'center',
   },
 })
