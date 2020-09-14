@@ -110,6 +110,11 @@ export default function LoginForm() {
       console.log(appMState.context)
     }
     if (appMState.value == 'FAILURE') {
+      /* turn off loading indicator */
+      setAnimatedIndex(0)
+      setLoading(false)
+      _fireUnloading()
+
       // update api error message state for it to be displayed
       setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
 

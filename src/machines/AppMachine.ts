@@ -68,7 +68,7 @@ const AppMachine = Machine<
               lastResponse: (_, event) => {
                 return {
                   statusCode: event.data.status,
-                  lastErrorMessage: Object.values(event.data)[0] as string,
+                  lastErrorMessage: Object.values(event.data.data)[0] as string,
                 }
               },
             }),
@@ -125,6 +125,7 @@ const AppMachine = Machine<
     FAILURE: {
       on: {
         Logout: { target: 'UNAUTHORISED' },
+        Login: { target: 'AUTHENTICATING'}
       },
     },
   },
