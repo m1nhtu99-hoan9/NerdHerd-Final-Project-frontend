@@ -58,24 +58,7 @@ export default function LoginScreen() {
           <LoginForm />
         </SignInNavContext.Provider>
         {/* END Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
-        <View style={styles.signUpTxtContainer}>
-          {/* `Have no account yet?` text */}
-          <View>
-            <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
-              {`${i18n.t('signIn.askSignUpTxt')}`}
-            </Text>
-          </View>
-          {/* END `Have no account yet?` text */}
-          {/* Link to `SignUp` screen */}
-          <TouchableOpacity
-            style={styles.signInTouchableTxt}
-            activeOpacity={0.6}
-            onPress={_signInTxtOnPressed}
-          >
-            <Text style={styles.signUpTxt}>{i18n.t('signIn.signUpTxt')}</Text>
-          </TouchableOpacity>
-          {/* END Link to `SignUp` screen */}
-        </View>
+
       </Content>
     </GradientContainer>
   )
@@ -83,7 +66,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   contentContainer: {
-    flex: 1,
+    flex: 0.97,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
