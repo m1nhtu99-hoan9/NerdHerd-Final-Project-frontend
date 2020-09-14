@@ -1,7 +1,13 @@
 import i18n from '../../i18n'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Alert, ActivityIndicator, Animated, Modal } from 'react-native'
+import {
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+  Animated,
+  Modal,
+} from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -77,7 +83,7 @@ export default function LoginForm() {
   useEffect(() => {
     if (appMState.value == 'UNAUTHORISED') {
       console.log('Not logged in yet')
-    } 
+    }
     if (appMState.value == 'AUTHENTICATING') {
       // start loading indicator
       setAnimatedIndex(2)
@@ -85,7 +91,7 @@ export default function LoginForm() {
       setLoading(true)
 
       console.log('Resolving login request')
-    } 
+    }
     if (appMState.value == 'LOGGED_IN') {
       // stop loading indicator
       setAnimatedIndex(0)
@@ -107,7 +113,7 @@ export default function LoginForm() {
       // update api error message state for it to be displayed
       setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
 
-      console.log("FAILED")
+      console.log('FAILED')
       console.log(appMState.context.lastResponse)
     }
   }, [appMState])
@@ -184,6 +190,7 @@ export default function LoginForm() {
     if (apiErrorMessage !== ' ' && apiErrorMessage?.length) {
       return <Text style={styles.validationText}>{apiErrorMessage}</Text>
     }
+  }
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
     width: 126 + '%',
@@ -213,9 +220,7 @@ export default function LoginForm() {
   return (
     <View style={styles.container}>
       <Animated.View style={animatedContainerStyleSheet}></Animated.View>
-      <Animated.View
-        style={animatedNoticeContainer}
-      >
+      <Animated.View style={animatedNoticeContainer}>
         <ActivityIndicator
           style={{ position: 'absolute', top: normaliseV(100) }}
           size="large"
