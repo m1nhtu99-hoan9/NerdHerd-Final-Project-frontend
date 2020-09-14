@@ -1,7 +1,7 @@
 import i18n from '../../i18n'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Alert, ActivityIndicator, Animated } from 'react-native'
+import { StyleSheet, Alert, ActivityIndicator, Animated, Modal } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -44,6 +44,7 @@ export default function LoginForm() {
   )
 
   const opacity = useState(new Animated.Value(0))[0]
+  const noticeOpacity = useState(new Animated.Value(0))[0]
   const [isLoading, setLoading] = useState(false)
   const [animatedIndex, setAnimatedIndex] = useState(0)
 
@@ -53,12 +54,22 @@ export default function LoginForm() {
       duration: 500,
       useNativeDriver: false,
     }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start()
   }
 
   const _fireUnloading = () => {
     Animated.timing(opacity, {
       toValue: 0,
       duration: 500,
+      useNativeDriver: false,
+    }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 0,
+      duration: 400,
       useNativeDriver: false,
     }).start()
   }
@@ -100,6 +111,10 @@ export default function LoginForm() {
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
+  }
+
+  const _signInTxtOnPressed = () => {
+    nav.navigate('SignUp')
   }
 
   const _showPhoneErrorMessage = function (): JSX.Element | undefined {
@@ -165,15 +180,37 @@ export default function LoginForm() {
     top: normaliseV(-720),
   }
 
+  const animatedNoticeContainer = {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(80),
+    opacity: noticeOpacity,
+    zIndex: animatedIndex,
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
+  }
+
   return (
     <View style={styles.container}>
-      <Animated.View style={animatedContainerStyleSheet}>
+      <Animated.View style={animatedContainerStyleSheet}></Animated.View>
+      <Animated.View
+        style={animatedNoticeContainer}
+      >
         <ActivityIndicator
-          style={{ position: 'absolute' }}
+          style={{ position: 'absolute', top: normaliseV(100) }}
           size="large"
-          color="white"
+          color="lightgrey"
           animating={isLoading}
         />
+        <StyledText
+          fontWeight="bold"
+          style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+        >
+          Đang xác thực..
+        </StyledText>
       </Animated.View>
 
       <View style={styles.formContainer}>
@@ -265,6 +302,8 @@ export default function LoginForm() {
         style={{
           // !! DANGEROUR ZONE FOR EDITTING !!
           flex: 9,
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <TouchableOpacity
@@ -277,6 +316,26 @@ export default function LoginForm() {
         </TouchableOpacity>
       </View>
       {/* END Sign In submit button */}
+      <View style={styles.signUpTxtContainer}>
+        {/* `Have no account yet?` text */}
+        <View>
+          <Text style={[styles.forgetPasswordTxt, { textAlign: 'right' }]}>
+            {`${i18n.t('signIn.askSignUpTxt')}`}
+          </Text>
+        </View>
+        {/* END `Have no account yet?` text */}
+        {/* Link to `SignUp` screen */}
+
+        <TouchableOpacity
+          style={styles.signInTouchableTxt}
+          activeOpacity={0.6}
+          onPress={_signInTxtOnPressed}
+        >
+          <Text style={styles.signUpTxt}>{i18n.t('signIn.signUpTxt')}</Text>
+        </TouchableOpacity>
+
+        {/* END Link to `SignUp` screen */}
+      </View>
     </View>
   )
 }
@@ -297,11 +356,10 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     backgroundColor: Colours.White,
-    marginVertical: 15 + '%',
     borderRadius: 6,
     height: 45,
     justifyContent: 'center',
-    width: 98 + '%',
+    width: normaliseH(1100),
     shadowOffset: {
       width: 0,
       height: 1,
@@ -334,6 +392,36 @@ const styles = StyleSheet.create({
   validationText: {
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
-    paddingBottom: normaliseV(40)
+    paddingBottom: normaliseV(27),
+    alignSelf: 'center',
+  },
+  signUpTxt: {
+    flex: 2,
+    fontSize: 15,
+    fontFamily: Fonts.PrimaryBold,
+    color: Colours.Sapphire,
+    paddingLeft: 5,
+    paddingTop: 10,
+    textAlign: 'center',
+    textAlignVertical: 'bottom',
+  },
+  signInTouchableTxt: {
+    width: normaliseH(300),
+    height: normaliseV(100),
+    shadowOffset: {
+      width: 1.25,
+      height: 1.25,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 1.12,
+    elevation: 3,
+    alignSelf: 'flex-end',
+  },
+  signUpTxtContainer: {
+    marginBottom: normaliseV(-35),
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
   },
 })
