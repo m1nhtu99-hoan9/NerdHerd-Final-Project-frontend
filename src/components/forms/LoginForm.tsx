@@ -35,25 +35,23 @@ export default function LoginForm() {
   )
 
   useEffect(() => {
-    ;(function (value: string) {
-      switch (value) {
-        case 'UNAUTHORISED':
-          console.log('Not logged in yet')
-          break
-        case 'AUTHENTICATING':
-          console.log('Resolving login request')
-          break
-        case 'LOGGED_IN':
-          /* progress to Home Screen */
-          nav.navigate('Home')
-          console.log(appMState.context)
-          break
-        case 'FAILURE':
-          console.error('something wrong :(')
-          break
-      }
-    })(appMState.value)
-  }, [appMState])
+    switch (appMState.value) {
+      case 'UNAUTHORISED':
+        console.log('Not logged in yet')
+        break
+      case 'AUTHENTICATING':
+        console.log('Resolving login request')
+        break
+      case 'LOGGED_IN':
+        /* progress to Home Screen */
+        nav.navigate('Home')
+        console.log(appMState.context)
+        break
+      case 'FAILURE':
+        console.error('something wrong :(')
+        break
+    }
+  }, [appMState.value])
 
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
     /* set loading indicator up -> set its state to false when `LOGGED_IN` */

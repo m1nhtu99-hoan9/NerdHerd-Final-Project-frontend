@@ -1,4 +1,4 @@
-import { Machine, StateNodeConfig,assign } from 'xstate'
+import { Machine, StateNodeConfig, assign } from 'xstate'
 import {
   AppMachineContext,
   AppMachineEvent,
@@ -21,11 +21,15 @@ const AppMachine = Machine<
     searchHistory: [],
     token: '',
     userProfile: {},
+    lastResponse: {
+      statusCode: -1,
+      lastErrorMessage: '',
+    },
   },
   states: {
     UNAUTHORISED: {
       // by default, context is reset everytime the program transit to this state.
-      entry: entryActions('resetContext'),
+      entry: entryActions.resetContext,
       on: {
         Login: {
           // invoke login promise as a state machine
@@ -46,16 +50,18 @@ const AppMachine = Machine<
           target: 'LOGGED_IN',
           actions: assign({
             // `event.data` returns an object complying to interface `ApiOkResponse`
-            token: (_, event) => (event.data).data.jwt
-          })
+            token: (_, event) => event.data.data.jwt,
+          }),
         },
         onError: {
-          target: 'FAILURE'
-        }
+          target: 'FAILURE',
+        },
       },
     },
     LOGGED_IN: {
-      type: 'final' // <TEMPORARY>
+      on: {
+        Logout: { target: 'UNAUTHORISED' },
+      },
     },
     INVOKING_PROFILE_PROMISE: {},
     PROFILE_UPDATED: {},
@@ -65,14 +71,18 @@ const AppMachine = Machine<
     },
     READY: {
       /* HomeScreen is ready to display */
-      type: 'final' // <TEMPORARY>
+      on: {
+        Logout: { target: 'UNAUTHORISED' },
+      },
     },
     INVOKING_OTP_PROMISE: {},
     OTP_UPDATED: {},
     INVOKING_CRESCORE_PROMISE: {},
     SEARCH_HISTORY_UPDATED: {},
     FAILURE: {
-      type: 'final' // <TEMPORARY>
+      on: {
+        Logout: { target: 'UNAUTHORISED' }
+      }
     },
   },
 })

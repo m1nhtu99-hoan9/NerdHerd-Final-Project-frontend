@@ -24,6 +24,10 @@ export interface AppMachineContext {
         userId: string
         email: string
       }
+  lastResponse: {
+    statusCode: number
+    lastErrorMessage: string
+  }
 }
 
 export interface AppMachineStateSchema extends StateSchema {
@@ -54,7 +58,7 @@ export interface AppMachineStateSchema extends StateSchema {
 /* after every changes made on `AppMachineEvent`, 
   `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
-  type: 'Login'
+  type: 'Login' | 'Logout'
   phoneNum?: string 
   password?: string 
 }
