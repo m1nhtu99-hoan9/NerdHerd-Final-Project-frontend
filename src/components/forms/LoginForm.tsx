@@ -1,6 +1,6 @@
 import i18n from '../../i18n'
 import React, { useState, useLayoutEffect, useContext } from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import { StyleSheet, Alert,ActivityIndicator, Animated } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -11,11 +11,12 @@ import SyncStorage from 'sync-storage'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Colours, Fonts } from '../../styles/index'
-import { normalise, normaliseV, PATTERN } from '../../helpers'
+import { normalise, normaliseH, normaliseV, PATTERN, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../helpers'
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
 import { asyncLogin } from '../../machines'
+import { AntDesign } from '@expo/vector-icons'
 
 interface FormInput {
   password: string
@@ -34,12 +35,51 @@ export default function LoginForm() {
     undefined,
   )
 
+  const [isLoading, setLoading] = useState(false)
+  const opacity = useState(new Animated.Value(0))[0]
+  const [animatedIndex, setAnimatedIndex] = useState(0)
+
+  const animatedContainer = {
+    backgroundColor: 'black',
+    width: 126 + '%',
+    height: 173 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: opacity,
+    zIndex: animatedIndex,
+    position: 'absolute',
+    left: normaliseH(-140),
+    top: normaliseV(-720)
+  }
+
+  const fireLoading = () => {
+    Animated.timing(opacity, {
+      toValue: 0.6,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+
+  }
+
+  const fireUnloading = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+  }
+
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
     /* set loading indicator up */
+    setAnimatedIndex(2)
+    fireLoading()
+    setLoading(true)
 
     const _onSuccess = function (jwt: string) {
       /* set loading indicator state to false */
-
+      setAnimatedIndex(0)
+      setLoading(false)
+      fireUnloading()
       /* progress to Home screen */
       nav.navigate('Home')
       /* store access token on SyncStorage */
@@ -83,6 +123,7 @@ export default function LoginForm() {
       /* implicitly, in `default`, return `undefined` */
     }
   }
+  
 
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
     switch (errors.password?.type) {
@@ -110,9 +151,25 @@ export default function LoginForm() {
 
   return (
     <View style={styles.container}>
+
+      <Animated.View style={animatedContainer}>
+          <ActivityIndicator style={{position: 'absolute'}} size="large" color="white" animating={isLoading} />
+      </Animated.View>
+
       <View style={styles.formContainer}>
         {/* Phone Number input field */}
-
+        <TouchableOpacity
+              style={{ flexDirection: 'row' }}
+              onPress={() => {nav.goBack()}}
+            >
+              <AntDesign
+                name="left"
+                size={normalise(16)}
+                color={Colours.White}
+                style={{ alignSelf: 'flex-start' }}
+              />
+              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
+            </TouchableOpacity>
         <Controller
           control={control}
           render={({ onChange, onBlur, value }) => (

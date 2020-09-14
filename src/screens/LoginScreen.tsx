@@ -52,18 +52,7 @@ export default function LoginScreen() {
         <SignInNavContext.Provider value={nav}>
           {/* Touchable 'Back' link */}
           <View style={styles.backContainer}>
-            <TouchableOpacity
-              style={{ flexDirection: 'row' }}
-              onPress={_goBack}
-            >
-              <AntDesign
-                name="left"
-                size={normalise(16)}
-                color={Colours.White}
-                style={{ alignSelf: 'flex-start' }}
-              />
-              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
-            </TouchableOpacity>
+            
           </View>
           {/* END Touchable 'Back' link */}
           <LoginForm />
