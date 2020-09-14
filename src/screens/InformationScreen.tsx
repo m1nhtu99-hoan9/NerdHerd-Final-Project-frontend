@@ -59,7 +59,7 @@ export default function InformationScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
-  const _showErrorMessage = function (props: any): JSX.Element | undefined {
+  const _showErrorMessage = function (props: any, type: string): JSX.Element | undefined {
     switch (props) {
       case 'required':
         return (
@@ -70,13 +70,26 @@ export default function InformationScreen() {
           </View>
         )
       case 'minLength':
-        return (
-          <View style={styles.validationTextContainer}>
-            <Text style={styles.validationText}>
-              {i18n.t('signIn.validation.invalid')}
-            </Text>
-          </View>
-        )
+        if(type != 'repeatPassword') {
+          return (
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>
+                {i18n.t('signIn.validation.invalid')}
+              </Text>
+            </View>
+          )
+              
+        }
+        else {
+          return (
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>
+              Mật khẩu nhập lại không chính xác
+              </Text>
+            </View>
+          )
+        }
+        
       case 'pattern':
         return (
           <View style={styles.validationTextContainer}>
@@ -86,15 +99,19 @@ export default function InformationScreen() {
           </View>
         )
     }
-    if (repeatPassword != newPassword)
+    if(type != 'oldPassword')
     {
-      return (
-        <View style={styles.validationTextContainer}>
-          <Text style={styles.validationText}>
-            {i18n.t('signIn.validation.invalid')}
-          </Text>
-        </View>)
-    }
+      if (repeatPassword != newPassword)
+      {
+        if(type == 'repeatPassword')
+        return (
+          <View style={styles.validationTextContainer}>
+            <Text style={styles.validationText}>
+              Mật khẩu nhập lại không chính xác
+            </Text>
+          </View>)
+      }
+    }   
   }
 
   const _confirmButtonOnSubmit = () => {
@@ -212,7 +229,7 @@ export default function InformationScreen() {
                 }}
                 defaultValue=""
               />
-              {_showErrorMessage(errors.oldPassword?.type)}
+              {_showErrorMessage(errors.oldPassword?.type, 'oldPassword')}
 
               <Controller
                 control={control}
@@ -237,7 +254,7 @@ export default function InformationScreen() {
                 }}
                 defaultValue=""
               />
-              {_showErrorMessage(errors.newPassword?.type)}
+              {_showErrorMessage(errors.newPassword?.type, 'newPassword')}
 
               <Controller
                 control={control}
@@ -262,7 +279,7 @@ export default function InformationScreen() {
                 }}
                 defaultValue=""
               />
-              {_showErrorMessage(errors.repeatNewPassword?.type)}
+              {_showErrorMessage(errors.repeatNewPassword?.type, 'repeatPassword')}
 
               <TouchableOpacity
                 style={styles.modalContentButton}
