@@ -1,17 +1,7 @@
 import i18n from '../../i18n'
 
 import React, { useState, useEffect, useContext } from 'react'
-<<<<<<< HEAD
-import {
-  StyleSheet,
-  Alert,
-  ActivityIndicator,
-  Animated,
-  AppState,
-} from 'react-native'
-=======
 import { StyleSheet, Alert, ActivityIndicator, Animated, Modal } from 'react-native'
->>>>>>> c94c0df679668ed5431a3dc9d4194dce12f43d5f
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
