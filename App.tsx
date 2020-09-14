@@ -24,9 +24,9 @@ console.disableYellowBox = true
 const AppService = interpretStateMachine(AppMachine)
 AppService.start()
 /* for DEBUGGING */
-AppService.onTransition((state) =>
-  console.log('CURRENT STATE: ', state),
-).onEvent((event) => console.log('EVENT: ', event))
+// AppService.onTransition((state) =>
+//   console.log('CURRENT STATE: ', state),
+// ).onEvent((event) => console.log('EVENT: ', event))
 
 export default function App() {
   const [appMState, appMSend] = useService(AppService)

@@ -1,5 +1,5 @@
 import i18n from '../../i18n'
-import React, { useState, useLayoutEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { StyleSheet, Alert } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
@@ -34,21 +34,33 @@ export default function LoginForm() {
     undefined,
   )
 
+  useEffect(() => {
+    ;(function (value: string) {
+      switch (value) {
+        case 'UNAUTHORISED':
+          console.log('Not logged in yet')
+          break
+        case 'AUTHENTICATING':
+          console.log('Resolving login request')
+          break
+        case 'LOGGED_IN':
+          /* progress to Home Screen */
+          nav.navigate('Home')
+          console.log(appMState.context)
+          break
+        case 'FAILURE':
+          console.error('something wrong :(')
+          break
+      }
+    })(appMState.value)
+  }, [appMState])
+
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
-    /* set loading indicator up */
+    /* set loading indicator up -> set its state to false when `LOGGED_IN` */
+    /* update AppService accordingly */
 
-    const _onSuccess = function (jwt: string) {
-      /* set loading indicator state to false */
+    appMSend({ type: 'Login', phoneNum: '0967162652', password: 'aacc1234' })
 
-      /* progress to Home screen */
-      nav.navigate('Home')
-      /* store access token on SyncStorage */
-      SyncStorage.set('token', jwt)
-      /* update AppService accordingly */
-      appMState.send('Login')
-    }
-    asyncLogin('0967162652', 'aacc1234')(_onSuccess, setApiErrorMessage)
-    
     // console.log(data)
     // console.log('submit btn on click -> sync storage: ', SyncStorage.getAllKeys())
     // console.log('this access token', SyncStorage.get('token'))

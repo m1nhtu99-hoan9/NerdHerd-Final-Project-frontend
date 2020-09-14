@@ -1,4 +1,4 @@
-import { Machine, StateNodeConfig } from 'xstate'
+import { Machine, StateNodeConfig,assign } from 'xstate'
 import {
   AppMachineContext,
   AppMachineEvent,
@@ -6,50 +6,75 @@ import {
 } from '../@types/machines'
 import { entryActions } from './appActions'
 
+import { ApiOkResponse } from 'apisauce'
+import { asyncLogout, asyncLogin } from './API'
+
 const AppMachine = Machine<
   AppMachineContext,
   AppMachineStateSchema,
   AppMachineEvent
 >({
   id: 'app',
-  initial: "UNAUTHORISED",
+  initial: 'UNAUTHORISED',
   context: {
+    /* initial context */
     searchHistory: [],
-    token: "",
+    token: '',
     userProfile: {},
   },
   states: {
-    "UNAUTHORISED": {
+    UNAUTHORISED: {
       // by default, context is reset everytime the program transit to this state.
-      entry: entryActions("resetContext"),
+      entry: entryActions('resetContext'),
       on: {
-        "Login": {
+        Login: {
           // invoke login promise as a state machine
-          target: "AUTHENTICATING"
-        }
-      }
+          target: 'AUTHENTICATING',
+        },
+      },
     },
-    "AUTHENTICATING": {
+    AUTHENTICATING: {
       /* invoke login promise here:
          in case of success, transit to "LOGGED_IN",
          else, transit back to "UNAUTHORISED".
       */
+      invoke: {
+        id: 'login_promise',
+        // @ts-ignore <HORRIBLE ERROR MAY HAPPEND HERE>
+        src: (_, event) => asyncLogin(event.phoneNum, event.password),
+        onDone: {
+          target: 'LOGGED_IN',
+          actions: assign({
+            // `event.data` returns an object complying to interface `ApiOkResponse`
+            token: (_, event) => (event.data).data.jwt
+          })
+        },
+        onError: {
+          target: 'FAILURE'
+        }
+      },
     },
-    "LOGGED_IN": {
-      /* When the program is at this state, automatically persist user's access token, 
-         list of searched customers' phone number and user's profile data. Then, immediately
-         transit to "NORMAL" state.
-      */
-    }, 
-    "NORMAL": {
-      /* As the named suggested, nothing happens here. */
-    }, 
-    "FAILURE": {
-      /* Nothing happens here */
+    LOGGED_IN: {
+      type: 'final' // <TEMPORARY>
     },
-    "SEARCH_HISTORY_UPDATED": {},
-    "PROFILE_UPDATED": {},
-  }
+    INVOKING_PROFILE_PROMISE: {},
+    PROFILE_UPDATED: {},
+    PREPARING_HOME_SCREEN: {
+      /* invoke multiple crescore promises to query credit score of each 
+         phone number in search history */
+    },
+    READY: {
+      /* HomeScreen is ready to display */
+      type: 'final' // <TEMPORARY>
+    },
+    INVOKING_OTP_PROMISE: {},
+    OTP_UPDATED: {},
+    INVOKING_CRESCORE_PROMISE: {},
+    SEARCH_HISTORY_UPDATED: {},
+    FAILURE: {
+      type: 'final' // <TEMPORARY>
+    },
+  },
 })
 
 export default AppMachine
