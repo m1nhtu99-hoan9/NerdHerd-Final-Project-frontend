@@ -21,8 +21,11 @@ console.disableYellowBox = true
 /* initialisation of a running service instance of app machine blueprint is a side effect
    independent from initialisation of React app
 */
+
+// @ts-ignore
 const AppService = interpretStateMachine(AppMachine)
 AppService.start()
+
 /* for DEBUGGING */
 // AppService.onTransition((state) =>
 //   console.log('CURRENT STATE: ', state),

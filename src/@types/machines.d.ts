@@ -11,19 +11,18 @@ import {
   SCXML,
 } from 'xstate'
 
+export type TUserProfile = {
+  phone?: PhoneNum | undefined
+  fullName?: string | undefined
+  bankId?: string | undefined
+  userId?: string | undefined
+  email?: string | undefined
+}
 export interface AppMachineContext {
   searchHistory?: Array<SearchResult>
   token?: string
   // either empty object or object with schema as stated below
-  userProfile:
-    | {}
-    | {
-        phone: PhoneNum
-        fullName: string
-        bankId: string
-        userId: string
-        email: string
-      }
+  userProfile: TUserProfile
   lastResponse: {
     statusCode: number
     lastErrorMessage: string
@@ -51,6 +50,7 @@ export interface AppMachineStateSchema extends StateSchema {
     OTP_UPDATED: {}
     INVOKING_CRESCORE_PROMISE: {}
     SEARCH_HISTORY_UPDATED: {}
+    LOGGING_OUT: {}
     FAILURE: {}
   }
 }
@@ -59,8 +59,8 @@ export interface AppMachineStateSchema extends StateSchema {
   `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
   type: 'Login' | 'Logout'
-  phoneNum?: string 
-  password?: string 
+  phoneNum?: string
+  password?: string
 }
 
 /** Type of `AppMachine` */

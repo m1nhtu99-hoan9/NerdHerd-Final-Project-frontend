@@ -1,7 +1,13 @@
 import i18n from '../../i18n'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Alert,ActivityIndicator, Animated  } from 'react-native'
+import {
+  StyleSheet,
+  Alert,
+  ActivityIndicator,
+  Animated,
+  AppState,
+} from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -12,7 +18,14 @@ import SyncStorage from 'sync-storage'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Colours, Fonts } from '../../styles/index'
-import { normalise, normaliseH, normaliseV, PATTERN, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../helpers'
+import {
+  normalise,
+  normaliseH,
+  normaliseV,
+  PATTERN,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../../helpers'
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
@@ -50,7 +63,7 @@ export default function LoginForm() {
     zIndex: animatedIndex,
     position: 'absolute',
     left: normaliseH(-140),
-    top: normaliseV(-720)
+    top: normaliseV(-720),
   }
 
   const fireLoading = () => {
@@ -59,7 +72,6 @@ export default function LoginForm() {
       duration: 500,
       useNativeDriver: false,
     }).start()
-
   }
 
   const fireUnloading = () => {
@@ -69,41 +81,53 @@ export default function LoginForm() {
       useNativeDriver: false,
     }).start()
   }
-    
+
   useEffect(() => {
-    switch (appMState.value) {
-      case 'UNAUTHORISED':
-        console.log('Not logged in yet')
-        break
-      case 'AUTHENTICATING':
-        setAnimatedIndex(2)
-        fireLoading()
-        setLoading(true)
-        console.log('Resolving login request')
-        break
-      case 'LOGGED_IN':
-        setAnimatedIndex(0)
+    if (appMState.value == 'UNAUTHORISED') {
+      console.log('Not logged in yet')
+    } 
+    if (appMState.value == 'AUTHENTICATING') {
+      // start loading indicator
+      setAnimatedIndex(2)
+      fireLoading()
+      setLoading(true)
+
+      console.log('Resolving login request')
+    } 
+    if (appMState.value == 'LOGGED_IN') {
+      // stop loading indicator
+      setAnimatedIndex(0)
       setLoading(false)
       fireUnloading()
-        /* progress to Home Screen */
+
+      /* a bit hacky 凸( •̀_•́ )凸 */
+      if (appMState.context.token) {
         nav.navigate('Home')
-        console.log(appMState.context)
-        break
-      case 'FAILURE':
-        console.error('something wrong :(')
-        break
+      } else {
+        setApiErrorMessage(
+          'Your login credentials are incorrect! Please re-check!',
+        )
+      }
+
+      console.log(appMState.context)
     }
-  }, [appMState.value])
+    if (appMState.value == 'FAILURE') {
+      // update api error message state for it to be displayed
+      setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
+
+      console.log("FAILED")
+      console.log(appMState.context.lastResponse)
+    }
+  }, [appMState])
 
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
-    /* set loading indicator up -> set its state to false when `LOGGED_IN` */
-    /* update AppService accordingly */
+    /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
 
-    appMSend({ type: 'Login', phoneNum: '0967162652', password: 'aacc1234' })
-    // console.log(data)
-    // console.log('submit btn on click -> sync storage: ', SyncStorage.getAllKeys())
-    // console.log('this access token', SyncStorage.get('token'))
-    // console.log('on Login screen: ', appMState.value)
+    appMSend({
+      type: 'Login',
+      phoneNum: data.phoneNum,
+      password: data.password,
+    })
   }
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
@@ -134,7 +158,6 @@ export default function LoginForm() {
       /* implicitly, in `default`, return `undefined` */
     }
   }
-  
 
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
     switch (errors.password?.type) {
@@ -160,27 +183,40 @@ export default function LoginForm() {
     }
   }
 
+  const _showApiErrorMessage = function () {
+    // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
+    if (apiErrorMessage !== ' ' && apiErrorMessage?.length) {
+      return <Text style={styles.validationText}>{apiErrorMessage}</Text>
+    }
+  }
+
   return (
     <View style={styles.container}>
-
       <Animated.View style={animatedContainer}>
-          <ActivityIndicator style={{position: 'absolute'}} size="large" color="white" animating={isLoading} />
+        <ActivityIndicator
+          style={{ position: 'absolute' }}
+          size="large"
+          color="white"
+          animating={isLoading}
+        />
       </Animated.View>
 
       <View style={styles.formContainer}>
         {/* Phone Number input field */}
         <TouchableOpacity
-              style={{ flexDirection: 'row' }}
-              onPress={() => {nav.goBack()}}
-            >
-              <AntDesign
-                name="left"
-                size={normalise(16)}
-                color={Colours.White}
-                style={{ alignSelf: 'flex-start' }}
-              />
-              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
-            </TouchableOpacity>
+          style={{ flexDirection: 'row' }}
+          onPress={() => {
+            nav.goBack()
+          }}
+        >
+          <AntDesign
+            name="left"
+            size={normalise(16)}
+            color={Colours.White}
+            style={{ alignSelf: 'flex-start' }}
+          />
+          <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
+        </TouchableOpacity>
         <Controller
           control={control}
           render={({ onChange, onBlur, value }) => (
@@ -237,6 +273,7 @@ export default function LoginForm() {
           defaultValue=""
         />
         {_showPasswordErrorMessage()}
+        {_showApiErrorMessage()}
 
         {/* END Password input field */}
       </View>

@@ -56,11 +56,7 @@ export default function InformationScreen() {
   })
 
   const _logoutButtonOnClicked = () => {
-    (function (state: string) {
-      switch (state) {
-
-      }
-    })(appMState.value)
+    appMSend('Logout')
 
     // navigate back to LoginScreen
     navigation.replace('Login', { name: 0 })
