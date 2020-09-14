@@ -27,10 +27,9 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import RNSpeedometer from 'react-native-speedometer'
 import RNFadedScrollView from 'rn-faded-scrollview'
 import RNPickerSelect from 'react-native-picker-select'
-import Slider from '@react-native-community/slider';
+import Slider from '@react-native-community/slider'
 
-
-import { useForm, Controller, DeepMap, FieldError } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 
 import ModalContent from '../components/ModalUserInfoCard'
 
@@ -183,7 +182,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           <ModalContent
             icon="check"
             headerText={'Thành công'}
-            contentText={'Đã đề xuất khoản vay thành công với lãi suất x%/năm'}
+            contentText={`Đã đề xuất khoản vay thành công với lãi suất ${sliderValue}%/năm`}
             color="#36ad51"
           ></ModalContent>
           <TouchableOpacity
@@ -387,17 +386,24 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {_showErrorMessage(errors.loanAmount_offer?.type)}
 
                 <View style={styles.sliderContainer}>
-                  <Text>Lai suat</Text>
-                  <Text>{sliderValue}%</Text>
-                  <Slider
-                    style={{ width: 240, height: 40 }}
-                    minimumValue={4.5}
-                    maximumValue={13.5}
-                    step={0.5}
-                    minimumTrackTintColor="green"
-                    maximumTrackTintColor="lightgrey"
-                    onValueChange={(value) => setSliderValue(value)}
-                  />
+                  <StyledText fontWeight="bold" style={{...styles.loanDetailHeader}}>Lai suat</StyledText>
+                  <StyledText fontWeight='bold' style={{...styles.modalContentText, alignSelf: 'center', marginTop: normaliseV(20), fontSize: normalise(16), textDecorationLine:'underline'}}>{`${sliderValue}%`}</StyledText>
+
+                  <View
+                    style={{ width: 100 + '%', flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center' }}
+                  >
+                    <StyledText style={{...styles.modalContentText, fontSize: normalise(12)}}>4.5%</StyledText>
+                    <Slider
+                      style={{ width: 200, height: 40 }}
+                      minimumValue={4.5}
+                      maximumValue={13.5}
+                      step={0.5}
+                      minimumTrackTintColor="green"
+                      maximumTrackTintColor="lightgrey"
+                      onValueChange={(value) => setSliderValue(value)}
+                    />
+                    <StyledText style={{...styles.modalContentText, fontSize: normalise(12)}}>13.5%</StyledText>
+                  </View>
                 </View>
 
                 <TouchableOpacity
@@ -611,7 +617,7 @@ const styles = StyleSheet.create({
   },
   // ------------------------------------ Recommend field
   recommendContainer: {
-    height: 550,
+    height: 570,
     width: 100 + '%',
     paddingHorizontal: normaliseH(40),
   },
@@ -628,11 +634,10 @@ const styles = StyleSheet.create({
     marginTop: normalise(111),
   },
   sliderContainer: {
-    alignItems: 'center',
+    width: 100 + '%',
   },
 
   //Setting up modal
-
 
   // modalBackground: {
   //   position: 'absolute',
