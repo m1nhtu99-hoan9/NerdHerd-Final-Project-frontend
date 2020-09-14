@@ -1,7 +1,7 @@
 import i18n from '../../i18n'
 
 import React, { useState, useEffect, useContext } from 'react'
-import { StyleSheet, Alert,ActivityIndicator, Animated  } from 'react-native'
+import { StyleSheet, Alert, ActivityIndicator, Animated } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -12,7 +12,14 @@ import SyncStorage from 'sync-storage'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Colours, Fonts } from '../../styles/index'
-import { normalise, normaliseH, normaliseV, PATTERN, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../helpers'
+import {
+  normalise,
+  normaliseH,
+  normaliseV,
+  PATTERN,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../../helpers'
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
@@ -36,40 +43,26 @@ export default function LoginForm() {
     undefined,
   )
 
-  const [isLoading, setLoading] = useState(false)
   const opacity = useState(new Animated.Value(0))[0]
+  const [isLoading, setLoading] = useState(false)
   const [animatedIndex, setAnimatedIndex] = useState(0)
 
-  const animatedContainer = {
-    backgroundColor: 'black',
-    width: 126 + '%',
-    height: 173 + '%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: opacity,
-    zIndex: animatedIndex,
-    position: 'absolute',
-    left: normaliseH(-140),
-    top: normaliseV(-720)
-  }
-
-  const fireLoading = () => {
+  const _fireLoading = () => {
     Animated.timing(opacity, {
       toValue: 0.6,
       duration: 500,
       useNativeDriver: false,
     }).start()
-
   }
 
-  const fireUnloading = () => {
+  const _fireUnloading = () => {
     Animated.timing(opacity, {
       toValue: 0,
       duration: 500,
       useNativeDriver: false,
     }).start()
   }
-    
+
   useEffect(() => {
     switch (appMState.value) {
       case 'UNAUTHORISED':
@@ -77,14 +70,14 @@ export default function LoginForm() {
         break
       case 'AUTHENTICATING':
         setAnimatedIndex(2)
-        fireLoading()
+        _fireLoading()
         setLoading(true)
         console.log('Resolving login request')
         break
       case 'LOGGED_IN':
         setAnimatedIndex(0)
-      setLoading(false)
-      fireUnloading()
+        setLoading(false)
+        _fireUnloading()
         /* progress to Home Screen */
         nav.navigate('Home')
         console.log(appMState.context)
@@ -134,7 +127,6 @@ export default function LoginForm() {
       /* implicitly, in `default`, return `undefined` */
     }
   }
-  
 
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
     switch (errors.password?.type) {
@@ -160,27 +152,46 @@ export default function LoginForm() {
     }
   }
 
+  const animatedContainerStyleSheet = {
+    backgroundColor: 'black',
+    width: 126 + '%',
+    height: 173 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: opacity,
+    zIndex: animatedIndex,
+    position: 'absolute',
+    left: normaliseH(-140),
+    top: normaliseV(-720),
+  }
+
   return (
     <View style={styles.container}>
-
-      <Animated.View style={animatedContainer}>
-          <ActivityIndicator style={{position: 'absolute'}} size="large" color="white" animating={isLoading} />
+      <Animated.View style={animatedContainerStyleSheet}>
+        <ActivityIndicator
+          style={{ position: 'absolute' }}
+          size="large"
+          color="white"
+          animating={isLoading}
+        />
       </Animated.View>
 
       <View style={styles.formContainer}>
         {/* Phone Number input field */}
         <TouchableOpacity
-              style={{ flexDirection: 'row' }}
-              onPress={() => {nav.goBack()}}
-            >
-              <AntDesign
-                name="left"
-                size={normalise(16)}
-                color={Colours.White}
-                style={{ alignSelf: 'flex-start' }}
-              />
-              <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
-            </TouchableOpacity>
+          style={{ flexDirection: 'row', marginBottom: normaliseV(0) }}
+          onPress={() => {
+            nav.goBack()
+          }}
+        >
+          <AntDesign
+            name="left"
+            size={normalise(16)}
+            color={Colours.White}
+            style={{ alignSelf: 'center' }}
+          />
+          <StyledText fontWeight="bold">{i18n.t('signUp.backTxt')}</StyledText>
+        </TouchableOpacity>
         <Controller
           control={control}
           render={({ onChange, onBlur, value }) => (
@@ -281,7 +292,7 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
   },
   btnContainer: {
@@ -319,10 +330,10 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 30,
-    marginBottom: -50,
   },
   validationText: {
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
+    paddingBottom: normaliseV(40)
   },
 })
