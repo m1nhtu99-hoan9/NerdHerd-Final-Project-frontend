@@ -1,6 +1,7 @@
 import i18n from '../../i18n'
-import React, { useState, useLayoutEffect, useContext } from 'react'
-import { StyleSheet, Alert,ActivityIndicator, Animated } from 'react-native'
+
+import React, { useState, useEffect, useContext } from 'react'
+import { StyleSheet, Alert,ActivityIndicator, Animated  } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
@@ -68,27 +69,37 @@ export default function LoginForm() {
       useNativeDriver: false,
     }).start()
   }
-
-  const _signInFormOnSubmitted = (data: SignInFormFields) => {
-    /* set loading indicator up */
-    setAnimatedIndex(2)
-    fireLoading()
-    setLoading(true)
-
-    const _onSuccess = function (jwt: string) {
-      /* set loading indicator state to false */
-      setAnimatedIndex(0)
+    
+  useEffect(() => {
+    switch (appMState.value) {
+      case 'UNAUTHORISED':
+        console.log('Not logged in yet')
+        break
+      case 'AUTHENTICATING':
+        setAnimatedIndex(2)
+        fireLoading()
+        setLoading(true)
+        console.log('Resolving login request')
+        break
+      case 'LOGGED_IN':
+        setAnimatedIndex(0)
       setLoading(false)
       fireUnloading()
-      /* progress to Home screen */
-      nav.navigate('Home')
-      /* store access token on SyncStorage */
-      SyncStorage.set('token', jwt)
-      /* update AppService accordingly */
-      appMState.send('Login')
+        /* progress to Home Screen */
+        nav.navigate('Home')
+        console.log(appMState.context)
+        break
+      case 'FAILURE':
+        console.error('something wrong :(')
+        break
     }
-    asyncLogin('0967162652', 'aacc1234')(_onSuccess, setApiErrorMessage)
-    
+  }, [appMState.value])
+
+  const _signInFormOnSubmitted = (data: SignInFormFields) => {
+    /* set loading indicator up -> set its state to false when `LOGGED_IN` */
+    /* update AppService accordingly */
+
+    appMSend({ type: 'Login', phoneNum: '0967162652', password: 'aacc1234' })
     // console.log(data)
     // console.log('submit btn on click -> sync storage: ', SyncStorage.getAllKeys())
     // console.log('this access token', SyncStorage.get('token'))

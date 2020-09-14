@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -10,20 +10,15 @@ import {
   TextInput,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
-
-import GradientContainer from '../components/atomic/GradientContainer'
+import { GradientContainer, StyledText } from '../components/atomic'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-//Import normalise
-import { normalise } from '../../src/helpers/Constants'
-
-import StyledText from '../../src/components/atomic/StyledText'
-import { normaliseH, normaliseV } from '../helpers'
-
-//Import validation
+import { normalise, normaliseH, normaliseV, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
+import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
+
+import { AppMachineContext } from '../contexts'
 
 type UserInfo = {
   fullName: string
@@ -32,12 +27,26 @@ type UserInfo = {
   email: string
   phone: string
 }
-//Get devices's dimension
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
+
+interface FormInput {
+  oldPassword: string
+  newPassword: string
+  repeatNewPassword: string
+}
 
 export default function InformationScreen() {
+  // consume AppService hooks
+  const [appMState, appMSend] = useContext(AppMachineContext)
+  
+  const navigation = useNavigation<HomeScreenNavigationProps>()
+  const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
+
+  // state for visibilty of Change Password form
   const [modalVisible, setModalVisible] = useState(false)
+  const [oldPassword, setOldPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
+
   const [userInfo, setUserInfo] = useState<UserInfo>({
     fullName: 'Ngo Tai Phat',
     bankName: 'Techcombank',
@@ -46,20 +55,21 @@ export default function InformationScreen() {
     phone: '094345xxx',
   })
 
-  const [oldPassword, setOldPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-  const [repeatPassword, setRepeatPassword] = useState('')
+  const _logoutButtonOnClicked = () => {
+    (function (state: string) {
+      switch (state) {
 
-  interface FormInput {
-    oldPassword: string
-    newPassword: string
-    repeatNewPassword: string
+      }
+    })(appMState.value)
+
+    // navigate back to LoginScreen
+    navigation.replace('Login', { name: 0 })
   }
 
-  const navigation = useNavigation<HomeScreenNavigationProps>()
-  const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
-
-  const _showErrorMessage = function (props: any, type: string): JSX.Element | undefined {
+  const _showErrorMessage = function (
+    props: any,
+    type: string,
+  ): JSX.Element | undefined {
     switch (props) {
       case 'required':
         return (
@@ -70,7 +80,7 @@ export default function InformationScreen() {
           </View>
         )
       case 'minLength':
-        if(type != 'repeatPassword') {
+        if (type != 'repeatPassword') {
           return (
             <View style={styles.validationTextContainer}>
               <Text style={styles.validationText}>
@@ -78,18 +88,16 @@ export default function InformationScreen() {
               </Text>
             </View>
           )
-              
-        }
-        else {
+        } else {
           return (
             <View style={styles.validationTextContainer}>
               <Text style={styles.validationText}>
-              Mật khẩu nhập lại không chính xác
+                Mật khẩu nhập lại không chính xác
               </Text>
             </View>
           )
         }
-        
+
       case 'pattern':
         return (
           <View style={styles.validationTextContainer}>
@@ -99,19 +107,18 @@ export default function InformationScreen() {
           </View>
         )
     }
-    if(type != 'oldPassword')
-    {
-      if (repeatPassword != newPassword)
-      {
-        if(type == 'repeatPassword')
-        return (
-          <View style={styles.validationTextContainer}>
-            <Text style={styles.validationText}>
-              Mật khẩu nhập lại không chính xác
-            </Text>
-          </View>)
+    if (type != 'oldPassword') {
+      if (repeatPassword != newPassword) {
+        if (type == 'repeatPassword')
+          return (
+            <View style={styles.validationTextContainer}>
+              <Text style={styles.validationText}>
+                Mật khẩu nhập lại không chính xác
+              </Text>
+            </View>
+          )
       }
-    }   
+    }
   }
 
   const _confirmButtonOnSubmit = () => {
@@ -167,9 +174,7 @@ export default function InformationScreen() {
           <View style={styles.button}>
             <TouchableOpacity
               style={styles.logoutButton}
-              onPress={() => {
-                navigation.replace('Login', { name: 0 })
-              }}
+              onPress={_logoutButtonOnClicked}
             >
               <StyledText fontWeight="bold" style={styles.buttonText}>
                 {i18n.t('aboutMe.signOutBtn')}
@@ -215,7 +220,7 @@ export default function InformationScreen() {
                     onBlur={onBlur}
                     value={value}
                     maxLength={14}
-                    // End of validation code-block
+                    // END validation code-block
                     style={styles.inputField}
                     placeholder={i18n.t('changePassword.oldPassInput')}
                     secureTextEntry
@@ -236,7 +241,10 @@ export default function InformationScreen() {
                 render={({ onChange, onBlur, value }) => (
                   <TextInput
                     // validation code-block
-                    onChangeText={(value) => {onChange(value); setNewPassword(value)} }
+                    onChangeText={(value) => {
+                      onChange(value)
+                      setNewPassword(value)
+                    }}
                     onBlur={onBlur}
                     value={value}
                     maxLength={14}
@@ -261,7 +269,10 @@ export default function InformationScreen() {
                 render={({ onChange, onBlur, value }) => (
                   <TextInput
                     // validation code-block
-                    onChangeText={(value) => {onChange(value); setRepeatPassword(value)} }
+                    onChangeText={(value) => {
+                      onChange(value)
+                      setRepeatPassword(value)
+                    }}
                     onBlur={onBlur}
                     value={value}
                     maxLength={14}
@@ -279,7 +290,10 @@ export default function InformationScreen() {
                 }}
                 defaultValue=""
               />
-              {_showErrorMessage(errors.repeatNewPassword?.type, 'repeatPassword')}
+              {_showErrorMessage(
+                errors.repeatNewPassword?.type,
+                'repeatPassword',
+              )}
 
               <TouchableOpacity
                 style={styles.modalContentButton}

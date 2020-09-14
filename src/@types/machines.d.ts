@@ -24,24 +24,33 @@ export interface AppMachineContext {
         userId: string
         email: string
       }
+  lastResponse: {
+    statusCode: number
+    lastErrorMessage: string
+  }
 }
-
-export type AppActionObject = ActionObject<
-  AppMachineContext,
-  AppMachineStateSchema,
-  AppMachineEvent
->
 
 export interface AppMachineStateSchema extends StateSchema {
   states: {
-    /* unauthorised access due to invalid or missing token or not being logged in yet 
-       bothfalls into this state */
-    UNAUTHORISED: {}
+    UNAUTHORISED: {
+      /* unauthorised access due to invalid or missing token or not
+         being logged in yet both falls into this state */
+    }
     AUTHENTICATING: {}
     LOGGED_IN: {}
-    NORMAL: {}
-    SEARCH_HISTORY_UPDATED: {}
+    INVOKING_PROFILE_PROMISE: {}
     PROFILE_UPDATED: {}
+    PREPARING_HOME_SCREEN: {
+      /* invoke multiple crescore promises to query credit score of each 
+         phone number in search history */
+    }
+    READY: {
+      /* HomeScreen is ready to display */
+    }
+    INVOKING_OTP_PROMISE: {}
+    OTP_UPDATED: {}
+    INVOKING_CRESCORE_PROMISE: {}
+    SEARCH_HISTORY_UPDATED: {}
     FAILURE: {}
   }
 }
@@ -49,11 +58,19 @@ export interface AppMachineStateSchema extends StateSchema {
 /* after every changes made on `AppMachineEvent`, 
   `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
-  type: 'Login'
-  payload?: object
+  type: 'Login' | 'Logout'
+  phoneNum?: string 
+  password?: string 
 }
 
 /** Type of `AppMachine` */
+
+export type AppActionObject = ActionObject<
+  AppMachineContext,
+  AppMachineStateSchema,
+  AppMachineEvent
+>
+
 export type TAppMachine = StateMachine<
   AppMachineContext,
   AppMachineStateSchema,
@@ -80,7 +97,8 @@ export type TAppMachineSender = (
     | 'Login'
     | SCXML.Event<AppMachineEvent>
     | Event<AppMachineEvent>[],
-  payload?: EventData | undefined,
+  phoneNum?: EventData | undefined,
+  password?: EventData | undefined,
 ) => TAppMachineState
 export interface OtpMachineContext {
   otp?: string
