@@ -83,7 +83,7 @@ const AppMachine = Machine<
                   statusCode,
                   lastErrorMessage:
                     statusCode >= 500
-                      ? 'Internal server error'
+                      ? 'Mật khẩu sai'
                       : (Object.values(respData)[0] as string),
                 }
               },

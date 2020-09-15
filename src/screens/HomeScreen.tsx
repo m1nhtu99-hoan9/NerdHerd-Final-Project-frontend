@@ -21,6 +21,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import Svg, { Rect } from 'react-native-svg'
 import ContentLoader from 'react-native-masked-loader'
+import { BlurView } from 'expo-blur'
 
 import {
   normalise,
@@ -53,42 +54,73 @@ console.disableYellowBox = true
 //   // If the app is loaded
 // }
 
-
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const [appStatus, setAppStatus] = useState(true)
 
+  const [blurOpacity, setBlurOpacity] = useState(1)
   const opacity = useState(new Animated.Value(0.6))[0]
   const noticeOpacity = useState(new Animated.Value(1))[0]
   const [isLoading, setLoading] = useState(true)
   const [animatedIndex, setAnimatedIndex] = useState(5)
 
-  // Style of loading screen
-const animatedContainerStyleSheet = {
-  backgroundColor: 'black',
-  width: 126 + '%',
-  height: 173 + '%',
-  alignItems: 'center',
-  justifyContent: 'center',
-  opacity: opacity,
-  zIndex: animatedIndex,
-  position: 'absolute',
-  left: normaliseH(-140),
-  top: normaliseV(-720),
-}
+  const _fireLoading = () => {
+    Animated.timing(opacity, {
+      toValue: 0.6,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start()
+  }
 
-const animatedNoticeContainer = {
-  borderRadius: 15,
-  alignSelf: 'center',
-  alignItems: 'center',
-  top: normaliseV(680),
-  opacity: noticeOpacity,
-  zIndex: animatedIndex,
-  width: normaliseH(550),
-  height: normaliseV(350),
-  backgroundColor: 'black',
-  position: 'absolute',
-}
+  const _fireUnloading = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start()
+  }
+  // Style of loading screen
+  const animatedContainerStyleSheet = {
+    backgroundColor: 'black',
+    width: 126 + '%',
+    height: 173 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: opacity,
+    zIndex: animatedIndex,
+    position: 'absolute',
+    left: normaliseH(-140),
+    top: normaliseV(-720),
+  }
+
+  const animatedNoticeContainer = {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(680),
+    opacity: noticeOpacity,
+    zIndex: animatedIndex,
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
+  }
+
+  // If the app is loading
+
+  // Block of codes here
+
+  // If the app is loading finished
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -123,20 +155,28 @@ const animatedNoticeContainer = {
           </Swiper>
 
           <Animated.View style={animatedContainerStyleSheet}></Animated.View>
-        <Animated.View style={animatedNoticeContainer}>
-          <ActivityIndicator
-            style={{ position: 'absolute', top: normaliseV(100) }}
-            size="large"
-            color="lightgrey"
-            animating={isLoading}
-          />
-          <StyledText
-            fontWeight="bold"
-            style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
-          >
-            Đang xác thực..
-          </StyledText>
-        </Animated.View>
+          <BlurView
+            intensity={97}
+            tint={'dark'}
+            style={[
+              StyleSheet.absoluteFill,
+              { zIndex: animatedIndex, opacity: blurOpacity },
+            ]}
+          ></BlurView>
+          <Animated.View style={animatedNoticeContainer}>
+            <ActivityIndicator
+              style={{ position: 'absolute', top: normaliseV(100) }}
+              size="large"
+              color="lightgrey"
+              animating={isLoading}
+            />
+            <StyledText
+              fontWeight="bold"
+              style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+            >
+              Đang tải...
+            </StyledText>
+          </Animated.View>
           {/* <ContentLoader
             MaskedElement={() => getMaskedElement(appStatus)}
             dir={'ltr'}
@@ -160,8 +200,6 @@ const animatedNoticeContainer = {
             pointerEvents={'none'}
           />
         </View>
-
-        
       </View>
     </GradientContainer>
   )
