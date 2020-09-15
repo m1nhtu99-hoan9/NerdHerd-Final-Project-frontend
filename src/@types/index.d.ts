@@ -22,6 +22,11 @@ declare module 'react-native-speedometer'
  */
 declare module 'Base64'
 
+/** a hack declaring empty type module to avoid type warning
+ *  regarding `react-native-masked-loader`
+ */
+declare module 'react-native-masked-loader'
+
 type PhoneNum = string
 
 /* HTTP Response schemas */

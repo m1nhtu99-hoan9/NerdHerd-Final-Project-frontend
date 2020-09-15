@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
@@ -10,6 +10,9 @@ import { Colours, Fonts } from '../styles/'
 import { GradientContainer, StyledText } from '../components/atomic/'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import Svg, { Rect } from 'react-native-svg'
+import ContentLoader from 'react-native-masked-loader'
 
 import {
   normalise,
@@ -27,8 +30,24 @@ import Swiper from 'react-native-swiper'
 /* hide warning boxes */
 console.disableYellowBox = true
 
+const getMaskedElement = (appStatus: boolean) => {
+  // If the app is loading
+  if (appStatus) {
+    return (
+      <Svg height={800} width="100%" fill={'black'}>
+        <Rect x="0" y="0" width="100%" height="100%" />
+      </Svg>
+    )
+  } else {
+    return
+  }
+
+  // If the app is loaded
+}
+
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
+  const [appStatus, setAppStatus] = useState(true)
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -52,25 +71,39 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            {/**@TODOs 
-             * implment a history stack of `UserCreditInfoCard` here 
+            {/**@TODOs
+             * implment a history stack of `UserCreditInfoCard` here
              * all of them are stored in SyncStorage */}
-            <UserCreditInfoCard phoneNumber="0967162652" creditScore={58}/>
+            <UserCreditInfoCard phoneNumber="0967162652" creditScore={58} />
 
-            <UserCreditInfoCard phoneNumber="0904586221" creditScore={75}/>
+            <UserCreditInfoCard phoneNumber="0904586221" creditScore={75} />
 
-            <UserCreditInfoCard phoneNumber="0955586221" creditScore={12}/>
+            <UserCreditInfoCard phoneNumber="0955586221" creditScore={12} />
           </Swiper>
+
+          <ContentLoader
+            MaskedElement={() => getMaskedElement(appStatus)}
+            dir={'ltr'}
+            duration={1000}
+            forColor="#fafafa"
+            backColor="lightgray"
+          />
         </View>
 
         <View style={styles.footer}>
-        <LinearGradient
-    style={{position:'absolute', bottom: normaliseV(72), borderRadius: 15, width: 94 + '%', alignSelf: 'center', height:30}}
-    colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
-    pointerEvents={'none'}
-  />
+          <LinearGradient
+            style={{
+              position: 'absolute',
+              bottom: normaliseV(72),
+              borderRadius: 15,
+              width: 94 + '%',
+              alignSelf: 'center',
+              height: 30,
+            }}
+            colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
+            pointerEvents={'none'}
+          />
         </View>
-        
       </View>
     </GradientContainer>
   )
@@ -180,7 +213,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colours.White, // RIP Old Colour: '#009591',
     borderTopEndRadius: 15,
     paddingHorizontal: normaliseH(40),
-
   },
   headerText: {
     fontSize: normalise(29),
