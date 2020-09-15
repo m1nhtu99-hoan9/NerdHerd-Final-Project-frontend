@@ -58,11 +58,12 @@ export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const [appStatus, setAppStatus] = useState(true)
 
-  const [blurOpacity, setBlurOpacity] = useState(0.9)
-  const opacity = useState(new Animated.Value(0.6))[0]
-  const noticeOpacity = useState(new Animated.Value(1))[0]
+  const [blurOpacity, setBlurOpacity] = useState(0)
+  const [blurIndex, setBlurIndex] = useState(-2)
+  const opacity = useState(new Animated.Value(0))[0]
+  const noticeOpacity = useState(new Animated.Value(0))[0]
   const [isLoading, setLoading] = useState(true)
-  const [animatedIndex, setAnimatedIndex] = useState(5)
+  const [animatedIndex, setAnimatedIndex] = useState(-2)
 
   const _fireLoading = () => {
     Animated.timing(opacity, {
@@ -160,7 +161,7 @@ export default function HomeScreen() {
             tint={'dark'}
             style={[
               StyleSheet.absoluteFill,
-              { zIndex: animatedIndex, opacity: blurOpacity },
+              { zIndex: blurIndex, opacity: blurOpacity },
             ]}
           ></BlurView>
           <Animated.View style={animatedNoticeContainer}>
@@ -187,7 +188,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.footer}>
-          <LinearGradient
+          {/* <LinearGradient
             style={{
               position: 'absolute',
               bottom: normaliseV(72),
@@ -198,7 +199,7 @@ export default function HomeScreen() {
             }}
             colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.5)']}
             pointerEvents={'none'}
-          />
+          /> */}
         </View>
       </View>
     </GradientContainer>
