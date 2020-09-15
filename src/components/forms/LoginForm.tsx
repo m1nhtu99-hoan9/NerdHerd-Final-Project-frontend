@@ -29,7 +29,7 @@ import {
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
-import { asyncLogin } from '../../machines'
+
 import { AntDesign } from '@expo/vector-icons'
 
 interface FormInput {
@@ -98,12 +98,16 @@ export default function LoginForm() {
       setLoading(false)
       _fireUnloading()
 
-      /* a bit hacky 凸( •̀_•́ )凸 */
       if (appMState.context.token) {
+        /* double-check to make sure access token has been generated and stored
+           just to be sure, ya know 凸( •̀_•́ )凸
+        */
         nav.navigate('Home')
       } else {
+        /* to be fair, if this happens, there is something wrong with `AppService`
+        */
         setApiErrorMessage(
-          'Your login credentials are incorrect! Please re-check!',
+          'Your login credentials are incorrect! Please re-check!'
         )
       }
 

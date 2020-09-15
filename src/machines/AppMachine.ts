@@ -66,9 +66,15 @@ const AppMachine = Machine<
             target: 'FAILURE',
             actions: assign({
               lastResponse: (_, event) => {
+                const statusCode = event.data.status
+                const respData = event.data.data
+
                 return {
-                  statusCode: event.data.status,
-                  lastErrorMessage: Object.values(event.data.data)[0] as string,
+                  statusCode,
+                  lastErrorMessage:
+                    statusCode >= 500
+                      ? JSON.stringify(respData)
+                      : (Object.values(respData)[0] as string),
                 }
               },
             }),
@@ -125,7 +131,7 @@ const AppMachine = Machine<
     FAILURE: {
       on: {
         Logout: { target: 'UNAUTHORISED' },
-        Login: { target: 'AUTHENTICATING'}
+        Login: { target: 'AUTHENTICATING' },
       },
     },
   },
