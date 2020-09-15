@@ -42,6 +42,7 @@
     "apisauce": "^1.1.2",
     "expo": "~38.0.8",
     "expo-asset": "~8.1.7",
+    "expo-blur": "^8.1.2",
     "expo-device": "^2.2.1",
     "expo-font": "~8.2.1",
     "expo-linear-gradient": "^8.2.1",

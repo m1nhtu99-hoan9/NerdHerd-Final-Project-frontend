@@ -87,7 +87,24 @@ const AppMachine = Machine<
             /* other types of response */
             cond: isNotSuccessResp,
             target: 'FAILURE',
+<<<<<<< HEAD
             actions: persistUnsuccRespMessage,
+=======
+            actions: assign({
+              lastResponse: (_, event) => {
+                const statusCode = event.data.status
+                const respData = event.data.data
+
+                return {
+                  statusCode,
+                  lastErrorMessage:
+                    statusCode >= 500
+                      ? 'Mật khẩu không chính xác'
+                      : (Object.values(respData)[0] as string),
+                }
+              },
+            }),
+>>>>>>> 148f3543a8b2a4daf4825d369561327a69848916
           },
         ],
         onError: {

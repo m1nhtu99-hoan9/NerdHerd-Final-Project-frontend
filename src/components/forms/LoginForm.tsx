@@ -14,6 +14,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
 
 import { useForm, Controller } from 'react-hook-form'
 import SyncStorage from 'sync-storage'
+import { BlurView } from 'expo-blur'
+
 
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -48,11 +50,14 @@ export default function LoginForm() {
   const [apiErrorMessage, setApiErrorMessage] = useState<string | undefined>(
     undefined,
   )
-
+  
+  /* states for doing loading animation */
   const opacity = useState(new Animated.Value(0))[0]
   const noticeOpacity = useState(new Animated.Value(0))[0]
   const [isLoading, setLoading] = useState(false)
-  const [animatedIndex, setAnimatedIndex] = useState(0)
+  const [animatedIndex, setAnimatedIndex] = useState(-2)
+  const [blurOpacity, setBlurOpacity] = useState(0)
+
 
   const _fireLoading = () => {
     Animated.timing(opacity, {
@@ -88,14 +93,17 @@ export default function LoginForm() {
       // start loading indicator
       setAnimatedIndex(2)
       _fireLoading()
+      setBlurOpacity(1)
       setLoading(true)
+      
 
       console.log('Resolving login request')
     }
     if (appMState.value == 'LOGGED_IN') {
       // stop loading indicator
-      setAnimatedIndex(0)
+      setAnimatedIndex(-2)
       setLoading(false)
+      setBlurOpacity(0)
       _fireUnloading()
 
       if (appMState.context.token) {
@@ -116,8 +124,9 @@ export default function LoginForm() {
     }
     if (appMState.value == 'FAILURE') {
       /* turn off loading indicator */
-      setAnimatedIndex(0)
+      setAnimatedIndex(-2)
       setLoading(false)
+      setBlurOpacity(0)
       _fireUnloading()
 
       // update api error message state for it to be displayed
@@ -232,21 +241,7 @@ export default function LoginForm() {
 
   return (
     <View style={styles.container}>
-      <Animated.View style={animatedContainerStyleSheet}></Animated.View>
-      <Animated.View style={animatedNoticeContainer}>
-        <ActivityIndicator
-          style={{ position: 'absolute', top: normaliseV(100) }}
-          size="large"
-          color="lightgrey"
-          animating={isLoading}
-        />
-        <StyledText
-          fontWeight="bold"
-          style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
-        >
-          Đang xác thực..
-        </StyledText>
-      </Animated.View>
+
 
       <View style={styles.formContainer}>
         {/* Phone Number input field */}
@@ -372,6 +367,33 @@ export default function LoginForm() {
 
         {/* END Link to `SignUp` screen */}
       </View>
+
+      <Animated.View style={animatedContainerStyleSheet}></Animated.View>
+      <BlurView
+            intensity={60}
+            tint={'dark'}
+            style={[
+              StyleSheet.absoluteFill,
+              { zIndex: animatedIndex, opacity: blurOpacity, position: 'absolute', width: 126 + '%',
+              height: 173 + '%',
+              left: normaliseH(-140),
+              top: normaliseV(-720), },
+            ]}
+          ></BlurView>
+      <Animated.View style={animatedNoticeContainer}>
+        <ActivityIndicator
+          style={{ position: 'absolute', top: normaliseV(100) }}
+          size="large"
+          color="lightgrey"
+          animating={isLoading}
+        />
+        <StyledText
+          fontWeight="bold"
+          style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+        >
+          Đang xác thực..
+        </StyledText>
+      </Animated.View>
     </View>
   )
 }

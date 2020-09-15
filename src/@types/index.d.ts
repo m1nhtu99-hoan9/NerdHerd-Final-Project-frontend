@@ -27,6 +27,7 @@ declare module 'Base64'
  */
 declare module 'react-native-masked-loader'
 
+declare module 'expo-blur'
 
 /** HTTP Response schemas 
  @reference https://app.swaggerhub.com/apis-docs/minhtu-thomas-hoang9/nerdherd-crescorex-api/

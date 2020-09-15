@@ -16,6 +16,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler'
 import { Container, Form } from 'native-base'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -32,6 +33,8 @@ import Slider from '@react-native-community/slider'
 import { useForm, Controller } from 'react-hook-form'
 
 import ModalContent from '../components/ModalUserInfoCard'
+import { TSpan } from 'react-native-svg'
+import { times } from 'ramda'
 
 interface FormInput {
   loanAmount_calculate: number | null
@@ -81,6 +84,8 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   ]
 
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
+
+  const [fadedOpacity, setFadedOpacity] = useState(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)'])
 
   // State of modal
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
@@ -149,6 +154,10 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         )
     }
   }
+  //@ts-ignore
+  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
 
   return (
     <>
@@ -198,7 +207,14 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           behavior="padding"
           enabled
         >
-          <ScrollView>
+          <ScrollView onScroll={({ nativeEvent }) => {
+            if (isCloseToBottom(nativeEvent)) {
+              setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)'])
+            }
+            if (!isCloseToBottom(nativeEvent)) {
+              setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)'])
+            }
+          }}>
             <View style={styles.phoneNumContainer}>
               <StyledText fontWeight="regular" style={styles.phoneNum}>
                 {phoneNumber}
@@ -475,6 +491,18 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
+        <LinearGradient
+            style={{
+              position: 'absolute',
+              bottom: normaliseV(0),
+              borderRadius: 0,
+              width: 100 + '%',
+              alignSelf: 'center',
+              height: normaliseV(100),
+            }}
+            colors={fadedOpacity}
+            pointerEvents={'none'}
+          />
       </Container>
     </>
   )
