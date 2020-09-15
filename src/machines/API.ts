@@ -15,7 +15,7 @@ type ReactStateSetter<T> = React.Dispatch<React.SetStateAction<T>>
  * @param phoneNum: user's input phone number as string
  * @param rawPassword: user's input password
  */
-export function asyncLogin (phoneNum: string, rawPassword: string) {
+export function asyncLogin(phoneNum: string, rawPassword: string) {
   const decodedCreds = b64_encode(`${phoneNum}:${rawPassword}`)
 
   return api.get<LoginOkResponse, ErrorResponse>(
@@ -32,7 +32,7 @@ export function asyncLogin (phoneNum: string, rawPassword: string) {
 /** Asynchronously request to logout (protected route)
  * @param userToken: this user's session access token stored in AsyncStorage
  */
-export function asyncLogout (userToken: string) {
+export function asyncLogout(userToken: string) {
   return (
     api
       // for this route, success response has the same schema as error response
@@ -51,7 +51,7 @@ export function asyncLogout (userToken: string) {
 /** Asynchronously request to register new user (public route)
  * @param inputForm: object holds to-be-registered user's information
  */
-export function asyncRegister (inputForm: RegisterForm) {
+export function asyncRegister(inputForm: RegisterForm) {
   return api.post<RegisterOkResponse, ErrorResponse>(
     '/auth/register',
     inputForm,
@@ -62,7 +62,7 @@ export function asyncRegister (inputForm: RegisterForm) {
  * @param userToken: this user's session access token stored in AsyncStorage
  * @param customerPhone: customer's phone number
  */
-export function asyncGetOtp (userToken: string) {
+export function asyncGetOtp(userToken: string) {
   return function (customerPhone: string) {
     return api.get<OtpOkResponse, ErrorResponse>(
       '/otp',
@@ -80,7 +80,7 @@ export function asyncGetOtp (userToken: string) {
  * @param userToken: this user's session access token stored in AsyncStorage
  * @param customerPhone: customer's phone number
  */
-export function asyncGetCrescore (userToken: string) {
+export function asyncGetCrescore(userToken: string) {
   return function (customerPhone: string) {
     return api.get<ScoreOkResponse, ErrorResponse>(
       '/crescore',
@@ -96,18 +96,13 @@ export function asyncGetCrescore (userToken: string) {
 
 /** Asynchronously request current user's profile (protected route)
  * @param userToken: this user's session access token stored in AsyncStorage
- * @param onSuccess: a function implement side effects
- *                   (i.e. persist data, navigation stuffs, etc.) in case of success
- * @param onProblem: a function takes returned error message and display it
  */
-export function asyncGetUserProfile (userToken: string) {
-  return api
-    .get<ProfileOkResponse, ErrorResponse>(
-      '/profile',
-      {},
-      // server will decode user token to get user's phone number,
-      // which is used as login id
-      { headers: { Authorization: `Bearer ${userToken}` } },
-    )
+export function asyncGetUserProfile(userToken: string) {
+  return api.get<ProfileOkResponse, ErrorResponse>(
+    '/profile',
+    {},
+    // server will decode user token to get user's phone number,
+    // which is used as login id
+    { headers: { Authorization: `Bearer ${userToken}` } },
+  )
 }
-
