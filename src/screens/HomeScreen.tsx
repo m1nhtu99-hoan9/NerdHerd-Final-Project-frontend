@@ -1,6 +1,14 @@
 import i18n from '../i18n'
 import React, { Component, useState } from 'react'
-import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  Dimensions,
+  Animated,
+  ActivityIndicator,
+} from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -30,24 +38,57 @@ import Swiper from 'react-native-swiper'
 /* hide warning boxes */
 console.disableYellowBox = true
 
-const getMaskedElement = (appStatus: boolean) => {
-  // If the app is loading
-  if (appStatus) {
-    return (
-      <Svg height={800} width="100%" fill={'black'}>
-        <Rect x="0" y="0" width="100%" height="100%" />
-      </Svg>
-    )
-  } else {
-    return
-  }
+// const getMaskedElement = (appStatus: boolean) => {
+//   // If the app is loading
+//   if (appStatus) {
+//     return (
+//       <Svg height={800} width="100%" fill={'black'}>
+//         <Rect x="0" y="0" width="100%" height="100%" />
+//       </Svg>
+//     )
+//   } else {
+//     return
+//   }
 
-  // If the app is loaded
-}
+//   // If the app is loaded
+// }
+
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const [appStatus, setAppStatus] = useState(true)
+
+  const opacity = useState(new Animated.Value(0.6))[0]
+  const noticeOpacity = useState(new Animated.Value(1))[0]
+  const [isLoading, setLoading] = useState(true)
+  const [animatedIndex, setAnimatedIndex] = useState(5)
+
+  // Style of loading screen
+const animatedContainerStyleSheet = {
+  backgroundColor: 'black',
+  width: 126 + '%',
+  height: 173 + '%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  opacity: opacity,
+  zIndex: animatedIndex,
+  position: 'absolute',
+  left: normaliseH(-140),
+  top: normaliseV(-720),
+}
+
+const animatedNoticeContainer = {
+  borderRadius: 15,
+  alignSelf: 'center',
+  alignItems: 'center',
+  top: normaliseV(680),
+  opacity: noticeOpacity,
+  zIndex: animatedIndex,
+  width: normaliseH(550),
+  height: normaliseV(350),
+  backgroundColor: 'black',
+  position: 'absolute',
+}
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -81,13 +122,28 @@ export default function HomeScreen() {
             <UserCreditInfoCard phoneNumber="0955586221" creditScore={12} />
           </Swiper>
 
-          <ContentLoader
+          <Animated.View style={animatedContainerStyleSheet}></Animated.View>
+        <Animated.View style={animatedNoticeContainer}>
+          <ActivityIndicator
+            style={{ position: 'absolute', top: normaliseV(100) }}
+            size="large"
+            color="lightgrey"
+            animating={isLoading}
+          />
+          <StyledText
+            fontWeight="bold"
+            style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+          >
+            Đang xác thực..
+          </StyledText>
+        </Animated.View>
+          {/* <ContentLoader
             MaskedElement={() => getMaskedElement(appStatus)}
             dir={'ltr'}
             duration={1000}
             forColor="#fafafa"
             backColor="lightgray"
-          />
+          /> */}
         </View>
 
         <View style={styles.footer}>
@@ -104,6 +160,8 @@ export default function HomeScreen() {
             pointerEvents={'none'}
           />
         </View>
+
+        
       </View>
     </GradientContainer>
   )
