@@ -193,15 +193,8 @@ const AppMachine = Machine<
     },
   },
   FAILURE: {
-    always: [
-      {
-        cond: isTokenEmpty,
-        target: 'UNAUTHORISED',
-      },
-    ],
     on: {
       Logout: { target: 'UNAUTHORISED' },
-      // a bit excessive but it's ok, ya know へ‿(ツ)‿ㄏ
       Login: { target: 'AUTHENTICATING' },
     },
   },
