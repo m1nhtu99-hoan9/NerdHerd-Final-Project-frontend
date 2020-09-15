@@ -83,7 +83,7 @@ const AppMachine = Machine<
                   statusCode,
                   lastErrorMessage:
                     statusCode >= 500
-                      ? 'Mật khẩu sai'
+                      ? 'Mật khẩu không chính xác'
                       : (Object.values(respData)[0] as string),
                 }
               },
