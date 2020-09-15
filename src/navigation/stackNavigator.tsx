@@ -14,7 +14,7 @@ const StackNavigator = () => {
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Login"
-        options={{ headerShown: false }}
+        options={{ headerShown: false, gestureEnabled: false }}
         component={WelcomeStackNavigator}
         initialParams={{}}
       />

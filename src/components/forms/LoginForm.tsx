@@ -171,6 +171,15 @@ export default function LoginForm() {
   }
 
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
+    // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
+    if (apiErrorMessage != ' ' && apiErrorMessage?.length) {
+      return (
+        <Text style={styles.validationText}>
+          {apiErrorMessage}
+        </Text>
+      )
+    }
+
     switch (errors.password?.type) {
       case 'required':
         return (
@@ -194,12 +203,12 @@ export default function LoginForm() {
     }
   }
 
-  const _showApiErrorMessage = function () {
-    // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
-    if (apiErrorMessage !== ' ' && apiErrorMessage?.length) {
-      return <Text style={styles.validationText}>{apiErrorMessage}</Text>
-    }
-  }
+  // const _showApiErrorMessage = function () {
+  //   // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
+  //   if (apiErrorMessage !== ' ' && apiErrorMessage?.length) {
+  //     return <Text style={styles.validationText}>{apiErrorMessage}</Text>
+  //   }
+  // }
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
     width: 126 + '%',
@@ -315,8 +324,9 @@ export default function LoginForm() {
           rules={{ required: true, minLength: 6, pattern: /^[a-zA-Z0-9]+$/ }}
           defaultValue=""
         />
+        {/* show error messages related to password and API responses */}
         {_showPasswordErrorMessage()}
-        {_showApiErrorMessage()}
+        
 
         {/* END Password input field */}
       </View>
