@@ -101,6 +101,13 @@ const AppMachine = Machine<
         },
       },
     },
+    FAILURE: {
+      on: {
+        Logout: { target: 'UNAUTHORISED' },
+        Login: { target: 'AUTHENTICATING' },
+      },
+    },
+    
     LOGGED_IN: {
       //always: [{ cond: 'isTokenEmpty', target: 'UNAUTHORISED' }],
       on: {
@@ -192,12 +199,7 @@ const AppMachine = Machine<
       },
     },
   },
-  FAILURE: {
-    on: {
-      Logout: { target: 'UNAUTHORISED' },
-      Login: { target: 'AUTHENTICATING' },
-    },
-  },
+
 })
 
 export default AppMachine
