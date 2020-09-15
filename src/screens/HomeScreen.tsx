@@ -58,7 +58,7 @@ export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const [appStatus, setAppStatus] = useState(true)
 
-  const [blurOpacity, setBlurOpacity] = useState(1)
+  const [blurOpacity, setBlurOpacity] = useState(0.9)
   const opacity = useState(new Animated.Value(0.6))[0]
   const noticeOpacity = useState(new Animated.Value(1))[0]
   const [isLoading, setLoading] = useState(true)
@@ -156,7 +156,7 @@ export default function HomeScreen() {
 
           <Animated.View style={animatedContainerStyleSheet}></Animated.View>
           <BlurView
-            intensity={97}
+            intensity={100}
             tint={'dark'}
             style={[
               StyleSheet.absoluteFill,
