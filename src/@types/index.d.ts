@@ -40,7 +40,7 @@ type LoginOkResponse = { jwt: string }
 type RegisterOkResponse = { db_user_id: string }
 type OtpOkResponse = { otp_code: string }
 type ScoreOkResponse = { score: string }
-type SearchResultResponse = { phone: string; credit_score: string }
+type SearchResultResponse = { customer_phone: string; credit_score: string }
 type SearchResult = {
   phone?: PhoneNum
   score?: number
