@@ -31,19 +31,16 @@ export interface AppMachineContext {
 
 export interface AppMachineStateSchema extends StateSchema {
   states: {
-    UNAUTHORISED: {
-      /* unauthorised access due to invalid or missing token or not
+    /* unauthorised access due to invalid or missing token or not
          being logged in yet both falls into this state */
-    }
+    UNAUTHORISED: {}
     AUTHENTICATING: {}
     LOGGED_IN: {}
-    PROFILE_FETCHING: {
-      /* to get data to display in HomeScreen (search history) 
+    /* to get data to display in HomeScreen (search history) 
          & InformationScreen */
-    }
-    READY: {
-      /* HomeScreen & InformationScreen are ready to display */
-    }
+    PROFILE_FETCHING: {}
+    /* HomeScreen & InformationScreen are ready to display */
+    READY: {}
     OTP_FETCHING: {}
     OTP_UPDATED: {}
     CRESCORE_QUERYING: {}

@@ -15,7 +15,6 @@ import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import { useForm, Controller } from 'react-hook-form'
 import { BlurView } from 'expo-blur'
 
-
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Colours, Fonts } from '../../styles/index'
@@ -30,7 +29,6 @@ import {
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
-
 
 interface FormInput {
   password: string
@@ -48,14 +46,13 @@ export default function LoginForm() {
   const [apiErrorMessage, setApiErrorMessage] = useState<string | undefined>(
     undefined,
   )
-  
+
   /* states for doing loading animation */
   const opacity = useState(new Animated.Value(0))[0]
   const noticeOpacity = useState(new Animated.Value(0))[0]
   const [isLoading, setLoading] = useState(false)
   const [animatedIndex, setAnimatedIndex] = useState(-2)
   const [blurOpacity, setBlurOpacity] = useState(0)
-
 
   const _fireLoading = () => {
     Animated.timing(opacity, {
@@ -83,26 +80,33 @@ export default function LoginForm() {
     }).start()
   }
 
+  const _stopAnimation = () => {
+    setAnimatedIndex(-2)
+    setLoading(false)
+    setBlurOpacity(0)
+    _fireUnloading()
+  }
+
+  const _startAnimation = () => {
+    setAnimatedIndex(2)
+    _fireLoading()
+    setBlurOpacity(1)
+    setLoading(true)
+  }
+
   useEffect(() => {
     if (appMState.value == 'UNAUTHORISED') {
       console.log('Not logged in yet')
     }
     if (appMState.value == 'AUTHENTICATING') {
       // start loading indicator
-      setAnimatedIndex(2)
-      _fireLoading()
-      setBlurOpacity(1)
-      setLoading(true)
-      
+      _startAnimation()
 
       console.log('Resolving login request')
     }
     if (appMState.value == 'LOGGED_IN') {
       // stop loading indicator
-      setAnimatedIndex(-2)
-      setLoading(false)
-      setBlurOpacity(0)
-      _fireUnloading()
+      _stopAnimation()
 
       if (appMState.context.token) {
         /* double-check to make sure access token has been generated and stored
@@ -122,10 +126,7 @@ export default function LoginForm() {
     }
     if (appMState.value == 'FAILURE') {
       /* turn off loading indicator */
-      setAnimatedIndex(-2)
-      setLoading(false)
-      setBlurOpacity(0)
-      _fireUnloading()
+      _stopAnimation()
 
       // update api error message state for it to be displayed
       setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
@@ -144,6 +145,7 @@ export default function LoginForm() {
       password: data.password,
     })
   }
+
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
   }
@@ -239,8 +241,6 @@ export default function LoginForm() {
 
   return (
     <View style={styles.container}>
-
-
       <View style={styles.formContainer}>
         {/* Phone Number input field */}
         <TouchableOpacity
@@ -368,17 +368,27 @@ export default function LoginForm() {
 
       <Animated.View style={animatedContainerStyleSheet}></Animated.View>
       <BlurView
-            intensity={60}
-            tint={'dark'}
-            style={[
-              StyleSheet.absoluteFill,
-              { zIndex: animatedIndex, opacity: blurOpacity, position: 'absolute', width: 126 + '%',
-              height: 173 + '%',
-              left: normaliseH(-140),
-              top: normaliseV(-720), },
-            ]}
-          ></BlurView>
-      <Animated.View style={animatedNoticeContainer}>
+        intensity={60}
+        tint={'dark'}
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            zIndex: animatedIndex,
+            opacity: blurOpacity,
+            position: 'absolute',
+            width: 126 + '%',
+            height: 173 + '%',
+            left: normaliseH(-140),
+            top: normaliseV(-720),
+          },
+        ]}
+      ></BlurView>
+      <Animated.View
+        onTouchStart={() => {
+          _stopAnimation()
+        }}
+        style={animatedNoticeContainer}
+      >
         <ActivityIndicator
           style={{ position: 'absolute', top: normaliseV(100) }}
           size="large"
