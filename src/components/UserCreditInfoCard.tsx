@@ -494,11 +494,11 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
         <LinearGradient
             style={{
               position: 'absolute',
-              bottom: normaliseV(0),
+              bottom: normaliseV(-1),
               borderRadius: 0,
               width: 100 + '%',
               alignSelf: 'center',
-              height: normaliseV(100),
+              height: normaliseV(110),
             }}
             colors={fadedOpacity}
             pointerEvents={'none'}

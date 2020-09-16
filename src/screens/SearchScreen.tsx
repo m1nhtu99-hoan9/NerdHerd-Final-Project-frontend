@@ -7,6 +7,7 @@ import {
   Dimensions,
   TextInput,
   Animated,
+  Modal,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
@@ -21,6 +22,7 @@ import { normalise } from '../../src/helpers/Constants'
 import { normaliseH, normaliseV, PATTERN } from '../helpers'
 
 import StyledText from '../../src/components/atomic/StyledText'
+import ModalContent from '../components/ModalUserInfoCard'
 
 //Get devices's dimension
 const SCREEN_HEIGHT = Dimensions.get('window').height
@@ -36,6 +38,11 @@ interface FormInput {
 
 export default function SeacrhScreen() {
   const hideSearchAnimation = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
     Animated.timing(heightView, {
       toValue: normaliseV(700),
       duration: 700,
@@ -46,12 +53,6 @@ export default function SeacrhScreen() {
       toValue: normaliseV(400),
       duration: 700,
       delay: 400,
-      useNativeDriver: false,
-    }).start()
-    Animated.timing(opacity, {
-      toValue: 0,
-      duration: 500,
-      delay: 600,
       useNativeDriver: false,
     }).start()
   }
@@ -97,24 +98,29 @@ export default function SeacrhScreen() {
     paddingHorizontal: normaliseH(40),
   }
 
+  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
   const [buttonText, setButtonText] = useState('Gửi mã OTP')
   const [isEnabled, setTextInputStatus] = useState(false)
   const [otpCode, setOtpCode] = useState('')
   const [otpWarn, setOtpWarn] = useState('')
+  const [phoneNum, setPhoneNum] = useState(0)
 
   const isIncorrect = (otpCode: string) => {
-    const _isNumDigit = (c: string) => any(x => x == c && x != ' ')([0,1,2,3,4,5,6,7,8,9])
+    const _isNumDigit = (c: string) =>
+      any((x) => x == c && x != ' ')([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
     const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
 
-    return (otpCode.length < 6) || (!_isValidOtp(otpCode))
+    return otpCode.length < 6 || !_isValidOtp(otpCode)
   }
 
   const showOtpInput = (data: Object) => {
     if (!isEnabled) {
-      console.log(data)
+      console.log(Object.values(data)[0])
+      setPhoneNum(Object.values(data)[0])
       showSearchAnimation()
       setTextInputStatus(true)
       setButtonText(i18n.t('search.submitBtn'))
+      setCalculateModalVisible(true)
     } else {
       if (isIncorrect(otpCode)) {
         setOtpWarn(i18n.t('search.validation.otpIncorrect'))
@@ -168,6 +174,25 @@ export default function SeacrhScreen() {
 
   return (
     <GradientContainer flexDirection={'column'}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={calculateModalVisible}
+      >
+        <ModalContent
+          icon="check"
+          headerText={'Thành công'}
+          contentText={`Đã gửi tin nhắn chứa mã OTP tới số điện thoại ${phoneNum}.`}
+          color="#36ad51"
+        ></ModalContent>
+        <TouchableOpacity
+          style={styles.calculateModalConfirmButton}
+          onPress={() => setCalculateModalVisible(false)}
+        >
+          <Text style={styles.formConfirmText}>OK</Text>
+        </TouchableOpacity>
+      </Modal>
+
       <View style={styles.container}>
         <Animated.View style={animatedContainer}>
           <StyledText fontWeight="bold" style={styles.headerText}>
@@ -180,7 +205,19 @@ export default function SeacrhScreen() {
             render={({ onChange, onBlur, value }) => (
               <TextInput
                 // validation code-block
-                onChangeText={(value) => onChange(value)}
+                onChangeText={(value) => {
+                  onChange(value)
+                  console.log(phoneNum)
+                  console.log(value)
+                  if (isEnabled && phoneNum != Number(value)) {
+                    hideSearchAnimation()
+                    setOtpCode('')
+                    setTextInputStatus(false)
+                    setButtonText('Gửi lại mã OTP')
+                  } else {
+                    setButtonText('Gửi mã OTP')
+                  }
+                }}
                 onBlur={onBlur}
                 value={value}
                 maxLength={10}
@@ -303,5 +340,22 @@ const styles = StyleSheet.create({
   },
   validationTextContainer: {
     alignItems: 'center',
+  },
+  // Modal style
+  calculateModalConfirmButton: {
+    width: 70 + '%',
+    height: 10 + '%',
+    backgroundColor: '#36ad51',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: normaliseV (1140),
+    marginLeft: normaliseH(204)
+
+  },
+  formConfirmText: {
+    color: 'white',
+    fontSize: normalise(16),
+    fontWeight: '600',
   },
 })
