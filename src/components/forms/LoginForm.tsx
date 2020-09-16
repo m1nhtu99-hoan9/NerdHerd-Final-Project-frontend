@@ -93,59 +93,9 @@ export default function LoginForm() {
     setBlurOpacity(1)
     setLoading(true)
   }
-
-  useEffect(() => {
-    if (appMState.value == 'UNAUTHORISED') {
-      console.log('Not logged in yet')
-    }
-    if (appMState.value == 'AUTHENTICATING') {
-      // start loading indicator
-      _startAnimation()
-
-      console.log('Resolving login request')
-    }
-    if (appMState.value == 'LOGGED_IN') {
-      // stop loading indicator
-      _stopAnimation()
-
-      if (appMState.context.token) {
-        /* double-check to make sure access token has been generated and stored
-           just to be sure, ya know 凸( •̀_•́ )凸
-        */
-        nav.navigate('Home')
-      } else {
-        /* to be fair, if this happens, (ó﹏ò｡)
-           there is something wrong with `AppService`
-        */
-        setApiErrorMessage(
-          'Your login credentials are incorrect! Please re-check!',
-        )
-      }
-
-      console.log(appMState.context)
-    }
-    if (appMState.value == 'FAILURE') {
-      /* turn off loading indicator */
-      _stopAnimation()
-
-      // update api error message state for it to be displayed
-      setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
-
-      console.log('FAILED')
-      console.log(appMState.context.lastResponse)
-    }
-  }, [appMState])
-
-  const _signInFormOnSubmitted = (data: SignInFormFields) => {
-    /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
-
-    appMSend({
-      type: 'Login',
-      phoneNum: data.phoneNum,
-      password: data.password,
-    })
+  const _onSpinnerTouched = () => {
+    _stopAnimation()
   }
-
   const _forgotPassTxtOnClicked = () => {
     nav.navigate('ForgotPassword')
   }
@@ -212,6 +162,59 @@ export default function LoginForm() {
         )
     }
   }
+
+  const _signInFormOnSubmitted = (data: SignInFormFields) => {
+    /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
+
+    appMSend({
+      type: 'Login',
+      phoneNum: data.phoneNum,
+      password: data.password,
+    })
+  }
+
+  useEffect(() => {
+    if (appMState.value == 'UNAUTHORISED') {
+      /* initial state of the app */
+      console.log('Not logged in yet')
+    }
+    if (appMState.value == 'AUTHENTICATING') {
+      // start loading indicator
+      _startAnimation()
+
+      console.log('Resolving login request')
+    }
+    if (appMState.value == 'LOGGED_IN') {
+      // stop loading indicator
+      _stopAnimation()
+
+      console.log(`Login request resolved: status ${appMState.context.lastResponse.statusCode}`)
+
+      if (appMState.context.token) {
+        /* double-check to make sure access token has been generated and stored
+           just to be sure, ya know 凸( •̀_•́ )凸
+        */
+        nav.navigate('Home')
+      } else {
+        /* to be fair, if this happens, (ó﹏ò｡)
+           there is something wrong with `AppService`
+        */
+        setApiErrorMessage(
+          'Your login credentials are incorrect! Please re-check!',
+        )
+      }
+    }
+    if (appMState.value == 'FAILURE') {
+      /* turn off loading indicator */
+      _stopAnimation()
+
+      // update api error message state so that the message can be showed
+      setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
+
+      console.log('FAILED')
+      console.log(appMState.context.lastResponse)
+    }
+  }, [appMState])
 
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
@@ -384,9 +387,7 @@ export default function LoginForm() {
         ]}
       ></BlurView>
       <Animated.View
-        onTouchStart={() => {
-          _stopAnimation()
-        }}
+        onTouchStart={_onSpinnerTouched}
         style={animatedNoticeContainer}
       >
         <ActivityIndicator
@@ -399,7 +400,7 @@ export default function LoginForm() {
           fontWeight="bold"
           style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
         >
-          Đang xác thực..
+          Đang xác thực...
         </StyledText>
       </Animated.View>
     </View>

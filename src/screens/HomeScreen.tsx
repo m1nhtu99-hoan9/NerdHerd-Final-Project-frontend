@@ -56,7 +56,8 @@ export default function HomeScreen() {
   const [appMState, appMSend] = useContext(AppMachineContext)
   const navigation = useNavigation<WelcomeScreenNavigationProps>()
 
-  const [appStatus, setAppStatus] = useState(true)
+  const [searchHistory, setSearchHistory] = useState<SearchResult[]>([])
+
   /* states for loading animation */
   const [isLoading, setLoading] = useState(true)
   const [blurOpacity, setBlurOpacity] = useState(0)
@@ -109,59 +110,47 @@ export default function HomeScreen() {
     ;(function (state) {
       switch (state) {
         case 'UNAUTHORISED':
-          /* navigate back to LoginScreen */
+          /** @desc rarely happens but still possible */
+
           navigation.navigate('Login')
           return
+        case 'LOGGED_IN':
+          /** @desc the user is led here after logging in successfully */
+
+          /* transit to `PROFILE_FETCHING` state */
+          appMSend('MoveOn')
+
+          return
         case 'PROFILE_FETCHING':
-          /* start loading animation for HomeScreen */
+          /** @desc
+           *    invoke a fetch promise to get data from server's `/profile` route;
+           *    if resolved, search history will be stored in state machine's context
+           */
+
+          /* start loading indicator animation */
           _startAnimation()
+
           return
         case 'READY':
-          /* stop loading animation */
+          /** @desc
+           *    the state machine reachs here only when `/profile` promise is resolved
+           */
+
+          /* stop loading indicator animation */
           _stopAnimation()
 
-          /* display information received and stored in context */
+          /* update screeen's `searchHistory` state accordingly to the `AppService` context */
+          setSearchHistory(appMState.context.searchHistory)
           return
         case 'FAILURE':
-          /* get back to LoginScreen (a bit rude but it's ok) */
+          /* getting back to LoginScreen without giving user an error message is a bit rude  
+             but it's okey for now, I reckon 凸( •̀_•́ )凸
+          */
           navigation.navigate('Login')
           return
       }
     })(appMState.value)
   }, [appMState.value])
-
-  // Style of loading screen
-  const animatedContainerStyleSheet = {
-    backgroundColor: 'black',
-    width: 126 + '%',
-    height: 173 + '%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: opacity,
-    zIndex: animatedIndex,
-    position: 'absolute',
-    left: normaliseH(-140),
-    top: normaliseV(-720),
-  }
-
-  const animatedNoticeContainer = {
-    borderRadius: 15,
-    alignSelf: 'center',
-    alignItems: 'center',
-    top: normaliseV(680),
-    opacity: noticeOpacity,
-    zIndex: animatedIndex,
-    width: normaliseH(550),
-    height: normaliseV(350),
-    backgroundColor: 'black',
-    position: 'absolute',
-  }
-
-  // If the app is loading
-
-  // Block of codes here
-
-  // If the app is loading finished
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -172,7 +161,7 @@ export default function HomeScreen() {
               {i18n.t('home.header')}
             </StyledText>
           </View>
-
+          {/* SEARCH HISTORY :: CUSTOMER'S CREDIT INFO VIEW CARDS */}
           <Swiper
             scrollEnabled={false}
             showsButtons
@@ -185,17 +174,28 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            {/**@TODOs
-             * implment a history stack of `UserCreditInfoCard` here
-             * all of them are stored in SyncStorage */}
-            <UserCreditInfoCard phoneNumber="0967162652" creditScore={58} />
-
-            <UserCreditInfoCard phoneNumber="0904586221" creditScore={75} />
-
-            <UserCreditInfoCard phoneNumber="0955586221" creditScore={12} />
+            {
+              /* render if search history has more than 1 elements */
+              searchHistory.length &&
+                searchHistory.map((element: SearchResult) => (
+                  <UserCreditInfoCard
+                    phoneNumber={element.phone as string}
+                    creditScore={element.score as number}
+                  />
+                ))
+            }
           </Swiper>
+          {/* END: SEARCH HISTORY :: CUSTOMER'S CREDIT INFO VIEW CARDS */}
 
-          <Animated.View style={animatedContainerStyleSheet}></Animated.View>
+          {/* LOADING INDICATOR ANIMATION */}
+          <Animated.View
+            style={[
+              styles.animatedContainer,
+              { opacity: opacity, zIndex: animatedIndex },
+            ]}
+          >
+            {/** Masked container for loading indicator animation */}
+          </Animated.View>
           <BlurView
             intensity={100}
             tint={'dark'}
@@ -204,7 +204,12 @@ export default function HomeScreen() {
               { zIndex: blurIndex, opacity: blurOpacity },
             ]}
           ></BlurView>
-          <Animated.View style={animatedNoticeContainer}>
+          <Animated.View
+            style={[
+              styles.animatedNoticeContainer,
+              { opacity: noticeOpacity, zIndex: animatedIndex },
+            ]}
+          >
             <ActivityIndicator
               style={{ position: 'absolute', top: normaliseV(100) }}
               size="large"
@@ -218,6 +223,7 @@ export default function HomeScreen() {
               Đang tải...
             </StyledText>
           </Animated.View>
+          {/* END: LOADING INDICATOR ANIMATION */}
           {/* <ContentLoader
             MaskedElement={() => getMaskedElement(appStatus)}
             dir={'ltr'}
@@ -380,5 +386,25 @@ const styles = StyleSheet.create({
     flex: 0.85,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
+  },
+  animatedContainer: {
+    backgroundColor: 'black',
+    width: 126 + '%',
+    height: 173 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'absolute',
+    left: normaliseH(-140),
+    top: normaliseV(-720),
+  },
+  animatedNoticeContainer: {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(680),
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
   },
 })

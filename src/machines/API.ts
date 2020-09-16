@@ -4,7 +4,10 @@ import { btoa as b64_encode } from 'Base64'
 /* (─‿‿─) If you really think about it, 
    isn't that Promise is a kind of state machine? */
 
-const BASE_URI = 'https://nerdherd-crescorex.herokuapp.com/'
+const BASE_URI = process.env.PRODUCTION
+  ? 'http://localhost:8000/'
+  : 'https://nerdherd-crescorex.herokuapp.com/'
+
 const api = create({
   baseURL: BASE_URI,
 })

@@ -22,8 +22,8 @@ export interface AppMachineContext {
   searchHistory?: Array<SearchResult>
   token?: string
   otp?: string
-  userProfile: TUserProfile
-  lastResponse: {
+  userProfile?: TUserProfile
+  lastResponse?: {
     statusCode: number
     lastErrorMessage: string
   }
@@ -52,7 +52,7 @@ export interface AppMachineStateSchema extends StateSchema {
 /* after every changes made on `AppMachineEvent`, 
   `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
-  type: 'Login' | 'Logout' | 'RequestOtp' | 'QueryScore' 
+  type: 'Login' | 'MoveOn' | 'Logout' | 'RequestOtp' | 'QueryScore' 
   phoneNum?: string
   password?: string
   token?: string
@@ -90,7 +90,7 @@ export type TAppMachineState = State<
 export type TAppMachineSender = (
   event:
     | AppMachineEvent
-    | 'Login' | 'Logout' | 'RequestOtp' | 'QueryScore'
+    | 'Login' | 'MoveOn' | 'Logout' | 'RequestOtp' | 'QueryScore'
     | SCXML.Event<AppMachineEvent>
     | Event<AppMachineEvent>[],
   phoneNum?: EventData | undefined,

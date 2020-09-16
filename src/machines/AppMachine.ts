@@ -101,8 +101,12 @@ const AppMachine = Machine<
       always: [
         // just to be sure ya know       ｡*ﾟ.*.｡(っ ᐛ )っ
         { cond: isTokenEmpty, target: 'UNAUTHORISED' },
-        { target: 'PROFILE_FETCHING' }
-      ]
+      ],
+      on: {
+        MoveOn: {
+          target: 'PROFILE_FETCHING'
+        }
+      }
     },
     PROFILE_FETCHING: {
       /* invoke promise to request from '/profile' route here:
