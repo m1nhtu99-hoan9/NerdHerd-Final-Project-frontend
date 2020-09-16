@@ -27,15 +27,33 @@ declare module 'Base64'
  */
 declare module 'react-native-masked-loader'
 
-type PhoneNum = string
+declare module 'expo-blur'
 
-/* HTTP Response schemas */
+/** HTTP Response schemas 
+ @reference https://app.swaggerhub.com/apis-docs/minhtu-thomas-hoang9/nerdherd-crescorex-api/
+ */
+
+type PhoneNum = string
 
 type ErrorResponse = { message: string } | { msg: string }
 type LoginOkResponse = { jwt: string }
 type RegisterOkResponse = { db_user_id: string }
 type OtpOkResponse = { otp_code: string }
 type ScoreOkResponse = { score: string }
+type SearchResultResponse = { phone: string; credit_score: string }
+type SearchResult = {
+  phone?: PhoneNum
+  score?: number
+}
+type ProfileOkResponse = {
+  user_id: string
+  phone: string
+  full_name: string
+  bank_id: string
+  email: string
+  search_history: Array<SearchResult>
+}
+
 
 type SignInFormFields = {
   phoneNum: string
@@ -49,15 +67,4 @@ type RegisterForm = {
   password: string
   license_key: string
   role: string
-}
-type SearchResult = {
-  phone: PhoneNum
-  score?: number
-}
-type ProfileOkResponse = {
-  phone: string
-  full_name: string
-  bank_id: string
-  email: string
-  search_history: Array<PhoneNum>
 }

@@ -21,7 +21,7 @@ export type TUserProfile = {
 export interface AppMachineContext {
   searchHistory?: Array<SearchResult>
   token?: string
-  // either empty object or object with schema as stated below
+  otp?: string
   userProfile: TUserProfile
   lastResponse: {
     statusCode: number
@@ -37,19 +37,16 @@ export interface AppMachineStateSchema extends StateSchema {
     }
     AUTHENTICATING: {}
     LOGGED_IN: {}
-    INVOKING_PROFILE_PROMISE: {}
-    PROFILE_UPDATED: {}
-    PREPARING_HOME_SCREEN: {
-      /* invoke multiple crescore promises to query credit score of each 
-         phone number in search history */
+    PROFILE_FETCHING: {
+      /* to get data to display in HomeScreen (search history) 
+         & InformationScreen */
     }
     READY: {
-      /* HomeScreen is ready to display */
+      /* HomeScreen & InformationScreen are ready to display */
     }
-    INVOKING_OTP_PROMISE: {}
+    OTP_FETCHING: {}
     OTP_UPDATED: {}
-    INVOKING_CRESCORE_PROMISE: {}
-    SEARCH_HISTORY_UPDATED: {}
+    CRESCORE_QUERYING: {}
     LOGGING_OUT: {}
     FAILURE: {}
   }
@@ -58,9 +55,11 @@ export interface AppMachineStateSchema extends StateSchema {
 /* after every changes made on `AppMachineEvent`, 
   `TAppMachineSender` has to be edited accordingly */
 export interface AppMachineEvent extends EventObject, DoneEventObject {
-  type: 'Login' | 'Logout'
+  type: 'Login' | 'Logout' | 'RequestOtp' | 'QueryScore' 
   phoneNum?: string
   password?: string
+  token?: string
+  inputOtp?: string
 }
 
 /** Type of `AppMachine` */
@@ -94,11 +93,13 @@ export type TAppMachineState = State<
 export type TAppMachineSender = (
   event:
     | AppMachineEvent
-    | 'Login'
+    | 'Login' | 'Logout' | 'RequestOtp' | 'QueryScore'
     | SCXML.Event<AppMachineEvent>
     | Event<AppMachineEvent>[],
   phoneNum?: EventData | undefined,
   password?: EventData | undefined,
+  token?: EventData | undefined,
+  inputOtp?: EventData | undefined
 ) => TAppMachineState
 export interface OtpMachineContext {
   otp?: string

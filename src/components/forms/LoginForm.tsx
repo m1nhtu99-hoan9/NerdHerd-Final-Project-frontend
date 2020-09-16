@@ -50,7 +50,8 @@ export default function LoginForm() {
   const [apiErrorMessage, setApiErrorMessage] = useState<string | undefined>(
     undefined,
   )
-
+  
+  /* states for doing loading animation */
   const opacity = useState(new Animated.Value(0))[0]
   const noticeOpacity = useState(new Animated.Value(0))[0]
   const [isLoading, setLoading] = useState(false)
@@ -111,10 +112,11 @@ export default function LoginForm() {
         */
         nav.navigate('Home')
       } else {
-        /* to be fair, if this happens, there is something wrong with `AppService`
+        /* to be fair, if this happens, (ó﹏ò｡)
+           there is something wrong with `AppService`
         */
         setApiErrorMessage(
-          'Your login credentials are incorrect! Please re-check!'
+          'Your login credentials are incorrect! Please re-check!',
         )
       }
 
@@ -178,16 +180,16 @@ export default function LoginForm() {
     }
   }
 
+  /** "serve" API error message if it's available ლ(´ڡ`ლ)
+   *  ; otherwise, "serve" password validation error message
+   */
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
     // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
     if (apiErrorMessage != ' ' && apiErrorMessage?.length) {
-      return (
-        <Text style={styles.validationText}>
-          {apiErrorMessage}
-        </Text>
-      )
+      return <Text style={styles.validationText}>{apiErrorMessage}</Text>
     }
 
+    // ლ(´ڡ`ლ)
     switch (errors.password?.type) {
       case 'required':
         return (
@@ -211,12 +213,6 @@ export default function LoginForm() {
     }
   }
 
-  // const _showApiErrorMessage = function () {
-  //   // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
-  //   if (apiErrorMessage !== ' ' && apiErrorMessage?.length) {
-  //     return <Text style={styles.validationText}>{apiErrorMessage}</Text>
-  //   }
-  // }
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
     width: 126 + '%',
@@ -318,9 +314,8 @@ export default function LoginForm() {
           rules={{ required: true, minLength: 6, pattern: /^[a-zA-Z0-9]+$/ }}
           defaultValue=""
         />
-        {/* show error messages related to password and API responses */}
+        {/* show error messages related to password validation and API responses */}
         {_showPasswordErrorMessage()}
-        
 
         {/* END Password input field */}
       </View>
