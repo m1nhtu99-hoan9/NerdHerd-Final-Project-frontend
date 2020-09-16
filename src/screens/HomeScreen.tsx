@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { Component, useState } from 'react'
+import React, { Component, useContext, useEffect, useState } from 'react'
 import {
   StyleSheet,
   ScrollView,
@@ -9,19 +9,21 @@ import {
   Animated,
   ActivityIndicator,
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { FontAwesome, Entypo } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
-
-import { HomeScreenNavigationProps } from '../@types/navigation'
 import { Colours, Fonts } from '../styles/'
 import { GradientContainer, StyledText } from '../components/atomic/'
-import UserCreditInfoCard from '../components/UserCreditInfoCard'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import Swiper from 'react-native-swiper'
 import Svg, { Rect } from 'react-native-svg'
 import ContentLoader from 'react-native-masked-loader'
+import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { BlurView } from 'expo-blur'
+
+import { AppMachineContext } from '../contexts'
+
+import { WelcomeScreenNavigationProps } from '../@types/navigation'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   normalise,
@@ -30,11 +32,6 @@ import {
   SCREEN_HEIGHT,
   SCREEN_WIDTH,
 } from '../../src/helpers'
-import Swiper from 'react-native-swiper'
-
-/* @TODOs: 
-    - [x] (01/08/2020): Just mock-up
-*/
 
 /* hide warning boxes */
 console.disableYellowBox = true
@@ -55,14 +52,17 @@ console.disableYellowBox = true
 // }
 
 export default function HomeScreen() {
-  const navigation = useNavigation<HomeScreenNavigationProps>()
-  const [appStatus, setAppStatus] = useState(true)
+  // consume XState service hooks
+  const [appMState, appMSend] = useContext(AppMachineContext)
+  const navigation = useNavigation<WelcomeScreenNavigationProps>()
 
+  const [appStatus, setAppStatus] = useState(true)
+  /* states for loading animation */
+  const [isLoading, setLoading] = useState(true)
   const [blurOpacity, setBlurOpacity] = useState(0)
   const [blurIndex, setBlurIndex] = useState(-2)
   const opacity = useState(new Animated.Value(0))[0]
   const noticeOpacity = useState(new Animated.Value(0))[0]
-  const [isLoading, setLoading] = useState(true)
   const [animatedIndex, setAnimatedIndex] = useState(-2)
 
   const _fireLoading = () => {
@@ -90,6 +90,46 @@ export default function HomeScreen() {
       useNativeDriver: false,
     }).start()
   }
+
+  const _stopAnimation = () => {
+    setAnimatedIndex(-2)
+    setLoading(false)
+    setBlurOpacity(0)
+    _fireUnloading
+  }
+  const _startAnimation = () => {
+    setAnimatedIndex(2)
+    _fireLoading()
+    setBlurOpacity(1)
+    setLoading(true)
+  }
+
+  useEffect(() => {
+    // IIFE
+    ;(function (state) {
+      switch (state) {
+        case 'UNAUTHORISED':
+          /* navigate back to LoginScreen */
+          navigation.navigate('Login')
+          return
+        case 'PROFILE_FETCHING':
+          /* start loading animation for HomeScreen */
+          _startAnimation()
+          return
+        case 'READY':
+          /* stop loading animation */
+          _stopAnimation()
+
+          /* display information received and stored in context */
+          return
+        case 'FAILURE':
+          /* get back to LoginScreen (a bit rude but it's ok) */
+          navigation.navigate('Login')
+          return
+      }
+    })(appMState.value)
+  }, [appMState.value])
+
   // Style of loading screen
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',

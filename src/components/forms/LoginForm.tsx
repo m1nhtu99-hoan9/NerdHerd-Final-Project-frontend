@@ -10,10 +10,9 @@ import {
 } from 'react-native'
 import { Text, View } from 'native-base'
 import { Hideo } from 'react-native-textinput-effects'
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import { AntDesign, FontAwesome } from '@expo/vector-icons'
 
 import { useForm, Controller } from 'react-hook-form'
-import SyncStorage from 'sync-storage'
 import { BlurView } from 'expo-blur'
 
 
@@ -32,7 +31,6 @@ import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
 
-import { AntDesign } from '@expo/vector-icons'
 
 interface FormInput {
   password: string
@@ -271,7 +269,7 @@ export default function LoginForm() {
               // End of validation code-block
               style={styles.input}
               placeholder={i18n.t('signIn.usernameInput')}
-              iconClass={FontAwesomeIcon}
+              iconClass={FontAwesome}
               iconName={'mobile-phone'}
               iconColor={'grey'}
               iconSize={30}
@@ -301,7 +299,7 @@ export default function LoginForm() {
               // End of validation code-block
               secureTextEntry
               placeholder={i18n.t('signIn.passwordInput')}
-              iconClass={FontAwesomeIcon}
+              iconClass={FontAwesome}
               iconName={'lock'}
               iconColor={'grey'}
               iconSize={22}
