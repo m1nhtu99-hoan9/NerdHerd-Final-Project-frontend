@@ -34,7 +34,7 @@ const persistUnsuccRespMessage = assign<AppMachineContext, AppMachineEvent>({
 
 /** extract error message from rejected promise and update context accordingly */
 const persistRejectedMessage = assign<AppMachineContext, AppMachineEvent>({
-  // for rejected promises, `event.data` returns error message
+  // @ts-ignore; for rejected promises, `event.data` returns error message
   lastResponse: (ctx, event) => {
     return { ...ctx.lastResponse, lastErrorMessage: event.data }
   },
@@ -47,10 +47,10 @@ const resetOtp = assign<AppMachineContext, AppMachineEvent>({
 
 /** prepend received search result to search history in context */
 const addSearchResultToHistory = assign<AppMachineContext, AppMachineEvent>({
-  searchHistory: (ctx, event) =>
-    prepend<SearchResult>(event.data.data)(
-      ctx.searchHistory as Array<SearchResult>,
-    ),
+  searchHistory: (ctx, event) => [
+    ...(ctx.searchHistory as Array<SearchResult>),
+    event.data.data,
+  ],
 })
 
 interface TAssignHandler {
@@ -71,8 +71,8 @@ const assignHandler: TAssignHandler = {
       }
 
       return {
-        phone: item.phone,
-        score: round(parseFloat(item.credit_score))(0) * 100,
+        phone: item.customer_phone,
+        score: round(parseFloat(item.credit_score))(2) * 100,
       }
     }
 

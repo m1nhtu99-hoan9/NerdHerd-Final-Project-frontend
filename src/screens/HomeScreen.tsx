@@ -141,6 +141,26 @@ export default function HomeScreen() {
 
           /* update screeen's `searchHistory` state accordingly to the `AppService` context */
           setSearchHistory(appMState.context.searchHistory)
+
+          // setCard1, setCard2, setCard3
+          if (searchHistory.length < 3) {
+            switch (searchHistory.length) {
+              case 2: 
+                setCard1(searchHistory[1])
+                setCard2(searchHistory[0])
+                break
+              case 1: 
+                setCard1(searchHistory[0])
+                break
+            }
+          } else {
+            setCard1(searchHistory[searchHistory.length - 1])
+            setCard2(searchHistory[searchHistory.length - 2])
+            setCard3(searchHistory[searchHistory.length - 3])
+          }
+
+          console.log(appMState.context.searchHistory)
+          console.log(appMState.context.userProfile)
           return
         case 'FAILURE':
           /* getting back to LoginScreen without giving user an error message is a bit rude  
@@ -174,19 +194,20 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            {
-              /* render if search history has more than 1 elements */
-              !!searchHistory.length && (
-                <>
-                  {searchHistory.map((element: SearchResult) => (
-                    <UserCreditInfoCard
-                      phoneNumber={element.phone as string}
-                      creditScore={element.score as number}
-                    />
-                  ))}
-                </>
-              )
-            }
+            {!!card1 && (<UserCreditInfoCard phoneNumber={card1.phone} creditScore={card1.score}/>)}
+            {!!card2 && (<UserCreditInfoCard phoneNumber={card2.phone} creditScore={card2.score}/>)}
+            {!!card3 && (<UserCreditInfoCard phoneNumber={card3.phone} creditScore={card3.score}/>)}
+            {/*
+              // render if search history has more than 1 elements
+              !!searchHistory.length &&
+                searchHistory.map((element: SearchResult) => (
+                  <UserCreditInfoCard
+                    key={element.phone as string}
+                    phoneNumber={element.phone as string}
+                    creditScore={element.score as number}
+                  />
+                ))
+            */}
           </Swiper>
           {/* END: SEARCH HISTORY :: CUSTOMER'S CREDIT INFO VIEW CARDS */}
 

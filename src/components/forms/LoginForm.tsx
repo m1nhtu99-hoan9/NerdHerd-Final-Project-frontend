@@ -166,11 +166,13 @@ export default function LoginForm() {
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
     /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
 
-    appMSend({
-      type: 'Login',
-      phoneNum: data.phoneNum,
-      password: data.password,
-    })
+    appMSend('Login', {phoneNum: "0967162652", password: "aacc1234"})
+
+    // appMSend({
+    //   type: 'Login',
+    //   phoneNum: data.phoneNum,
+    //   password: data.password,
+    // })
   }
 
   useEffect(() => {

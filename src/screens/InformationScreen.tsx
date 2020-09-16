@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -28,14 +28,6 @@ import { useForm, Controller } from 'react-hook-form'
 
 import { AppMachineContext } from '../contexts'
 import { BlurView } from 'expo-blur'
-
-type UserInfo = {
-  fullName: string
-  bankName: string
-  status: 'normal' | 'warned' | '...' | undefined
-  email: string
-  phone: string
-}
 
 interface FormInput {
   oldPassword: string
@@ -94,15 +86,18 @@ export default function InformationScreen() {
     }).start()
   }
 
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    fullName: 'Ngo Tai Phat',
-    bankName: 'Techcombank',
-    status: 'normal',
+  const [userInfo, setUserInfo] = useState<
+    Omit<ProfileOkResponse, 'search_history'>
+  >({
+    full_name: 'Ngo Tai Phat',
+    bank_id: 'Techcombank',
     email: 'phatxxxxx@gmail.com',
     phone: '094345xxx',
+    user_id: '',
   })
 
   const _logoutButtonOnClicked = () => {
+    // update AppService state accordingly
     appMSend('Logout')
 
     // navigate back to LoginScreen
@@ -168,6 +163,8 @@ export default function InformationScreen() {
     setModalVisible(false)
   }
 
+  useEffect(() => {})
+
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
@@ -181,7 +178,7 @@ export default function InformationScreen() {
           <View style={styles.information}>
             <View style={styles.nameContainer}>
               <StyledText fontWeight="bold" style={styles.name}>
-                {userInfo.fullName}
+                {userInfo.full_name}
               </StyledText>
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -200,7 +197,7 @@ export default function InformationScreen() {
 
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.bank',
-            )}: ${userInfo.bankName}`}</StyledText>
+            )}: ${userInfo.bank_id}`}</StyledText>
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.accStatus',
             )}: ${userInfo.status}`}</StyledText>
