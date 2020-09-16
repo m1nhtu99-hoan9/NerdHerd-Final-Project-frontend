@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -14,19 +14,17 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { GradientContainer, StyledText } from '../components/atomic'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-import { normalise, normaliseH, normaliseV, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
+import {
+  normalise,
+  normaliseH,
+  normaliseV,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../helpers'
 import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
 
 import { AppMachineContext } from '../contexts'
-
-type UserInfo = {
-  fullName: string
-  bankName: string
-  status: 'normal' | 'warned' | '...' | undefined
-  email: string
-  phone: string
-}
 
 interface FormInput {
   oldPassword: string
@@ -37,7 +35,7 @@ interface FormInput {
 export default function InformationScreen() {
   // consume AppService hooks
   const [appMState, appMSend] = useContext(AppMachineContext)
-  
+
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
@@ -47,15 +45,18 @@ export default function InformationScreen() {
   const [newPassword, setNewPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
 
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    fullName: 'Ngo Tai Phat',
-    bankName: 'Techcombank',
-    status: 'normal',
+  const [userInfo, setUserInfo] = useState<
+    Omit<ProfileOkResponse, 'search_history'>
+  >({
+    full_name: 'Ngo Tai Phat',
+    bank_id: 'Techcombank',
     email: 'phatxxxxx@gmail.com',
     phone: '094345xxx',
+    user_id: '',
   })
 
   const _logoutButtonOnClicked = () => {
+    // update AppService state accordingly
     appMSend('Logout')
 
     // navigate back to LoginScreen
@@ -120,6 +121,8 @@ export default function InformationScreen() {
   const _confirmButtonOnSubmit = () => {
     setModalVisible(false)
   }
+
+  useEffect(() => {})
 
   return (
     <GradientContainer flexDirection={'column'}>
