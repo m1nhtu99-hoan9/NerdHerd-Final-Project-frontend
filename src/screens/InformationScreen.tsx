@@ -8,17 +8,26 @@ import {
   Modal,
   Systrace,
   TextInput,
+  Animated,
+  ActivityIndicator,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { GradientContainer, StyledText } from '../components/atomic'
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-import { normalise, normaliseH, normaliseV, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
+import {
+  normalise,
+  normaliseH,
+  normaliseV,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../helpers'
 import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
 
 import { AppMachineContext } from '../contexts'
+import { BlurView } from 'expo-blur'
 
 type UserInfo = {
   fullName: string
@@ -37,7 +46,7 @@ interface FormInput {
 export default function InformationScreen() {
   // consume AppService hooks
   const [appMState, appMSend] = useContext(AppMachineContext)
-  
+
   const navigation = useNavigation<HomeScreenNavigationProps>()
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
@@ -46,6 +55,44 @@ export default function InformationScreen() {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+
+  /* states for loading animation */
+  const [isLoading, setLoading] = useState(false)
+  const [blurOpacity, setBlurOpacity] = useState(0)
+  const [blurIndex, setBlurIndex] = useState(-2)
+  const noticeOpacity = useState(new Animated.Value(0))[0]
+  const [animatedIndex, setAnimatedIndex] = useState(-2)
+
+  const _stopAnimation = () => {
+    setAnimatedIndex(-2)
+    setLoading(false)
+    setBlurIndex(-6)
+    setBlurOpacity(0)
+    _fireUnloading
+  }
+  const _startAnimation = () => {
+    setAnimatedIndex(8)
+    _fireLoading()
+    setBlurIndex(8)
+    setBlurOpacity(1)
+    setLoading(true)
+  }
+
+  const _fireLoading = () => {
+    Animated.timing(noticeOpacity, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start()
+  }
+
+  const _fireUnloading = () => {
+    Animated.timing(noticeOpacity, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start()
+  }
 
   const [userInfo, setUserInfo] = useState<UserInfo>({
     fullName: 'Ngo Tai Phat',
@@ -187,6 +234,43 @@ export default function InformationScreen() {
             </TouchableOpacity>
           </View>
         </View>
+        {/* LOADING INDICATOR ANIMATION */}
+
+        <BlurView
+          intensity={80}
+          tint={'dark'}
+          style={[
+            {
+              zIndex: blurIndex,
+              opacity: blurOpacity,
+              height: normaliseV(1400),
+              width: normaliseH(1290),
+              top: normaliseV(140),
+              position: 'absolute',
+              borderRadius: 15
+            },
+          ]}
+        ></BlurView>
+        <Animated.View
+          style={[
+            styles.animatedNoticeContainer,
+            { opacity: noticeOpacity, zIndex: animatedIndex },
+          ]}
+        >
+          <ActivityIndicator
+            style={{ position: 'absolute', top: normaliseV(100) }}
+            size="large"
+            color="lightgrey"
+            animating={isLoading}
+          />
+          <StyledText
+            fontWeight="bold"
+            style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+          >
+            Đang tải...
+          </StyledText>
+        </Animated.View>
+        {/* END: LOADING INDICATOR ANIMATION */}
       </View>
 
       <Modal animationType="fade" transparent={true} visible={modalVisible}>
@@ -479,5 +563,16 @@ const styles = StyleSheet.create({
   },
   validationTextContainer: {
     alignItems: 'center',
+  },
+  animatedContainer: {},
+  animatedNoticeContainer: {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(640),
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
   },
 })
