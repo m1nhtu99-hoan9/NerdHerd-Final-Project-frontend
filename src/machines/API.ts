@@ -1,12 +1,11 @@
 import { create } from 'apisauce'
 import { btoa as b64_encode } from 'Base64'
+import { construct } from 'ramda'
 
 /* (─‿‿─) If you really think about it, 
    isn't that Promise is a kind of state machine? */
 
-const BASE_URI = process.env.PRODUCTION
-  ? 'http://localhost:8000/'
-  : 'https://nerdherd-crescorex.herokuapp.com/'
+const BASE_URI = 'https://nerdherd-crescorex.herokuapp.com/'
 
 const api = create({
   baseURL: BASE_URI,
@@ -33,7 +32,7 @@ export function asyncLogin(phoneNum: string, rawPassword: string) {
 }
 
 /** Asynchronously request to logout (protected route)
- * @param userToken: this user's session access token stored in AsyncStorage
+ * @param userToken: this user's session access token stored in state machine's context
  */
 export function asyncLogout(userToken: string) {
   return (
@@ -62,7 +61,7 @@ export function asyncRegister(inputForm: RegisterForm) {
 }
 
 /** Asynchronously request an OTP code (protected route)
- * @param userToken: this user's session access token stored in AsyncStorage
+ * @param userToken: this user's session access token stored in state machine's context
  * @param customerPhone: customer's phone number
  */
 export function asyncGetOtp(userToken: string) {
@@ -80,7 +79,7 @@ export function asyncGetOtp(userToken: string) {
 }
 
 /** Asynchronously request customer's credit score (protected route)
- * @param userToken: this user's session access token stored in AsyncStorage
+ * @param userToken: this user's session access token stored in state machine's context
  * @param customerPhone: customer's phone number
  */
 export function asyncGetCrescore(userToken: string) {
@@ -98,7 +97,7 @@ export function asyncGetCrescore(userToken: string) {
 }
 
 /** Asynchronously request current user's profile (protected route)
- * @param userToken: this user's session access token stored in AsyncStorage
+ * @param userToken: this user's session access token stored in state machine's context
  */
 export function asyncGetUserProfile(userToken: string) {
   return api.get<ProfileOkResponse, ErrorResponse>(

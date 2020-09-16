@@ -1,6 +1,7 @@
 import React, { useLayoutEffect, useContext } from 'react'
 import { AppLoading } from 'expo'
 import { StyleSheet } from 'react-native'
+import Constants from 'expo-constants'
 import SyncStorage from 'sync-storage'
 
 import { useFonts } from 'expo-font'

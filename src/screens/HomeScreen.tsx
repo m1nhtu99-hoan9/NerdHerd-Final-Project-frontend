@@ -176,13 +176,16 @@ export default function HomeScreen() {
           >
             {
               /* render if search history has more than 1 elements */
-              searchHistory.length &&
-                searchHistory.map((element: SearchResult) => (
-                  <UserCreditInfoCard
-                    phoneNumber={element.phone as string}
-                    creditScore={element.score as number}
-                  />
-                ))
+              !!searchHistory.length && (
+                <>
+                  {searchHistory.map((element: SearchResult) => (
+                    <UserCreditInfoCard
+                      phoneNumber={element.phone as string}
+                      creditScore={element.score as number}
+                    />
+                  ))}
+                </>
+              )
             }
           </Swiper>
           {/* END: SEARCH HISTORY :: CUSTOMER'S CREDIT INFO VIEW CARDS */}
