@@ -87,24 +87,7 @@ const AppMachine = Machine<
             /* other types of response */
             cond: isNotSuccessResp,
             target: 'FAILURE',
-<<<<<<< HEAD
             actions: persistUnsuccRespMessage,
-=======
-            actions: assign({
-              lastResponse: (_, event) => {
-                const statusCode = event.data.status
-                const respData = event.data.data
-
-                return {
-                  statusCode,
-                  lastErrorMessage:
-                    statusCode >= 500
-                      ? 'Mật khẩu không chính xác'
-                      : (Object.values(respData)[0] as string),
-                }
-              },
-            }),
->>>>>>> 148f3543a8b2a4daf4825d369561327a69848916
           },
         ],
         onError: {
@@ -118,14 +101,12 @@ const AppMachine = Machine<
       always: [
         // just to be sure ya know       ｡*ﾟ.*.｡(っ ᐛ )っ
         { cond: isTokenEmpty, target: 'UNAUTHORISED' },
-      ],
-      on: {
-        Logout: { target: 'UNAUTHORISED' },
-      },
+        { target: 'PROFILE_FETCHING' }
+      ]
     },
     PROFILE_FETCHING: {
       /* invoke promise to request from '/profile' route here:
-         in case of success, transit to `PROFILE_UPDATED`,
+         in case of success, transit to `READY`,
          else, transit to `FAILURE`.
       */
 
