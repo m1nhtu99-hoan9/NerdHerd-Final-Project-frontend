@@ -141,6 +141,9 @@ export default function HomeScreen() {
 
           /* update screeen's `searchHistory` state accordingly to the `AppService` context */
           setSearchHistory(appMState.context.searchHistory)
+
+          console.log(appMState.context.searchHistory)
+          console.log(appMState.context.userProfile)
           return
         case 'FAILURE':
           /* getting back to LoginScreen without giving user an error message is a bit rude  
@@ -176,16 +179,14 @@ export default function HomeScreen() {
           >
             {
               /* render if search history has more than 1 elements */
-              !!searchHistory.length && (
-                <>
-                  {searchHistory.map((element: SearchResult) => (
-                    <UserCreditInfoCard
-                      phoneNumber={element.phone as string}
-                      creditScore={element.score as number}
-                    />
-                  ))}
-                </>
-              )
+              !!searchHistory.length &&
+                searchHistory.map((element: SearchResult) => (
+                  <UserCreditInfoCard
+                    key={element.phone as string}
+                    phoneNumber={element.phone as string}
+                    creditScore={element.score as number}
+                  />
+                ))
             }
           </Swiper>
           {/* END: SEARCH HISTORY :: CUSTOMER'S CREDIT INFO VIEW CARDS */}
