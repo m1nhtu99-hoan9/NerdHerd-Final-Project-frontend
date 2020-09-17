@@ -1,6 +1,6 @@
 import i18n from '../i18n'
-import React, { Component } from 'react'
-import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
+import React, { Component, useState } from 'react'
+import { StyleSheet, ScrollView, Text, View, Dimensions,Animated, ActivityIndicator } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
@@ -9,6 +9,7 @@ import { HomeScreenNavigationProps } from '../@types/navigation'
 
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { GradientContainer, StyledText } from '../../src/components/atomic/'
+import { BlurView } from 'expo-blur'
 
 import { normaliseH, normaliseV, normalise, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
 
@@ -19,6 +20,44 @@ export default function SearchResultScreen() {
   const _goBack = () => {
     nav.goBack()
   }
+
+    /* states for loading animation */
+    const [isLoading, setLoading] = useState(false)
+    const [blurOpacity, setBlurOpacity] = useState(0)
+    const [blurIndex, setBlurIndex] = useState(-2)
+    const noticeOpacity = useState(new Animated.Value(0))[0]
+    const [animatedIndex, setAnimatedIndex] = useState(-2)
+  
+    const _stopAnimation = () => {
+      setAnimatedIndex(-2)
+      setLoading(false)
+      setBlurIndex(-6)
+      setBlurOpacity(0)
+      _fireUnloading
+    }
+    const _startAnimation = () => {
+      setAnimatedIndex(8)
+      _fireLoading()
+      setBlurIndex(8)
+      setBlurOpacity(1)
+      setLoading(true)
+    }
+  
+    const _fireLoading = () => {
+      Animated.timing(noticeOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: false,
+      }).start()
+    }
+  
+    const _fireUnloading = () => {
+      Animated.timing(noticeOpacity, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: false,
+      }).start()
+    }
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -46,6 +85,45 @@ export default function SearchResultScreen() {
             {/* </RNFadedScrollView> */}
           </View>
         </View>
+
+        {/* LOADING INDICATOR ANIMATION */}
+
+        <BlurView
+          intensity={80}
+          tint={'dark'}
+          style={[
+            {
+              zIndex: blurIndex,
+              opacity: blurOpacity,
+              height: normaliseV(1630),
+              width: normaliseH(1290),
+              top: normaliseV(140),
+              position: 'absolute',
+              borderRadius: 15,
+            },
+          ]}
+        ></BlurView>
+        <Animated.View
+          style={[
+            styles.animatedNoticeContainer,
+            { opacity: noticeOpacity, zIndex: animatedIndex },
+          ]}
+        >
+          <ActivityIndicator
+            style={{ position: 'absolute', top: normaliseV(100) }}
+            size="large"
+            color="lightgrey"
+            animating={isLoading}
+          />
+          <StyledText
+            fontWeight="bold"
+            style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+          >
+            Đang tải...
+          </StyledText>
+        </Animated.View>
+        {/* END: LOADING INDICATOR ANIMATION */}
+
       </View>
     </GradientContainer>
   )
@@ -111,5 +189,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     borderColor: 'white',
+  },
+  animatedContainer: {},
+  animatedNoticeContainer: {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(850),
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
   },
 })
