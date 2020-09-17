@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,8 @@ import {
   Modal,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+
+import { AppMachineContext } from '../contexts'
 import { useNavigation } from '@react-navigation/native'
 import { SearchScreenNavigationProps } from '../@types/navigation'
 import { any, all } from 'ramda'
@@ -37,6 +39,20 @@ interface FormInput {
 }
 
 export default function SeacrhScreen() {
+  const [appMState, appMSend] = useContext(AppMachineContext)
+  const navigation = useNavigation<SearchScreenNavigationProps>()
+  const { control, handleSubmit, errors, reset } = useForm<FormInput>()
+
+  const heightView = useState(new Animated.Value(normaliseV(700)))[0]
+  const marginTop = useState(new Animated.Value(normaliseV(400)))[0]
+  const opacity = useState(new Animated.Value(0))[0]
+  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
+  const [buttonText, setButtonText] = useState('Gửi mã OTP')
+  const [isEnabled, setTextInputStatus] = useState(false)
+  const [otpCode, setOtpCode] = useState('')
+  const [otpWarn, setOtpWarn] = useState('')
+  const [phoneNum, setPhoneNum] = useState(0)
+
   const hideSearchAnimation = () => {
     Animated.timing(opacity, {
       toValue: 0,
@@ -75,35 +91,6 @@ export default function SeacrhScreen() {
       useNativeDriver: false,
     }).start()
   }
-
-  const navigation = useNavigation<SearchScreenNavigationProps>()
-  const heightView = useState(new Animated.Value(normaliseV(700)))[0]
-  const marginTop = useState(new Animated.Value(normaliseV(400)))[0]
-  const opacity = useState(new Animated.Value(0))[0]
-
-  const animatedContainer = {
-    backgroundColor: 'white',
-    width: 94 + '%',
-    height: heightView,
-    alignSelf: 'center',
-    borderRadius: 15,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.44,
-    shadowRadius: 6.27,
-    elevation: 10,
-    paddingHorizontal: normaliseH(40),
-  }
-
-  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
-  const [buttonText, setButtonText] = useState('Gửi mã OTP')
-  const [isEnabled, setTextInputStatus] = useState(false)
-  const [otpCode, setOtpCode] = useState('')
-  const [otpWarn, setOtpWarn] = useState('')
-  const [phoneNum, setPhoneNum] = useState(0)
 
   const isIncorrect = (otpCode: string) => {
     const _isNumDigit = (c: string) =>
@@ -169,8 +156,8 @@ export default function SeacrhScreen() {
         )
     }
   }
-  // use react-hook-form
-  const { control, handleSubmit, errors, reset } = useForm<FormInput>()
+
+  /* ON TOUCHED BEHAVIOURS */
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -194,7 +181,7 @@ export default function SeacrhScreen() {
       </Modal>
 
       <View style={styles.container}>
-        <Animated.View style={animatedContainer}>
+        <Animated.View style={[styles.animatedContainer, {height: heightView}]}>
           <StyledText fontWeight="bold" style={styles.headerText}>
             {i18n.t('search._nav')}
           </StyledText>
@@ -206,10 +193,15 @@ export default function SeacrhScreen() {
               <TextInput
                 // validation code-block
                 onChangeText={(value) => {
+                  // update lately input data
                   onChange(value)
+
+                  // for DEBUGGING
                   console.log(phoneNum)
                   console.log(value)
+                  
                   if (isEnabled && phoneNum != Number(value)) {
+                    /* modify submit button and OTP confirmation text field accordingly */
                     hideSearchAnimation()
                     setOtpCode('')
                     setTextInputStatus(false)
@@ -221,7 +213,7 @@ export default function SeacrhScreen() {
                 onBlur={onBlur}
                 value={value}
                 maxLength={10}
-                // End of validation code-block
+                // END: validation code-block
                 style={styles.inputPhone}
                 placeholder={i18n.t('search.phoneNumInput')}
               />
@@ -242,23 +234,10 @@ export default function SeacrhScreen() {
               // validation code-block
               onChangeText={(value) => setOtpCode(value)}
               maxLength={6}
-              // End of validation code-block
+              // END: validation code-block
               editable={isEnabled}
               value={otpCode}
-              style={{
-                fontFamily: 'ComfortaaRegular', // Test
-                lineHeight: 17,
-                textAlign: 'center',
-                height: normalise(50),
-                marginVertical: normalise(15),
-                width: 100 + '%',
-                backgroundColor: 'transparent',
-                borderWidth: 2,
-                borderColor: 'black',
-                borderRadius: 30,
-                paddingHorizontal: normaliseV(20),
-                alignSelf: 'center',
-              }}
+              style={styles.otpTextInput}
               placeholder={i18n.t('search.otpCodeInput')}
             />
             <View style={styles.validationTextContainer}>
@@ -358,4 +337,33 @@ const styles = StyleSheet.create({
     fontSize: normalise(16),
     fontWeight: '600',
   },
+  animatedContainer: {
+    backgroundColor: 'white',
+    width: 94 + '%',
+    alignSelf: 'center',
+    borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.44,
+    shadowRadius: 6.27,
+    elevation: 10,
+    paddingHorizontal: normaliseH(40),
+  },
+  otpTextInput: {
+    fontFamily: 'ComfortaaRegular', // Test
+    lineHeight: 17,
+    textAlign: 'center',
+    height: normalise(50),
+    marginVertical: normalise(15),
+    width: 100 + '%',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 30,
+    paddingHorizontal: normaliseV(20),
+    alignSelf: 'center',
+  }
 })
