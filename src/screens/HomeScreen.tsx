@@ -100,7 +100,7 @@ export default function HomeScreen() {
     setAnimatedIndex(-2)
     setLoading(false)
     setBlurOpacity(0)
-    _fireUnloading
+    _fireUnloading()
   }
   const _startAnimation = () => {
     setAnimatedIndex(2)
@@ -163,11 +163,11 @@ export default function HomeScreen() {
             setCard3(searchHistory[searchHistory.length - 3])
           }
 
-          console.log(appMState.context.searchHistory)
-          console.log(appMState.context.userProfile)
-
           /* stop loading indicator animation */
           _stopAnimation()
+
+          console.log(appMState.context.searchHistory)
+          console.log(appMState.context.userProfile)
 
           return
         case 'FAILURE':
