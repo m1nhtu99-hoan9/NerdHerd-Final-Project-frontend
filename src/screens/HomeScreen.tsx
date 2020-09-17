@@ -57,6 +57,9 @@ export default function HomeScreen() {
   const navigation = useNavigation<WelcomeScreenNavigationProps>()
 
   const [searchHistory, setSearchHistory] = useState<SearchResult[]>([])
+  const [card1, setCard1] = useState<SearchResult>({})
+  const [card2, setCard2] = useState<SearchResult>({})
+  const [card3, setCard3] = useState<SearchResult>({})
 
   /* states for loading animation */
   const [isLoading, setLoading] = useState(true)
