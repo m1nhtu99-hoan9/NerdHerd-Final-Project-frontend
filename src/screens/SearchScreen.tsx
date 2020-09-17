@@ -48,10 +48,12 @@ export default function SeacrhScreen() {
   const opacity = useState(new Animated.Value(0))[0]
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
   const [buttonText, setButtonText] = useState('Gửi mã OTP')
-  const [isEnabled, setTextInputStatus] = useState(false)
   const [otpCode, setOtpCode] = useState('')
   const [otpWarn, setOtpWarn] = useState('')
   const [phoneNum, setPhoneNum] = useState(0)
+
+  // To check if the OTP input field is shown or not
+  const [isEnabled, setTextInputStatus] = useState(false)
 
   const hideSearchAnimation = () => {
     Animated.timing(opacity, {
@@ -100,7 +102,10 @@ export default function SeacrhScreen() {
     return otpCode.length < 6 || !_isValidOtp(otpCode)
   }
 
+  // Check when the user press button
   const showOtpInput = (data: Object) => {
+
+    // If the OTP field is hidden, show the OTP field
     if (!isEnabled) {
       console.log(Object.values(data)[0])
       setPhoneNum(Object.values(data)[0])
@@ -108,7 +113,9 @@ export default function SeacrhScreen() {
       setTextInputStatus(true)
       setButtonText(i18n.t('search.submitBtn'))
       setCalculateModalVisible(true)
-    } else {
+    } 
+    // If the OTP is shown, check the OTP code if it's correct or not
+    else {
       if (isIncorrect(otpCode)) {
         setOtpWarn(i18n.t('search.validation.otpIncorrect'))
       } else {
@@ -202,11 +209,13 @@ export default function SeacrhScreen() {
                   
                   if (isEnabled && phoneNum != Number(value)) {
                     /* modify submit button and OTP confirmation text field accordingly */
+                    /* If the phoneNum is changed, reset the OTP field to hidden and change button text */
                     hideSearchAnimation()
                     setOtpCode('')
                     setTextInputStatus(false)
                     setButtonText('Gửi lại mã OTP')
-                  } else {
+                  } else /* If the phoneNum is not changed, change the button text */
+                  {
                     setButtonText('Gửi mã OTP')
                   }
                 }}
