@@ -188,6 +188,9 @@ const AppMachine = Machine<
       /* similar to `READY` but waiting for user to 
          send request to query customer's credit score */
       on: {
+        MoveOn: {
+          target: 'OTP_FETCHING'
+        },
         QueryScore: {
           /* if user's input OTP doesn't match OTP stored in context, 
              don't get to anywhere */
