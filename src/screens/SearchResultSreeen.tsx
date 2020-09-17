@@ -14,7 +14,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
 
-import { HomeScreenNavigationProps } from '../@types/navigation'
+import { SearchResultScreenNavigationProps } from '../@types/navigation'
 
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { GradientContainer, StyledText } from '../../src/components/atomic/'
@@ -30,7 +30,7 @@ import {
 
 export default function SearchResultScreen() {
   const [appMState, appMSend] = useContext(AppMachineContext)
-  const nav = useNavigation<HomeScreenNavigationProps>()
+  const nav = useNavigation<SearchResultScreenNavigationProps>()
   const route = useRoute()
 
   const { phone, score } = route.params as {
@@ -44,7 +44,7 @@ export default function SearchResultScreen() {
     )
     /* update `AppService` accordingly */
     appMSend('MoveOn')
-
+    
     nav.navigate('Search')
   }
 
@@ -110,7 +110,7 @@ export default function SearchResultScreen() {
             {/* <RNFadedScrollView> */}
             <UserCreditInfoCard
               phoneNumber={phone}
-              creditScore={score as number}
+              creditScore={score}
             />
             {/* </RNFadedScrollView> */}
           </View>
