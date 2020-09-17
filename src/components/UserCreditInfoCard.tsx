@@ -58,7 +58,7 @@ const round = (num: Number) => (places: Number) => {
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   //const { phoneNumber, creditScore } = props
   const phoneNumber = props.phoneNumber
-  const creditScore = (props.creditScore * 5.5 + 300)
+  const creditScore = (round(props.creditScore * 5.5 + 300)(0))
   const placeholderLoanType = {
     label: i18n.t('home.loanOptionsInput'),
     value: null,

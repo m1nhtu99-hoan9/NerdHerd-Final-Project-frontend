@@ -1,5 +1,5 @@
 import i18n from '../i18n'
-import React, { Component, useContext, useState } from 'react'
+import React, { Component, useContext, useEffect, useState } from 'react'
 import { AppMachineContext } from '../contexts'
 import {
   StyleSheet,
@@ -40,13 +40,19 @@ export default function SearchResultScreen() {
 
   const _goBack = () => {
     console.log(
-      `Currently in SearchResultScreen; MAchine\'s state: ${appMState.value}`,
+      `Currently in SearchResultScreen; Machine\'s state: ${appMState.value}`,
     )
     /* update `AppService` accordingly */
     appMSend('MoveOn')
-    
+
     nav.navigate('Search')
   }
+
+  useEffect(() => {
+    console.log(
+      `Search result: <phone number: ${phone}>; credit score: ${JSON.stringify(score)}, of type ${typeof score}`,
+    )
+  }, [])
 
   /* states for loading animation */
   const [isLoading, setLoading] = useState(false)
@@ -110,7 +116,7 @@ export default function SearchResultScreen() {
             {/* <RNFadedScrollView> */}
             <UserCreditInfoCard
               phoneNumber={phone}
-              creditScore={score}
+              creditScore={score as number}
             />
             {/* </RNFadedScrollView> */}
           </View>

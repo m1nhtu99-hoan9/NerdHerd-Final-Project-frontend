@@ -17,7 +17,6 @@ export type StackParamList = {
 export type HomeStackParamList = {
   Search: undefined
   SearchResult: {
-    [key: string]: string | number | undefined
     phone: string
     score: string | number
   }

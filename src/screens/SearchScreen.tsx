@@ -36,11 +36,11 @@ interface FormInput {
 }
 
 const _isOtpInvalid = (otpCode: string) => {
-  const _isNumDigit = (c: string) =>
-    any((x) => x == c && x != ' ')([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-  const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
+  // const _isNumDigit = (c: string) =>
+  //   any((x) => x == c && x != ' ')([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  // const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
 
-  return otpCode.length < 6 || !_isValidOtp(otpCode)
+  return otpCode.length < 6
 }
 
 enum PopupColor {
@@ -242,7 +242,7 @@ export default function SeacrhScreen() {
 
           navigation.navigate('SearchResult', {
             phone: phoneNum,
-            score: appMState.context.searchHistory[0],
+            score: parseFloat(appMState.context.searchHistory[0].score),
           })
 
           return
