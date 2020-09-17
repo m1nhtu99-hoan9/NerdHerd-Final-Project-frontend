@@ -11,12 +11,11 @@
       "url": "https://github.com/PhatsNgoo"
     }
   ],
-  "version": "0.0.1",
-  "private": true,
+  "version": "1.0.0",
+  "private": false,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -26,7 +25,8 @@
     "lint": "eslint -ext js,jsx,ts,tsx .",
     "lint:fix": "eslint -ext js,jsx,ts,tsx . --fix",
     "prettier": "prettier . ",
-    "prettier:fix": "prettier . --fix"
+    "prettier:fix": "prettier . --fix",
+    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start",
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",

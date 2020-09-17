@@ -192,8 +192,8 @@ export default function InformationScreen() {
           /* update screeen's `userInfo` state accordingly to the `AppService` context */
           setUserInfo(appMState.context.userProfile)
 
-          console.log('Context at this moment')
-          console.log(appMState.context)
+          // console.log('Context at this moment')
+          // console.log(appMState.context)
 
           _stopAnimation()
 

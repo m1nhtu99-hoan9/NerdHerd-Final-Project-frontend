@@ -1,5 +1,9 @@
 # CHANGELOG 
 
+## Log: 18/09/2020
+
+- PUBLISH VERSION 1.0.0
+
 ## Log: 07/09/2020 (End of Week 10)
 
 - [x] `UserCreditInfoCard`: bổ sung mục tính toán khoản vay

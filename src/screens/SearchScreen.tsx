@@ -112,36 +112,6 @@ export default function SeacrhScreen() {
     _fireLoading()
     setLoading(true)
   }
-  const _onSpinnerTouched = () => {
-    _stopAnimation()
-  }
-
-  const animatedContainerStyleSheet = {
-    backgroundColor: 'black',
-    width: 94 + '%',
-    height: 51.1 + '%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    opacity: opacityAnimatedContainer,
-    zIndex: animatedIndex,
-    position: 'absolute',
-    left: normaliseH(42),
-    top: normaliseV(140),
-    borderRadius: 15,
-  }
-
-  const animatedNoticeContainer = {
-    borderRadius: 15,
-    alignSelf: 'center',
-    alignItems: 'center',
-    top: normaliseV(800),
-    opacity: noticeOpacity,
-    zIndex: animatedIndex,
-    width: normaliseH(550),
-    height: normaliseV(350),
-    backgroundColor: 'black',
-    position: 'absolute',
-  }
 
   /* states for content of popup modal */
   const [iconColour, setIconColour] = useState<
@@ -238,10 +208,19 @@ export default function SeacrhScreen() {
    *  @param data Form data consumed by `react-hook-form`
    *  @author Trung Duc Do
    */
+
+  /* On touched behaviours */
+
+  const _onSpinnerTouched = () => {
+    _stopAnimation()
+  }
+
   const onSubmitButtonClicked = (data: Object) => {
+    console.log(`SearchScreen; current machine state: ${appMState.value}`)
+
     /* If the OTP field is hidden */
     if (!isOtpFieldEnabled) {
-      console.log(`Input phone number: ${Object.values(data)[0]}`)
+      // console.log(`Input phone number: ${Object.values(data)[0]}`)
 
       /* send OTP request with the help of `AppService` */
       setPhoneNum(Object.values(data)[0])
@@ -255,7 +234,7 @@ export default function SeacrhScreen() {
       setOtpFieldEnabled(true)
       setButtonText(i18n.t('search.submitBtn'))
     } else {
-      console.log('Form payload', data)
+      // console.log('Form payload', data)
       console.log('Input OTP from user', otpCode)
       /* If the OTP input field is already visible, check if the OTP code is valid */
       if (_isOtpInvalid(otpCode)) {
@@ -268,6 +247,8 @@ export default function SeacrhScreen() {
           inputOtp: otpCode,
           phoneNum: Object.values(data)[0],
         })
+
+        _startAnimation()
 
         // reset the form values to its initial state
         setButtonText('Gửi mã OTP')
@@ -282,6 +263,8 @@ export default function SeacrhScreen() {
       }
     }
   }
+
+  /* END: On touched behaviours */
 
   useEffect(() => {
     ;(function (state) {
@@ -314,17 +297,21 @@ export default function SeacrhScreen() {
           setPopupModalVisible(true)
           return
         case 'CRESCORE_READY':
-          console.log(appMState.context)
+          // console.log(appMState.context)
+
+          _stopAnimation()
 
           navigation.navigate('SearchResult', {
+            // @ts-ignore
             phone: phoneNum,
             score: parseFloat(appMState.context.searchHistory[0].score),
           })
 
+          appMSend('MoveOn')
           return
       }
     })(appMState.value)
-  }, [appMState, phoneNum, icon, iconColour, message, header])
+  }, [appMState, phoneNum, icon, iconColour, message, header, isLoading])
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -367,8 +354,8 @@ export default function SeacrhScreen() {
                   onChange(value)
 
                   // for DEBUGGING
-                  console.log(phoneNum)
-                  console.log(value)
+                  // console.log(phoneNum)
+                  // console.log(value)
 
                   if (isOtpFieldEnabled && phoneNum != Number(value)) {
                     /* modify submit button and OTP confirmation text field accordingly */
@@ -391,7 +378,11 @@ export default function SeacrhScreen() {
               />
             )}
             name="phoneNum"
-            rules={{ required: true, minLength: 10, pattern: /(09)+([0-9]{8})/ }}
+            rules={{
+              required: true,
+              minLength: 10,
+              pattern: /(09)+([0-9]{8})/,
+            }}
             defaultValue=""
           />
 
@@ -437,25 +428,32 @@ export default function SeacrhScreen() {
         </Animated.View>
 
         {/** Loading indicator */}
-        <Animated.View style={animatedContainerStyleSheet}></Animated.View>
-      <Animated.View
-        onTouchStart={_onSpinnerTouched}
-        style={animatedNoticeContainer}
-      >
-        <ActivityIndicator
-          style={{ position: 'absolute', top: normaliseV(100) }}
-          size="large"
-          color="lightgrey"
-          animating={isLoading}
+        <Animated.View
+          style={[
+            styles.animatedModalContainer,
+            { opacity: opacityAnimatedContainer, zIndex: animatedIndex },
+          ]}
         />
-        <StyledText
-          fontWeight="bold"
-          style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+        <Animated.View
+          onTouchStart={_onSpinnerTouched}
+          style={[
+            styles.animatedNoticeContainer,
+            { opacity: noticeOpacity, zIndex: animatedIndex },
+          ]}
         >
-          Đang tải...
-        </StyledText>
-      </Animated.View>
-
+          <ActivityIndicator
+            style={{ position: 'absolute', top: normaliseV(100) }}
+            size="large"
+            color="lightgrey"
+            animating={isLoading}
+          />
+          <StyledText
+            fontWeight="bold"
+            style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+          >
+            Đang tải...
+          </StyledText>
+        </Animated.View>
       </View>
     </GradientContainer>
   )
@@ -543,6 +541,28 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
     paddingHorizontal: normaliseH(40),
+  },
+  animatedModalContainer: {
+    backgroundColor: 'black',
+    width: 94 + '%',
+    height: 51.1 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    position: 'absolute',
+    left: normaliseH(42),
+    top: normaliseV(140),
+    borderRadius: 15,
+  },
+  animatedNoticeContainer: {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(800),
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
   },
   otpTextInput: {
     fontFamily: 'ComfortaaRegular', // Test

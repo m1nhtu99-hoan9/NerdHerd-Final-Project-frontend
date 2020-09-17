@@ -42,17 +42,17 @@ export default function SearchResultScreen() {
     console.log(
       `Currently in SearchResultScreen; Machine\'s state: ${appMState.value}`,
     )
-    /* update `AppService` accordingly */
-    appMSend('MoveOn')
-
+    
     nav.navigate('Search')
   }
 
   useEffect(() => {
+    appMSend('MoveOn')
+    /* update `AppService` accordingly */
     console.log(
       `Search result: <phone number: ${phone}>; credit score: ${JSON.stringify(score)}, of type ${typeof score}`,
     )
-  }, [])
+  }, [appMState])
 
   /* states for loading animation */
   const [isLoading, setLoading] = useState(false)

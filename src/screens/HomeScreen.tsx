@@ -167,8 +167,8 @@ export default function HomeScreen() {
             _stopAnimation()
           }
 
-          console.log(appMState.context.searchHistory)
-          console.log(appMState.context.userProfile)
+          // console.log(appMState.context.searchHistory)
+          // console.log(appMState.context.userProfile)
 
           return
         case 'FAILURE':

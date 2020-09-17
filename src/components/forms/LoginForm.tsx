@@ -166,20 +166,20 @@ export default function LoginForm() {
 
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
     /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
+    /* in development mode */
+    // appMSend('Login', {phoneNum: "0967162652", password: "aacc1234"})
 
-    appMSend('Login', {phoneNum: "0967162652", password: "aacc1234"})
-
-    // appMSend({
-    //   type: 'Login',
-    //   phoneNum: data.phoneNum,
-    //   password: data.password,
-    // })
+    appMSend({
+      type: 'Login',
+      phoneNum: data.phoneNum,
+      password: data.password,
+    })
   }
 
   useEffect(() => {
     if (appMState.value == 'UNAUTHORISED') {
       /* initial state of the app */
-      console.log('Not logged in yet')
+      // console.log('Not logged in yet')
     }
     if (appMState.value == 'AUTHENTICATING') {
       // start loading indicator
@@ -191,7 +191,7 @@ export default function LoginForm() {
       // stop loading indicator
       _stopAnimation()
 
-      console.log(`Login request resolved: status ${appMState.context.lastResponse.statusCode}`)
+      // console.log(`Login request resolved: status ${appMState.context.lastResponse.statusCode}`)
       console.log(`Token: ${appMState.context.token}`)
 
       if (appMState.context.token) {
