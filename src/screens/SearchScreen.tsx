@@ -224,7 +224,7 @@ export default function SeacrhScreen() {
 
           /* display the popup modal to inform user that the request is successfully resolved */
           setPopupModalVisible(true)
-          
+
           /* for DEBUGGING?! nah ┌П┐(►˛◄’!) I just want to see OTP code
              yeah, I know what you're thinking ( ͡ ͡° ͜つ ͡͡° ) Yes, I'm cheating ◕‿↼
           */
@@ -240,7 +240,10 @@ export default function SeacrhScreen() {
         case 'CRESCORE_READY':
           console.log(appMState.context)
 
-          navigation.navigate('SearchResult', { phone: undefined })
+          navigation.navigate('SearchResult', {
+            phone: phoneNum,
+            score: appMState.context.searchHistory[0],
+          })
 
           return
       }
