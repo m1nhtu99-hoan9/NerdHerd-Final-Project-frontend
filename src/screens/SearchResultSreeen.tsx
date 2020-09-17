@@ -3,13 +3,10 @@ import React, { Component } from 'react'
 import { StyleSheet, ScrollView, Text, View, Dimensions } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useNavigation } from '@react-navigation/native'
-import { FontAwesome } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-import Swiper from 'react-native-swiper'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
 
-import RNFadedScrollView from 'rn-faded-scrollview'
 import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { GradientContainer, StyledText } from '../../src/components/atomic/'
 

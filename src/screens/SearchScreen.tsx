@@ -28,6 +28,7 @@ import {
 
 import { StyledText, GradientContainer } from '../../src/components/atomic'
 import ModalContent from '../components/ModalUserInfoCard'
+import { Icon } from 'native-base'
 
 interface FormInput {
   phoneNum: string
@@ -174,17 +175,8 @@ export default function SeacrhScreen() {
       _showSearchAnimation()
       setOtpFieldEnabled(true)
       setButtonText(i18n.t('search.submitBtn'))
-      
-      /* prepare content of Popup modal */
-      _setPopupContent(
-        true,
-        'Thành công',
-        `Đã gửi tin nhắn chứa mã OTP tới số điện thoại ${phoneNum}.`,
-      )
-      setPopupModalVisible(true)
-
     } else {
-    /* If the OTP input field is already visible, check if the OTP code is valid */
+      /* If the OTP input field is already visible, check if the OTP code is valid */
       if (_isOtpInvalid(otpCode)) {
         // in order for error message to be displayed
         setOtpWarn(i18n.t('search.validation.otpIncorrect'))
@@ -214,14 +206,34 @@ export default function SeacrhScreen() {
              no request will be processed 
         */
         case 'OTP_UPDATED':
+          /* prepare content of Popup modal */
+          _setPopupContent(
+            true,
+            'Thành công',
+            `Đã gửi tin nhắn chứa mã OTP tới số điện thoại ${phoneNum}.`,
+          )
+
+          /* display the popup modal to inform user that the request is successfully resolved */
+          setPopupModalVisible(true)
+          return
+        case 'FAILURE':
+          /* prepare content of Popup modal */
+          _setPopupContent(
+            false,
+            'Lỗi',
+            `Internal server error!`,
+          )
+
+          /* display the popup modal to inform user that the request is successfully resolved */
+          setPopupModalVisible(true)
+          return
+        case 'READY':
           /* if OTP is found in the context, move on */
           //navigation.navigate('SearchResult', { phone: undefined })
           return
-        case 'READY':
-          return 
       }
     })(appMState.value)
-  }, [appMState])
+  }, [appMState, phoneNum, isPopupModalVisible, icon, iconColour, message, header])
 
   return (
     <GradientContainer flexDirection={'column'}>
