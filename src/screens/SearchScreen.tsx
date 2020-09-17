@@ -179,7 +179,7 @@ export default function SeacrhScreen() {
       setOtpFieldEnabled(true)
       setButtonText(i18n.t('search.submitBtn'))
     } else {
-      console.log(`Form payload: ${data}`)
+      console.log('Form payload', data)
       /* If the OTP input field is already visible, check if the OTP code is valid */
       if (_isOtpInvalid(otpCode)) {
         // in order for error message to be displayed
