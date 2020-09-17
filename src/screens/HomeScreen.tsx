@@ -1,3 +1,4 @@
+// @ts-nocheck
 import i18n from '../i18n'
 import React, { Component, useContext, useEffect, useState } from 'react'
 import {
@@ -139,21 +140,21 @@ export default function HomeScreen() {
            *    the state machine reachs here only when `/profile` promise is resolved
            */
 
-          /* stop loading indicator animation */
-          _stopAnimation()
-
           /* update screeen's `searchHistory` state accordingly to the `AppService` context */
           setSearchHistory(appMState.context.searchHistory)
 
           // setCard1, setCard2, setCard3
           if (searchHistory.length < 3) {
             switch (searchHistory.length) {
-              case 2: 
+              case 2:
                 setCard1(searchHistory[1])
                 setCard2(searchHistory[0])
                 break
-              case 1: 
+              case 1:
                 setCard1(searchHistory[0])
+                break
+              case 0:
+                /* display blank screen */
                 break
             }
           } else {
@@ -164,6 +165,10 @@ export default function HomeScreen() {
 
           console.log(appMState.context.searchHistory)
           console.log(appMState.context.userProfile)
+
+          /* stop loading indicator animation */
+          _stopAnimation()
+
           return
         case 'FAILURE':
           /* getting back to LoginScreen without giving user an error message is a bit rude  
@@ -197,9 +202,24 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            {!!card1 && (<UserCreditInfoCard phoneNumber={Object.values(card1)[0] as string} creditScore={Object.values(card1)[1] as number}/>)}
-            {!!card2 && (<UserCreditInfoCard phoneNumber={Object.values(card2)[0] as string} creditScore={Object.values(card2)[1] as number}/>)}
-            {!!card3 && (<UserCreditInfoCard phoneNumber={Object.values(card3)[0] as string} creditScore={Object.values(card3)[1] as number}/>)}
+            {Object.values(card1).length ? (
+              <UserCreditInfoCard
+                phoneNumber={Object.values(card1)[0] as string}
+                creditScore={Object.values(card1)[1] as number}
+              />
+            ) : undefined}
+            {Object.values(card2).length ? (
+              <UserCreditInfoCard
+                phoneNumber={Object.values(card2)[0] as string}
+                creditScore={Object.values(card2)[1] as number}
+              />
+            ) : undefined}
+            {Object.values(card3).length ? (
+              <UserCreditInfoCard
+                phoneNumber={Object.values(card3)[0] as string}
+                creditScore={Object.values(card3)[1] as number}
+              />
+            ) : undefined}
             {/*
               // render if search history has more than 1 elements
               !!searchHistory.length &&

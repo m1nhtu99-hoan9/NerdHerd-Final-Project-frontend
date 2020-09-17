@@ -14,7 +14,7 @@ import {
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { GradientContainer, StyledText } from '../components/atomic'
-import { HomeScreenNavigationProps } from '../@types/navigation'
+import { ProfileScreenNavigationProp } from '../@types/navigation'
 
 import {
   normalise,
@@ -39,7 +39,7 @@ export default function InformationScreen() {
   // consume AppService hooks
   const [appMState, appMSend] = useContext(AppMachineContext)
 
-  const navigation = useNavigation<HomeScreenNavigationProps>()
+  const navigation = useNavigation<ProfileScreenNavigationProp>()
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
   // state for visibilty of Change Password form
@@ -47,6 +47,16 @@ export default function InformationScreen() {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+
+  const [userInfo, setUserInfo] = useState<
+    Omit<ProfileOkResponse, 'search_history'>
+  >({
+    full_name: 'Ngo Tai Phat',
+    bank_id: 'Techcombank',
+    email: 'phatxxxxx@gmail.com',
+    phone: '094345xxx',
+    user_id: '',
+  })
 
   /* states for loading animation */
   const [isLoading, setLoading] = useState(false)
@@ -85,16 +95,6 @@ export default function InformationScreen() {
       useNativeDriver: false,
     }).start()
   }
-
-  const [userInfo, setUserInfo] = useState<
-    Omit<ProfileOkResponse, 'search_history'>
-  >({
-    full_name: 'Ngo Tai Phat',
-    bank_id: 'Techcombank',
-    email: 'phatxxxxx@gmail.com',
-    phone: '094345xxx',
-    user_id: '',
-  })
 
   const _logoutButtonOnClicked = () => {
     // update AppService state accordingly
@@ -163,17 +163,63 @@ export default function InformationScreen() {
     setModalVisible(false)
   }
 
-  useEffect(() => {})
+  useEffect(() => {
+    ;(function (state) {
+      switch (state) {
+        case 'UNAUTHORISED':
+          /** @desc rarely happens */
+
+          // @ts-ignore
+          navigation.navigate('Index')
+          return
+        case 'LOGGED_IN':
+          appMSend('MoveOn')
+          return
+        case 'PROFILE_FETCHING':
+          /** @desc
+           *    invoke a fetch promise to get data from server's `/profile` route;
+           *    if resolved, search history will be stored in state machine's context
+           */
+
+          _startAnimation()
+
+          return
+        case 'READY':
+          /** @desc
+           *    the state machine reachs here only when `/profile` promise is resolved
+           */
+
+          /* update screeen's `userInfo` state accordingly to the `AppService` context */
+          setUserInfo(appMState.context.userProfile)
+
+          console.log('Context at this moment')
+          console.log(appMState.context)
+
+          _stopAnimation()
+
+          return
+        case 'FAILURE':
+          /* getting back to LoginScreen without giving user an error message is a bit rude  
+             but it's okey for now, I reckon 凸( •̀_•́ )凸
+          */
+          // @ts-ignore
+          navigation.navigate('Index')
+          return
+      }
+    })(appMState.value)
+  }, [appMState])
 
   return (
     <GradientContainer flexDirection={'column'}>
       <View style={styles.container}>
         <View style={styles.content}>
+          {/* HEADER BANNER */}
           <View style={styles.header}>
             <StyledText fontWeight="bold" style={styles.headerText}>
               {i18n.t('aboutMe._nav')}
             </StyledText>
           </View>
+          {/* END: HEADER BANNER */}
 
           <View style={styles.information}>
             <View style={styles.nameContainer}>
@@ -195,12 +241,14 @@ export default function InformationScreen() {
               </TouchableOpacity>
             </View>
 
+            {/* DISPLAY USER PROFILE DATA */}
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.bank',
-            )}: ${userInfo.bank_id}`}</StyledText>
-            <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
-              'aboutMe.accStatus',
-            )}: ${userInfo.status}`}</StyledText>
+            )}: ${userInfo.bank_id || userInfo.bankId}`}</StyledText>
+            <StyledText
+              fontWeight="bold"
+              style={styles.infoText}
+            >{`User ID: ${userInfo.user_id || userInfo.userId}`}</StyledText>
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.email',
             )}: ${userInfo.email}`}</StyledText>
@@ -244,7 +292,7 @@ export default function InformationScreen() {
               width: normaliseH(1290),
               top: normaliseV(140),
               position: 'absolute',
-              borderRadius: 15
+              borderRadius: 15,
             },
           ]}
         ></BlurView>

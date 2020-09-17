@@ -191,6 +191,7 @@ export default function LoginForm() {
       _stopAnimation()
 
       console.log(`Login request resolved: status ${appMState.context.lastResponse.statusCode}`)
+      console.log(`Token: ${appMState.context.token}`)
 
       if (appMState.context.token) {
         /* double-check to make sure access token has been generated and stored
@@ -416,7 +417,6 @@ const styles = StyleSheet.create({
     width: 80 + '%',
     alignContent: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red'
   },
   formContainer: {
     flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!
