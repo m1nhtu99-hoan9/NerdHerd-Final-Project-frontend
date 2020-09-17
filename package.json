@@ -13,6 +13,11 @@
   ],
   "version": "1.0.0",
   "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git", 
+    "url": "git+https://github.com/mnhthng-thms/NerdHerd-Final-Project-frontend.git"
+  }, 
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -26,7 +31,7 @@
     "lint:fix": "eslint -ext js,jsx,ts,tsx . --fix",
     "prettier": "prettier . ",
     "prettier:fix": "prettier . --fix",
-    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start",
+    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
