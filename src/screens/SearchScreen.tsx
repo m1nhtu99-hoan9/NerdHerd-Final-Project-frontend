@@ -1,5 +1,6 @@
 import i18n from '../i18n'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { any, all } from 'ramda'
 import {
   StyleSheet,
   Text,
@@ -11,31 +12,44 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+import { useForm, Controller } from 'react-hook-form'
 import { AppMachineContext } from '../contexts'
 import { useNavigation } from '@react-navigation/native'
 import { SearchScreenNavigationProps } from '../@types/navigation'
-import { any, all } from 'ramda'
 
-import GradientContainer from '../components/atomic/GradientContainer'
-import { HomeScreenNavigationProps } from '../@types/navigation'
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  normalise,
+  normaliseH,
+  normaliseV,
+  PATTERN,
+} from '../helpers'
 
-//Import normalise
-import { normalise } from '../../src/helpers/Constants'
-import { normaliseH, normaliseV, PATTERN } from '../helpers'
-
-import StyledText from '../../src/components/atomic/StyledText'
+import { StyledText, GradientContainer } from '../../src/components/atomic'
 import ModalContent from '../components/ModalUserInfoCard'
-
-//Get devices's dimension
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
-
-// import react-hook-form for validation
-import { useForm, Controller } from 'react-hook-form'
 
 interface FormInput {
   phoneNum: string
   otp: string
+}
+
+const _isOtpInvalid = (otpCode: string) => {
+  const _isNumDigit = (c: string) =>
+    any((x) => x == c && x != ' ')([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
+
+  return otpCode.length < 6 || !_isValidOtp(otpCode)
+}
+
+enum PopupColor {
+  GREEN = '#36AD51',
+  RED = '#931A25',
+}
+
+enum PopupIcon {
+  SUCCESS = 'check',
+  ERROR = '!',
 }
 
 export default function SeacrhScreen() {
@@ -46,16 +60,26 @@ export default function SeacrhScreen() {
   const heightView = useState(new Animated.Value(normaliseV(700)))[0]
   const marginTop = useState(new Animated.Value(normaliseV(400)))[0]
   const opacity = useState(new Animated.Value(0))[0]
-  const [calculateModalVisible, setCalculateModalVisible] = useState(false)
+  const [isPopupModalVisible, setPopupModalVisible] = useState(false)
   const [buttonText, setButtonText] = useState('Gửi mã OTP')
   const [otpCode, setOtpCode] = useState('')
   const [otpWarn, setOtpWarn] = useState('')
   const [phoneNum, setPhoneNum] = useState(0)
 
-  // To check if the OTP input field is shown or not
-  const [isEnabled, setTextInputStatus] = useState(false)
+  /* states for content of popup modal */
+  const [iconColour, setIconColour] = useState<
+    PopupColor.GREEN | PopupColor.RED
+  >(PopupColor.GREEN)
+  const [icon, setIcon] = useState<PopupIcon.ERROR | PopupIcon.SUCCESS>(
+    PopupIcon.SUCCESS,
+  )
+  const [message, setMessage] = useState('')
+  const [header, setHeader] = useState('')
 
-  const hideSearchAnimation = () => {
+  // state for visibility of OTP input field
+  const [isOtpFieldEnabled, setOtpFieldEnabled] = useState(false)
+
+  const _hideSearchAnimation = () => {
     Animated.timing(opacity, {
       toValue: 0,
       duration: 500,
@@ -75,7 +99,7 @@ export default function SeacrhScreen() {
     }).start()
   }
 
-  const showSearchAnimation = () => {
+  const _showSearchAnimation = () => {
     Animated.timing(heightView, {
       toValue: normaliseV(950),
       duration: 700,
@@ -94,48 +118,17 @@ export default function SeacrhScreen() {
     }).start()
   }
 
-  const isIncorrect = (otpCode: string) => {
-    const _isNumDigit = (c: string) =>
-      any((x) => x == c && x != ' ')([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
-    const _isValidOtp = (code: string) => all(_isNumDigit)(code.split(''))
-
-    return otpCode.length < 6 || !_isValidOtp(otpCode)
+  const _setPopupContent = function (
+    isSuccess: boolean,
+    header: string,
+    content: string,
+  ) {
+    setIconColour(isSuccess ? PopupColor.GREEN : PopupColor.RED)
+    setIcon(isSuccess ? PopupIcon.SUCCESS : PopupIcon.ERROR)
+    setMessage(content)
+    setHeader(header)
   }
-
-  // Check when the user press button
-  const showOtpInput = (data: Object) => {
-
-    // If the OTP field is hidden, show the OTP field
-    if (!isEnabled) {
-      console.log(Object.values(data)[0])
-      setPhoneNum(Object.values(data)[0])
-      showSearchAnimation()
-      setTextInputStatus(true)
-      setButtonText(i18n.t('search.submitBtn'))
-      setCalculateModalVisible(true)
-    } 
-    // If the OTP is shown, check the OTP code if it's correct or not
-    else {
-      if (isIncorrect(otpCode)) {
-        setOtpWarn(i18n.t('search.validation.otpIncorrect'))
-      } else {
-        navigation.navigate('SearchResult', { phone: undefined })
-
-        //reset the form values after navigate to result screen
-        setButtonText('Gửi mã OTP')
-        setTextInputStatus(false)
-        setOtpWarn('')
-        setOtpCode('')
-        reset({
-          phoneNum: '',
-        })
-
-        hideSearchAnimation()
-      }
-    }
-  }
-
-  const _showErrorMessage = function (props: any): JSX.Element | undefined {
+  const _showErrorMessage = function (props: unknown): JSX.Element | undefined {
     switch (props) {
       case 'required':
         return (
@@ -164,31 +157,98 @@ export default function SeacrhScreen() {
     }
   }
 
-  /* ON TOUCHED BEHAVIOURS */
+  /** Definition for on-touched behaviour of submit button
+   *  @param data Form data consumed by `react-hook-form`
+   *  @author Trung Duc Do
+   */
+  const onSubmitButtonClicked = (data: Object) => {
+    /* If the OTP field is hidden */
+    if (!isOtpFieldEnabled) {
+      console.log(Object.values(data)[0])
+
+      /* send OTP request with the help of `AppService` */
+      setPhoneNum(Object.values(data)[0])
+      appMSend({ type: 'RequestOtp', phoneNum: Object.values(data)[0] })
+
+      /* show OTP input field */
+      _showSearchAnimation()
+      setOtpFieldEnabled(true)
+      setButtonText(i18n.t('search.submitBtn'))
+      
+      /* prepare content of Popup modal */
+      _setPopupContent(
+        true,
+        'Thành công',
+        `Đã gửi tin nhắn chứa mã OTP tới số điện thoại ${phoneNum}.`,
+      )
+      setPopupModalVisible(true)
+
+    } else {
+    /* If the OTP input field is already visible, check if the OTP code is valid */
+      if (_isOtpInvalid(otpCode)) {
+        // in order for error message to be displayed
+        setOtpWarn(i18n.t('search.validation.otpIncorrect'))
+      } else {
+        // send OTP request with the help of `AppService`
+        appMSend()
+
+        // reset the form values to its initial state
+        setButtonText('Gửi mã OTP')
+        setOtpFieldEnabled(false)
+        setOtpWarn('')
+        setOtpCode('')
+        reset({
+          phoneNum: '',
+        })
+
+        _hideSearchAnimation()
+      }
+    }
+  }
+
+  useEffect(() => {
+    ;(function (state) {
+      switch (state) {
+        /* Expected intial machine state for SearchScreen: `READY` 
+           If `AppService` is still in `PROFILE_FETCHING` state,
+             no request will be processed 
+        */
+        case 'OTP_UPDATED':
+          /* if OTP is found in the context, move on */
+          //navigation.navigate('SearchResult', { phone: undefined })
+          return
+        case 'READY':
+          return 
+      }
+    })(appMState.value)
+  }, [appMState])
 
   return (
     <GradientContainer flexDirection={'column'}>
+      {/* Popup alert box */}
       <Modal
         animationType="fade"
         transparent={true}
-        visible={calculateModalVisible}
+        visible={isPopupModalVisible}
       >
         <ModalContent
-          icon="check"
-          headerText={'Thành công'}
-          contentText={`Đã gửi tin nhắn chứa mã OTP tới số điện thoại ${phoneNum}.`}
-          color="#36ad51"
+          icon={icon}
+          headerText={header}
+          contentText={message}
+          color={iconColour}
         ></ModalContent>
         <TouchableOpacity
           style={styles.calculateModalConfirmButton}
-          onPress={() => setCalculateModalVisible(false)}
+          onPress={() => setPopupModalVisible(false)}
         >
           <Text style={styles.formConfirmText}>OK</Text>
         </TouchableOpacity>
       </Modal>
-
+      {/* END: Popup alert box */}
       <View style={styles.container}>
-        <Animated.View style={[styles.animatedContainer, {height: heightView}]}>
+        <Animated.View
+          style={[styles.animatedContainer, { height: heightView }]}
+        >
           <StyledText fontWeight="bold" style={styles.headerText}>
             {i18n.t('search._nav')}
           </StyledText>
@@ -206,16 +266,16 @@ export default function SeacrhScreen() {
                   // for DEBUGGING
                   console.log(phoneNum)
                   console.log(value)
-                  
-                  if (isEnabled && phoneNum != Number(value)) {
+
+                  if (isOtpFieldEnabled && phoneNum != Number(value)) {
                     /* modify submit button and OTP confirmation text field accordingly */
                     /* If the phoneNum is changed, reset the OTP field to hidden and change button text */
-                    hideSearchAnimation()
+                    _hideSearchAnimation()
                     setOtpCode('')
-                    setTextInputStatus(false)
+                    setOtpFieldEnabled(false)
                     setButtonText('Gửi lại mã OTP')
-                  } else /* If the phoneNum is not changed, change the button text */
-                  {
+                  } else {
+                    /* If the phoneNum is not changed, change the button text */
                     setButtonText('Gửi mã OTP')
                   }
                 }}
@@ -244,7 +304,7 @@ export default function SeacrhScreen() {
               onChangeText={(value) => setOtpCode(value)}
               maxLength={6}
               // END: validation code-block
-              editable={isEnabled}
+              editable={isOtpFieldEnabled}
               value={otpCode}
               style={styles.otpTextInput}
               placeholder={i18n.t('search.otpCodeInput')}
@@ -264,7 +324,7 @@ export default function SeacrhScreen() {
           >
             <TouchableOpacity
               style={styles.searchButton}
-              onPress={handleSubmit(showOtpInput)}
+              onPress={handleSubmit(onSubmitButtonClicked)}
             >
               <StyledText fontWeight="bold" style={styles.searchText}>
                 {buttonText}
@@ -337,9 +397,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: normaliseV (1140),
-    marginLeft: normaliseH(204)
-
+    marginTop: normaliseV(1140),
+    marginLeft: normaliseH(204),
   },
   formConfirmText: {
     color: 'white',
@@ -374,5 +433,5 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     paddingHorizontal: normaliseV(20),
     alignSelf: 'center',
-  }
+  },
 })

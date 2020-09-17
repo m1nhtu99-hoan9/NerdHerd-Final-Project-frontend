@@ -139,32 +139,33 @@ export default function HomeScreen() {
           /** @desc
            *    the state machine reachs here only when `/profile` promise is resolved
            */
+          if (appMState.context.lastResponse.statusCode >= 200) {
+            /* update screeen's `searchHistory` state accordingly to the `AppService` context */
+            setSearchHistory(appMState.context.searchHistory)
 
-          /* update screeen's `searchHistory` state accordingly to the `AppService` context */
-          setSearchHistory(appMState.context.searchHistory)
-
-          /* update component's states accordingly */
-          if (searchHistory.length < 3) {
-            switch (searchHistory.length) {
-              case 2:
-                setCard1(searchHistory[1])
-                setCard2(searchHistory[0])
-                break
-              case 1:
-                setCard1(searchHistory[0])
-                break
-              case 0:
-                /* display blank screen */
-                break
+            /* update component's states accordingly */
+            if (searchHistory.length < 3) {
+              switch (searchHistory.length) {
+                case 2:
+                  setCard1(searchHistory[1])
+                  setCard2(searchHistory[0])
+                  break
+                case 1:
+                  setCard1(searchHistory[0])
+                  break
+                case 0:
+                  /* display blank screen */
+                  break
+              }
+            } else {
+              setCard1(searchHistory[searchHistory.length - 1])
+              setCard2(searchHistory[searchHistory.length - 2])
+              setCard3(searchHistory[searchHistory.length - 3])
             }
-          } else {
-            setCard1(searchHistory[searchHistory.length - 1])
-            setCard2(searchHistory[searchHistory.length - 2])
-            setCard3(searchHistory[searchHistory.length - 3])
-          }
 
-          /* stop loading indicator animation */
-          _stopAnimation()
+            /* stop loading indicator animation */
+            _stopAnimation()
+          }
 
           console.log(appMState.context.searchHistory)
           console.log(appMState.context.userProfile)
@@ -178,7 +179,7 @@ export default function HomeScreen() {
           return
       }
     })(appMState.value)
-  }, [appMState.value])
+  }, [appMState, isLoading])
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -202,25 +203,30 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            <>{Object.values(card1).length ? (
-              <UserCreditInfoCard
-                phoneNumber={Object.values(card1)[0] as string}
-                creditScore={Object.values(card1)[1] as number}
-              />
-              
-            ) : undefined}</>
-            <>{Object.values(card2).length ? (
-              <UserCreditInfoCard
-                phoneNumber={Object.values(card2)[0] as string}
-                creditScore={Object.values(card2)[1] as number}
-              />
-            ) : undefined}</>
-            <>{Object.values(card3).length ? (
-              <UserCreditInfoCard
-                phoneNumber={Object.values(card3)[0] as string}
-                creditScore={Object.values(card3)[1] as number}
-              />
-            ) : undefined}</>
+            <>
+              {!isLoading ? (
+                <UserCreditInfoCard
+                  phoneNumber={Object.values(card1)[0] as string}
+                  creditScore={Object.values(card1)[1] as number}
+                />
+              ) : undefined}
+            </>
+            <>
+              {!isLoading ? (
+                <UserCreditInfoCard
+                  phoneNumber={Object.values(card2)[0] as string}
+                  creditScore={Object.values(card2)[1] as number}
+                />
+              ) : undefined}
+            </>
+            <>
+              {!isLoading ? (
+                <UserCreditInfoCard
+                  phoneNumber={Object.values(card3)[0] as string}
+                  creditScore={Object.values(card3)[1] as number}
+                />
+              ) : undefined}
+            </>
             {/*
               // render if search history has more than 1 elements
               !!searchHistory.length &&

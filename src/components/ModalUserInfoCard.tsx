@@ -15,6 +15,9 @@ type ModalContentProps = {
   icon: string
 }
 
+/** Popup alert box 
+ *  @author Trung Duc Do
+*/
 const ModalContent = (props: ModalContentProps) => {
   const { headerText, contentText, color, icon } = props
 

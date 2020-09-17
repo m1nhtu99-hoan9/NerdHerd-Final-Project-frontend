@@ -30,6 +30,9 @@ import {
   asyncRegister,
 } from './API'
 
+/** State machine blueprint for the whole app
+ *  @author Minh Tu Thomas Hoang <minhtu.hoang19@gmail.com>
+ */
 const AppMachine = Machine<
   AppMachineContext,
   AppMachineStateSchema,
@@ -163,7 +166,7 @@ const AppMachine = Machine<
       // @ts-ignore; TS too rigid (ó﹏ò｡)
       invoke: {
         id: 'otp_promise',
-        src: (ctx) => asyncGetOtp(ctx.token as string),
+        src: (ctx, event) => asyncGetOtp(ctx.token as string)(event.phoneNum as string),
         onDone: [
           {
             cond: isSuccessResp,
