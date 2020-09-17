@@ -233,7 +233,7 @@ export default function SeacrhScreen() {
           return
       }
     })(appMState.value)
-  }, [appMState, phoneNum, isPopupModalVisible, icon, iconColour, message, header])
+  }, [appMState, phoneNum, icon, iconColour, message, header])
 
   return (
     <GradientContainer flexDirection={'column'}>
