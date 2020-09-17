@@ -411,11 +411,12 @@ export default function LoginForm() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 11, // !! DANGEROUR ZONE FOR EDITTING !!
+    flex: 0.7, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     width: 80 + '%',
     alignContent: 'center',
     justifyContent: 'center',
+    backgroundColor: 'red'
   },
   formContainer: {
     flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!

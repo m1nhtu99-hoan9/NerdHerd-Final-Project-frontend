@@ -51,9 +51,7 @@ export default function LoginScreen() {
         {/* Account Identifier & Password input fields + Link to `ForgotPassword` screen */}
         <SignInNavContext.Provider value={nav}>
           {/* Touchable 'Back' link */}
-          <View style={styles.backContainer}>
-            
-          </View>
+
           {/* END Touchable 'Back' link */}
           <LoginForm />
         </SignInNavContext.Provider>
@@ -84,13 +82,14 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     // PLEASE DO NOT EDIT THIS!
-    flex: 3,
+    flex: 0.3,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 17 + '%',
     paddingBottom: '5%'
   },
   backContainer: {
+    backgroundColor: 'green',
     flex: 0.5, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'row',
     width: 80 + '%',
