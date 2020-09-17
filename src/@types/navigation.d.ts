@@ -1,7 +1,7 @@
 /* Type Definitions */
 import { ParamListBase } from '@react-navigation/routers'
 import { NavigationProp } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack'
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs'
 import { RouteProp } from '@react-navigation/native'
 
@@ -16,8 +16,11 @@ export type StackParamList = {
 
 export type HomeStackParamList = {
   Search: undefined
-  SearchResult: { phone: number | undefined }
-  Approval: { phone: number | undefined }                           //////Test
+  SearchResult: {
+    [key: string]: string | number | undefined
+    phone: string
+    score: string | number
+  }
 }
 
 export type WelcomeStackParamList = {
@@ -54,11 +57,6 @@ export type SearchScreenNavigationProps = StackNavigationProp<
 export type SearchResultScreenNavigationProps = StackNavigationProp<
   HomeStackParamList,
   'SearchResult'
->
-
-export type ApprovalScreenNavigationProps = StackNavigationProp<    /////////Test
-  HomeStackParamList,
-  'Approval'
 >
 
 export type IndexScreenNavigationProp = BottomTabNavigationProp<

@@ -48,8 +48,8 @@ const resetOtp = assign<AppMachineContext, AppMachineEvent>({
 /** prepend received search result to search history in context */
 const addSearchResultToHistory = assign<AppMachineContext, AppMachineEvent>({
   searchHistory: (ctx, event) => [
-    ...(ctx.searchHistory as Array<SearchResult>),
     event.data.data,
+    ...(ctx.searchHistory as Array<SearchResult>),
   ],
 })
 

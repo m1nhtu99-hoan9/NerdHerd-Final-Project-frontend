@@ -1,8 +1,17 @@
 import i18n from '../i18n'
-import React, { Component, useState } from 'react'
-import { StyleSheet, ScrollView, Text, View, Dimensions,Animated, ActivityIndicator } from 'react-native'
+import React, { Component, useContext, useState } from 'react'
+import { AppMachineContext } from '../contexts'
+import {
+  StyleSheet,
+  ScrollView,
+  Text,
+  View,
+  Dimensions,
+  Animated,
+  ActivityIndicator,
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { AntDesign } from '@expo/vector-icons'
 
 import { HomeScreenNavigationProps } from '../@types/navigation'
@@ -11,53 +20,71 @@ import UserCreditInfoCard from '../components/UserCreditInfoCard'
 import { GradientContainer, StyledText } from '../../src/components/atomic/'
 import { BlurView } from 'expo-blur'
 
-import { normaliseH, normaliseV, normalise, SCREEN_HEIGHT, SCREEN_WIDTH } from '../helpers'
-
+import {
+  normaliseH,
+  normaliseV,
+  normalise,
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+} from '../helpers'
 
 export default function SearchResultScreen() {
+  const [appMState, appMSend] = useContext(AppMachineContext)
   const nav = useNavigation<HomeScreenNavigationProps>()
+  const route = useRoute()
 
-  const _goBack = () => {
-    nav.goBack()
+  const { phone, score } = route.params as {
+    phone: string
+    score: string | number
   }
 
-    /* states for loading animation */
-    const [isLoading, setLoading] = useState(false)
-    const [blurOpacity, setBlurOpacity] = useState(0)
-    const [blurIndex, setBlurIndex] = useState(-2)
-    const noticeOpacity = useState(new Animated.Value(0))[0]
-    const [animatedIndex, setAnimatedIndex] = useState(-2)
-  
-    const _stopAnimation = () => {
-      setAnimatedIndex(-2)
-      setLoading(false)
-      setBlurIndex(-6)
-      setBlurOpacity(0)
-      _fireUnloading
-    }
-    const _startAnimation = () => {
-      setAnimatedIndex(8)
-      _fireLoading()
-      setBlurIndex(8)
-      setBlurOpacity(1)
-      setLoading(true)
-    }
-  
-    const _fireLoading = () => {
-      Animated.timing(noticeOpacity, {
-        toValue: 1,
-        duration: 600,
-        useNativeDriver: false,
-      }).start()
-    }
-  
-    const _fireUnloading = () => {
-      Animated.timing(noticeOpacity, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: false,
-      }).start()
-    }
+  const _goBack = () => {
+    console.log(
+      `Currently in SearchResultScreen; MAchine\'s state: ${appMState.value}`,
+    )
+    /* update `AppService` accordingly */
+    appMSend('MoveOn')
+
+    nav.navigate('Search')
+  }
+
+  /* states for loading animation */
+  const [isLoading, setLoading] = useState(false)
+  const [blurOpacity, setBlurOpacity] = useState(0)
+  const [blurIndex, setBlurIndex] = useState(-2)
+  const noticeOpacity = useState(new Animated.Value(0))[0]
+  const [animatedIndex, setAnimatedIndex] = useState(-2)
+
+  const _stopAnimation = () => {
+    setAnimatedIndex(-2)
+    setLoading(false)
+    setBlurIndex(-6)
+    setBlurOpacity(0)
+    _fireUnloading
+  }
+  const _startAnimation = () => {
+    setAnimatedIndex(8)
+    _fireLoading()
+    setBlurIndex(8)
+    setBlurOpacity(1)
+    setLoading(true)
+  }
+
+  const _fireLoading = () => {
+    Animated.timing(noticeOpacity, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start()
+  }
+
+  const _fireUnloading = () => {
+    Animated.timing(noticeOpacity, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start()
+  }
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -74,14 +101,17 @@ export default function SearchResultScreen() {
                 color={'black'}
                 style={{ alignSelf: 'center' }}
               />
-              <StyledText fontWeight='bold' style={styles.headerText}>
+              <StyledText fontWeight="bold" style={styles.headerText}>
                 {i18n.t('signUp.backTxt')}
               </StyledText>
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
             {/* <RNFadedScrollView> */}
-              <UserCreditInfoCard phoneNumber="0967162652" creditScore={45}/>
+            <UserCreditInfoCard
+              phoneNumber={phone}
+              creditScore={score as number}
+            />
             {/* </RNFadedScrollView> */}
           </View>
         </View>
@@ -123,7 +153,6 @@ export default function SearchResultScreen() {
           </StyledText>
         </Animated.View>
         {/* END: LOADING INDICATOR ANIMATION */}
-
       </View>
     </GradientContainer>
   )
@@ -142,7 +171,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
     paddingTop: normaliseV(140),
-    alignItems: 'center'
+    alignItems: 'center',
   },
   header: {
     flex: 0.15,
@@ -153,7 +182,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: normalise(20),
     marginLeft: 8,
-    color: 'black'
+    color: 'black',
   },
   content: {
     flex: 1,

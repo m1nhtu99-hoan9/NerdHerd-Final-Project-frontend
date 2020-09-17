@@ -8,7 +8,7 @@ const Stack = createStackNavigator<HomeStackParamList>()
 /**Navigation stack between `Search` screen & `SearchResult` screen */
 const HomeStackNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Approval">
+    <Stack.Navigator initialRouteName="Search">
       <Stack.Screen
         name="Search"
         options={{ headerShown: false }}
@@ -18,7 +18,6 @@ const HomeStackNavigator = () => {
         name="SearchResult"
         options={{ headerShown: false }}
         component={SearchResultScreen}
-        initialParams={{phone: undefined}}
       />
     </Stack.Navigator>
   )
