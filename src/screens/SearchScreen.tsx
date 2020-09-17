@@ -8,9 +8,11 @@ import {
   Dimensions,
   TextInput,
   Animated,
+  ActivityIndicator,
   Modal,
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { BlurView } from 'expo-blur'
 
 import { useForm, Controller } from 'react-hook-form'
 import { AppMachineContext } from '../contexts'
@@ -66,6 +68,80 @@ export default function SeacrhScreen() {
   const [otpCode, setOtpCode] = useState('')
   const [otpWarn, setOtpWarn] = useState('')
   const [phoneNum, setPhoneNum] = useState(0)
+
+  /* states for doing loading animation */
+  const opacityAnimatedContainer = useState(new Animated.Value(0))[0]
+  const noticeOpacity = useState(new Animated.Value(0))[0]
+  const [isLoading, setLoading] = useState(false)
+  const [animatedIndex, setAnimatedIndex] = useState(-2)
+
+  const _fireLoading = () => {
+    Animated.timing(opacityAnimatedContainer, {
+      toValue: 0.6,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 1,
+      duration: 600,
+      useNativeDriver: false,
+    }).start()
+  }
+
+  const _fireUnloading = () => {
+    Animated.timing(opacityAnimatedContainer, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start()
+    Animated.timing(noticeOpacity, {
+      toValue: 0,
+      duration: 400,
+      useNativeDriver: false,
+    }).start()
+  }
+
+  const _stopAnimation = () => {
+    setAnimatedIndex(-2)
+    setLoading(false)
+    _fireUnloading()
+  }
+
+  const _startAnimation = () => {
+    setAnimatedIndex(2)
+    _fireLoading()
+    setLoading(true)
+  }
+  const _onSpinnerTouched = () => {
+    _stopAnimation()
+  }
+
+  const animatedContainerStyleSheet = {
+    backgroundColor: 'black',
+    width: 94 + '%',
+    height: 51.1 + '%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: opacityAnimatedContainer,
+    zIndex: animatedIndex,
+    position: 'absolute',
+    left: normaliseH(42),
+    top: normaliseV(140),
+    borderRadius: 15,
+  }
+
+  const animatedNoticeContainer = {
+    borderRadius: 15,
+    alignSelf: 'center',
+    alignItems: 'center',
+    top: normaliseV(800),
+    opacity: noticeOpacity,
+    zIndex: animatedIndex,
+    width: normaliseH(550),
+    height: normaliseV(350),
+    backgroundColor: 'black',
+    position: 'absolute',
+  }
 
   /* states for content of popup modal */
   const [iconColour, setIconColour] = useState<
@@ -359,6 +435,27 @@ export default function SeacrhScreen() {
             </TouchableOpacity>
           </Animated.View>
         </Animated.View>
+
+        {/** Loading indicator */}
+        <Animated.View style={animatedContainerStyleSheet}></Animated.View>
+      <Animated.View
+        onTouchStart={_onSpinnerTouched}
+        style={animatedNoticeContainer}
+      >
+        <ActivityIndicator
+          style={{ position: 'absolute', top: normaliseV(100) }}
+          size="large"
+          color="lightgrey"
+          animating={isLoading}
+        />
+        <StyledText
+          fontWeight="bold"
+          style={{ marginTop: normaliseV(260), fontSize: normalise(14) }}
+        >
+          Đang tải...
+        </StyledText>
+      </Animated.View>
+
       </View>
     </GradientContainer>
   )
