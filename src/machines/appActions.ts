@@ -71,8 +71,8 @@ const assignHandler: TAssignHandler = {
       }
 
       return {
-        phone: item.customer_phone,
-        score: round(parseFloat(item.credit_score))(2) * 100,
+        phone: Object.values(item)[0],
+        score: round(parseFloat(Object.values(item)[1]))(2) * 100,
       }
     }
 
