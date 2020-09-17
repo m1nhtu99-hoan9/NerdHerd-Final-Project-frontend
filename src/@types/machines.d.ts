@@ -44,6 +44,7 @@ export interface AppMachineStateSchema extends StateSchema {
     OTP_FETCHING: {}
     OTP_UPDATED: {}
     CRESCORE_QUERYING: {}
+    CRESCORE_READY: {}
     LOGGING_OUT: {}
     FAILURE: {}
   }

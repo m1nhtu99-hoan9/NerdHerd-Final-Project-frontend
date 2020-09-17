@@ -30,7 +30,7 @@ import {
   asyncRegister,
 } from './API'
 
-/** State machine blueprint for the whole app
+/** ⬆️ State machine blueprint for the whole app
  *  @author Minh Tu Thomas Hoang <minhtu.hoang19@gmail.com>
  */
 const AppMachine = Machine<
@@ -151,6 +151,9 @@ const AppMachine = Machine<
       /* HomeScreen & InformationScreen is ready to display 
          (after user being logged in 
           or a credit score request being resolved successfully) */
+      
+      // on this state, OTP from last OTP request shouldn't be stored
+      entry: [resetOtp],
       on: {
         Logout: { target: 'LOGGING_OUT' },
         RequestOtp: {
@@ -222,8 +225,8 @@ const AppMachine = Machine<
           {
             /* in case of 200's response */
             cond: isSuccessResp,
-            target: 'READY',
-            actions: [addSearchResultToHistory, resetOtp],
+            target: 'CRESCORE_READY',
+            actions: [addSearchResultToHistory],
           },
           {
             /* in case of non-200's response */
@@ -237,7 +240,13 @@ const AppMachine = Machine<
           actions: persistUnsuccRespMessage,
         },
       },
+      exit: [resetOtp]
     },
+    CRESCORE_READY: {
+      on: {
+        MoveOn: { target: 'READY' }
+      }
+    },  
     LOGGING_OUT: {
       /* @ts-ignore; request the server to revoke current user token */
       invoke: {
