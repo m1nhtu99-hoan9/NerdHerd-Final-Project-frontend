@@ -104,9 +104,9 @@ const AppMachine = Machine<
       ],
       on: {
         MoveOn: {
-          target: 'PROFILE_FETCHING'
-        }
-      }
+          target: 'PROFILE_FETCHING',
+        },
+      },
     },
     PROFILE_FETCHING: {
       /* invoke promise to request from '/profile' route here:
@@ -188,8 +188,10 @@ const AppMachine = Machine<
       /* similar to `READY` but waiting for user to 
          send request to query customer's credit score */
       on: {
-        MoveOn: {
-          target: 'OTP_FETCHING'
+        /* in case user input wrong phone number 
+           and want to retry with the desired number */
+        RequestOtp: {
+          target: 'OTP_FETCHING',
         },
         QueryScore: {
           /* if user's input OTP doesn't match OTP stored in context, 

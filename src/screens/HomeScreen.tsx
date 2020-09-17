@@ -143,7 +143,7 @@ export default function HomeScreen() {
           /* update screeen's `searchHistory` state accordingly to the `AppService` context */
           setSearchHistory(appMState.context.searchHistory)
 
-          // setCard1, setCard2, setCard3
+          /* update component's states accordingly */
           if (searchHistory.length < 3) {
             switch (searchHistory.length) {
               case 2:
