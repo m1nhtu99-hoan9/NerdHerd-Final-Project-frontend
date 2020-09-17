@@ -233,7 +233,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {i18n.t('home.firstSubHeader')}
               </StyledText>
 
-              <RNSpeedometer value={creditScore} size={normalise(220)} />
+              <RNSpeedometer value={creditScore*5.5 + 300} size={normalise(220)} minValue={300} maxValue={850} />
               <View style={styles.speedometerContainer}>
                 <View style={{}}>
                   <Image
@@ -241,7 +241,7 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                     style={{ width: 220, height: 185, position: 'relative' }}
                   ></Image>
                   <StyledText style={styles.score} fontWeight="bold">
-                    {String(creditScore)}
+                    {String(creditScore*5.5 + 300)}
                   </StyledText>
                 </View>
               </View>
