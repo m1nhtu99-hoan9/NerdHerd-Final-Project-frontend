@@ -315,7 +315,7 @@ export default function SeacrhScreen() {
               />
             )}
             name="phoneNum"
-            rules={{ required: true, minLength: 10, pattern: PATTERN }}
+            rules={{ required: true, minLength: 10, pattern: /(09)+([0-9]{8})/ }}
             defaultValue=""
           />
 
