@@ -197,9 +197,9 @@ export default function HomeScreen() {
             loop={false}
             loadMinimal={true}
           >
-            {!!card1 && (<UserCreditInfoCard phoneNumber={card1.phone} creditScore={card1.score}/>)}
-            {!!card2 && (<UserCreditInfoCard phoneNumber={card2.phone} creditScore={card2.score}/>)}
-            {!!card3 && (<UserCreditInfoCard phoneNumber={card3.phone} creditScore={card3.score}/>)}
+            {!!card1 && (<UserCreditInfoCard phoneNumber={Object.values(card1)[0] as string} creditScore={Object.values(card1)[1] as number}/>)}
+            {!!card2 && (<UserCreditInfoCard phoneNumber={Object.values(card2)[0] as string} creditScore={Object.values(card2)[1] as number}/>)}
+            {!!card3 && (<UserCreditInfoCard phoneNumber={Object.values(card3)[0] as string} creditScore={Object.values(card3)[1] as number}/>)}
             {/*
               // render if search history has more than 1 elements
               !!searchHistory.length &&

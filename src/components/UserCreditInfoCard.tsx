@@ -50,6 +50,11 @@ const Line = function () {
   return <View style={styles.line} />
 }
 
+const round = (num: Number) => (places: Number) => {
+  // @ts-ignore; because TS too dump to understand the brilliance of this
+  return +(Math.round(num + 'e+' + places) + 'e-' + places)
+}
+
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   const { phoneNumber, creditScore } = props
 
