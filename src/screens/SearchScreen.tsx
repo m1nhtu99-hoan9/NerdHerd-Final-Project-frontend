@@ -165,24 +165,32 @@ export default function SeacrhScreen() {
   const onSubmitButtonClicked = (data: Object) => {
     /* If the OTP field is hidden */
     if (!isOtpFieldEnabled) {
-      console.log(Object.values(data)[0])
+      console.log(`Input phone number: ${Object.values(data)[0]}`)
 
       /* send OTP request with the help of `AppService` */
       setPhoneNum(Object.values(data)[0])
       appMSend({ type: 'RequestOtp', phoneNum: Object.values(data)[0] })
+
+      /* popup modal will be displayed accordingly to the response 
+         as defined in `useEffect` hook below */
 
       /* show OTP input field */
       _showSearchAnimation()
       setOtpFieldEnabled(true)
       setButtonText(i18n.t('search.submitBtn'))
     } else {
+      console.log(`Form payload: ${Object.values(data)}`)
       /* If the OTP input field is already visible, check if the OTP code is valid */
       if (_isOtpInvalid(otpCode)) {
         // in order for error message to be displayed
         setOtpWarn(i18n.t('search.validation.otpIncorrect'))
       } else {
         // send OTP request with the help of `AppService`
-        appMSend()
+        appMSend({
+          type: 'QueryScore',
+          inputOtp: Object.values(data)[1],
+          phoneNum: Object.values(data)[0],
+        })
 
         // reset the form values to its initial state
         setButtonText('Gửi mã OTP')
@@ -215,21 +223,24 @@ export default function SeacrhScreen() {
 
           /* display the popup modal to inform user that the request is successfully resolved */
           setPopupModalVisible(true)
+          
+          /* for DEBUGGING?! nah ┌П┐(►˛◄’!) I just want to see OTP code
+             yeah, I know what you're thinking ( ͡ ͡° ͜つ ͡͡° ) Yes, I'm cheating ◕‿↼
+          */
+          console.log(`｀(^▼^)´ OTP: ${appMState.context.otp}`)
           return
         case 'FAILURE':
           /* prepare content of Popup modal */
-          _setPopupContent(
-            false,
-            'Lỗi',
-            `Internal server error!`,
-          )
+          _setPopupContent(false, 'Lỗi', `Internal server error!`)
 
           /* display the popup modal to inform user that the request is successfully resolved */
           setPopupModalVisible(true)
           return
-        case 'READY':
-          /* if OTP is found in the context, move on */
-          //navigation.navigate('SearchResult', { phone: undefined })
+        case 'CRESCORE_READY':
+          console.log(appMState.context)
+
+          navigation.navigate('SearchResult', { phone: undefined })
+
           return
       }
     })(appMState.value)
