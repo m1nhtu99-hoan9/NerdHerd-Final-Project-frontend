@@ -53,6 +53,7 @@ export default function LoginForm() {
   const [isLoading, setLoading] = useState(false)
   const [animatedIndex, setAnimatedIndex] = useState(-2)
   const [blurOpacity, setBlurOpacity] = useState(0)
+  const [isFirstRender, setIsFirstRender] = useState(true)
 
   const _fireLoading = () => {
     Animated.timing(opacity, {
@@ -183,7 +184,7 @@ export default function LoginForm() {
     if (appMState.value == 'AUTHENTICATING') {
       // start loading indicator
       _startAnimation()
-
+      setIsFirstRender(false)
       console.log('Resolving login request')
     }
     if (appMState.value == 'LOGGED_IN') {
@@ -212,7 +213,11 @@ export default function LoginForm() {
       _stopAnimation()
 
       // update api error message state so that the message can be showed
-      setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
+      if(!isFirstRender)
+      {
+        setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
+      }
+      setIsFirstRender(true)
 
       console.log('FAILED')
       console.log(appMState.context.lastResponse)
