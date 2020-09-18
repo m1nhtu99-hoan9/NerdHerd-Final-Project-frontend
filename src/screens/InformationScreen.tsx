@@ -192,18 +192,18 @@ export default function InformationScreen() {
           /* update screeen's `userInfo` state accordingly to the `AppService` context */
           setUserInfo(appMState.context.userProfile)
 
-          console.log('Received user info')
-          console.log(appMState.context.userProfile)
+          // console.log('Received user info')
+          // console.log(appMState.context.userProfile)
 
           _stopAnimation()
 
           return
         case 'FAILURE':
           /* getting back to LoginScreen without giving user an error message is a bit rude  
-             but it's okey for now, I reckon 凸( •̀_•́ )凸
+             凸( •̀_•́ )凸
           */
           // @ts-ignore
-          navigation.navigate('Index')
+          // navigation.navigate('Index')
           return
       }
     })(appMState.value)

@@ -232,12 +232,12 @@ const AppMachine = Machine<
           {
             /* in case of non-200's response */
             cond: isNotSuccessResp,
-            target: 'OTP_UPDATED',
+            target: 'SEARCH_FAILURE',
             actions: persistRejectedMessage,
           },
         ],
         onError: {
-          target: 'OTP_UPDATED',
+          target: 'SEARCH_FAILURE',
           actions: persistUnsuccRespMessage,
         },
       },
@@ -272,6 +272,16 @@ const AppMachine = Machine<
       },
       exit: [resetContext],
     },
+    SEARCH_FAILURE: {
+      on: {
+        /* still under READY */
+        RequestOtp: {
+          // prevent user from sending excessive OTP requests
+          cond: hasOtpNotLoaded,
+          target: 'OTP_FETCHING',
+        },
+      },
+    },
     FAILURE: {
       on: {
         /** events which can be sent from `UNAUTHORISED`, `LOGGED_IN`, `READY`
@@ -279,11 +289,6 @@ const AppMachine = Machine<
          */
         Logout: { target: 'UNAUTHORISED' },
         Login: { target: 'AUTHENTICATING' },
-        RequestOtp: {
-          // prevent user from sending excessive OTP requests
-          cond: hasOtpNotLoaded,
-          target: 'OTP_FETCHING',
-        },
       },
     },
   },

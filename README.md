@@ -32,7 +32,7 @@ For Bank Staff:
 - [x] History of search queries
 - [x] Internalisation: Vietnamese and English languages
 
-## CHANGELOG
+## VERSION HISTORY
 
 See [CHANGELOG](https://github.com/mnhthng-thms/NerdHerd-Final-Project-frontend/blob/master/CHANGELOG.md)
 

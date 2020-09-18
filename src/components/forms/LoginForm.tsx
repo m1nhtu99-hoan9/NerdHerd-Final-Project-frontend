@@ -167,6 +167,14 @@ export default function LoginForm() {
 
   const _signInFormOnSubmitted = (data: SignInFormFields) => {
     /* PM's phone number (for DEBUGGING, ya know? ¯\_(ツ)_/¯): "0967162652" */
+
+    if (appMState.context.token) {
+      /* double-check for cases in which 
+         user got kicked out unexpectedly 凸( •̀_•́ )凸
+      */
+      nav.navigate('Home')
+    }
+
     /* in development mode */
     // appMSend('Login', {phoneNum: "0967162652", password: "aacc1234"})
 
@@ -178,6 +186,12 @@ export default function LoginForm() {
   }
 
   useEffect(() => {
+    if (appMState.context.token) {
+      /* double-check for cases in which 
+         user got kicked out unexpectedly 凸( •̀_•́ )凸
+      */
+      nav.navigate('Home')
+    }
     if (appMState.value == 'UNAUTHORISED') {
       /* initial state of the app */
       // console.log('Not logged in yet')
@@ -195,12 +209,7 @@ export default function LoginForm() {
       // console.log(`Login request resolved: status ${appMState.context.lastResponse.statusCode}`)
       console.log(`Token: ${appMState.context.token}`)
 
-      if (appMState.context.token) {
-        /* double-check to make sure access token has been generated and stored
-           just to be sure, ya know 凸( •̀_•́ )凸
-        */
-        nav.navigate('Home')
-      } else {
+      if (!appMState.context.token) {
         /* to be fair, if this happens, (ó﹏ò｡)
            there is something wrong with `AppService`
         */
@@ -214,20 +223,19 @@ export default function LoginForm() {
       _stopAnimation()
 
       // update api error message state so that the message can be showed
-      if(!isFirstRender)
-      {
+      if (!isFirstRender) {
         setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
         reset({
           phoneNum: 0,
-          password: ''
+          password: '',
         })
       }
       setIsFirstRender(true)
 
-      console.log('FAILED')
-      console.log(appMState.context.lastResponse)
+      console.log('FAILURE happend in LoginScreen')
+      console.log('Context: ', appMState.context)
     }
-  }, [appMState])
+  }, [appMState, apiErrorMessage, isLoading])
 
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
@@ -469,12 +477,12 @@ const styles = StyleSheet.create({
   },
   inputPhone: {
     top: normaliseV(120),
-    position: 'absolute'
+    position: 'absolute',
   },
   inputPassword: {
     top: normaliseV(380),
     position: 'absolute',
-    paddingBottom: normaliseV(-70)
+    paddingBottom: normaliseV(-70),
   },
   validationText: {
     fontSize: normalise(14),

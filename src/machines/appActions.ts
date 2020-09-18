@@ -43,7 +43,7 @@ const persistUnsuccRespMessage = assign<AppMachineContext, AppMachineEvent>({
       lastErrorMessage:
         statusCode >= 500
           ? 'Internal server error'
-          : (Object.values(respData)[0] as string),
+          : respData.msg || respData.message,
     }
   },
 })
@@ -52,7 +52,11 @@ const persistUnsuccRespMessage = assign<AppMachineContext, AppMachineEvent>({
 const persistRejectedMessage = assign<AppMachineContext, AppMachineEvent>({
   // @ts-ignore; for rejected promises, `event.data` returns error message
   lastResponse: (ctx, event) => {
-    return { ...ctx.lastResponse, lastErrorMessage: event.data }
+    const resp = event.data
+    return {
+      statusCode: resp.status,
+      lastErrorMessage: resp.data.msg || resp.data.message,
+    }
   },
 })
 
@@ -64,6 +68,8 @@ const resetOtp = assign<AppMachineContext, AppMachineEvent>({
 /** prepend received search result to search history in context */
 const addSearchResultToHistory = assign<AppMachineContext, AppMachineEvent>({
   searchHistory: function (ctx, event) {
+    console.log(event.data)
+
     return [
       // `event.data.data` has type of `SearchResult`
       _transformSearchedCustItem(event.data.data),
