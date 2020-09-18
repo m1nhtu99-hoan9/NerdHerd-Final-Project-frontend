@@ -42,7 +42,7 @@ export default function SearchResultScreen() {
     console.log(
       `Currently in SearchResultScreen; Machine\'s state: ${appMState.value}`,
     )
-    
+
     nav.navigate('Search')
   }
 
@@ -50,8 +50,12 @@ export default function SearchResultScreen() {
     appMSend('MoveOn')
     /* update `AppService` accordingly */
     console.log(
-      `Search result: <phone number: ${phone}>; credit score: ${JSON.stringify(score)}, of type ${typeof score}`,
+      `Search result: <phone number: ${phone}>; credit score: ${JSON.stringify(
+        score,
+      )}, of type ${typeof score}`,
     )
+
+    console.log(`Search history: `, appMState.context.searchHistory)
   }, [appMState])
 
   /* states for loading animation */

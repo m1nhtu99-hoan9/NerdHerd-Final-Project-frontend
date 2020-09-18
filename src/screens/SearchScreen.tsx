@@ -268,6 +268,7 @@ export default function SeacrhScreen() {
 
   useEffect(() => {
     ;(function (state) {
+      console.log(`SearchScreen; current machine state: ${appMState.value}`)
       switch (state) {
         /* Expected intial machine state for SearchScreen: `READY` 
            If `AppService` is still in `PROFILE_FETCHING` state,
@@ -295,6 +296,8 @@ export default function SeacrhScreen() {
 
           /* display the popup modal to inform user that the request is successfully resolved */
           setPopupModalVisible(true)
+
+          console.log('FAILURE happend during OTP request')
           return
         case 'CRESCORE_READY':
           // console.log(appMState.context)

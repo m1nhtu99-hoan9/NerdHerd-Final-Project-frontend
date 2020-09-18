@@ -17,10 +17,16 @@ import {
 } from 'react-native-gesture-handler'
 import { Container, Form } from 'native-base'
 import { LinearGradient } from 'expo-linear-gradient'
+import { preciseRound as _round } from '../utils'
 
-const SCREEN_HEIGHT = Dimensions.get('window').height
-const SCREEN_WIDTH = Dimensions.get('window').width
-import { normalise, normaliseV, normaliseH, PATTERN } from '../../src/helpers'
+import {
+  SCREEN_HEIGHT,
+  SCREEN_WIDTH,
+  normalise,
+  normaliseV,
+  normaliseH,
+  PATTERN,
+} from '../../src/helpers'
 import StyledText from '../../src/components/atomic/StyledText'
 import TextInputIcon from '../components/atomic/TextInputIcon'
 import { FontAwesome5 } from '@expo/vector-icons'
@@ -33,8 +39,6 @@ import Slider from '@react-native-community/slider'
 import { useForm, Controller } from 'react-hook-form'
 
 import ModalContent from '../components/ModalUserInfoCard'
-import { TSpan } from 'react-native-svg'
-import { times } from 'ramda'
 
 interface FormInput {
   loanAmount_calculate: number | null
@@ -52,13 +56,13 @@ const Line = function () {
 
 const round = (num: Number) => (places: Number) => {
   // @ts-ignore; because TS too dump to understand the brilliance of this
-  return +(Math.round(num + 'e+' + places) + 'e-' + places)
+  return _round(num, places)
 }
 
 export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
   //const { phoneNumber, creditScore } = props
   const phoneNumber = props.phoneNumber
-  const creditScore = (round(props.creditScore * 5.5 + 300)(0))
+  const creditScore = round(props.creditScore * 5.5 + 300)(0)
   const placeholderLoanType = {
     label: i18n.t('home.loanOptionsInput'),
     value: null,
@@ -91,7 +95,10 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
 
   const { control, handleSubmit, errors, trigger, reset } = useForm<FormInput>()
 
-  const [fadedOpacity, setFadedOpacity] = useState(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)'])
+  const [fadedOpacity, setFadedOpacity] = useState([
+    'rgba(0, 0, 0, 0)',
+    'rgba(0, 0, 0, 0.6)',
+  ])
 
   // State of modal
   const [calculateModalVisible, setCalculateModalVisible] = useState(false)
@@ -161,9 +168,13 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
     }
   }
   //@ts-ignore
-  const isCloseToBottom = ({ layoutMeasurement, contentOffset, contentSize }) => {
-    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
-  };
+  const isCloseToBottom = ({
+    layoutMeasurement,
+    contentOffset,
+    contentSize,
+  }) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1
+  }
 
   return (
     <>
@@ -213,14 +224,16 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           behavior="padding"
           enabled
         >
-          <ScrollView onScroll={({ nativeEvent }) => {
-            if (isCloseToBottom(nativeEvent)) {
-              setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)'])
-            }
-            if (!isCloseToBottom(nativeEvent)) {
-              setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)'])
-            }
-          }}>
+          <ScrollView
+            onScroll={({ nativeEvent }) => {
+              if (isCloseToBottom(nativeEvent)) {
+                setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0)'])
+              }
+              if (!isCloseToBottom(nativeEvent)) {
+                setFadedOpacity(['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.6)'])
+              }
+            }}
+          >
             <View style={styles.phoneNumContainer}>
               <StyledText fontWeight="regular" style={styles.phoneNum}>
                 {phoneNumber}
@@ -234,7 +247,12 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {i18n.t('home.firstSubHeader')}
               </StyledText>
 
-              <RNSpeedometer value={creditScore} size={normalise(220)} minValue={300} maxValue={850} />
+              <RNSpeedometer
+                value={creditScore}
+                size={normalise(220)}
+                minValue={300}
+                maxValue={850}
+              />
               <View style={styles.speedometerContainer}>
                 <View style={{}}>
                   <Image
@@ -408,9 +426,23 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                 {_showErrorMessage(errors.loanAmount_offer?.type)}
 
                 <View style={styles.sliderContainer}>
-                  <StyledText fontWeight="bold" style={{...styles.loanDetailHeader, paddingLeft: normaliseH(150)}}>Lãi suất</StyledText>
+                  <StyledText
+                    fontWeight="bold"
+                    style={{
+                      ...styles.loanDetailHeader,
+                      paddingLeft: normaliseH(150),
+                    }}
+                  >
+                    Lãi suất
+                  </StyledText>
                   <View
-                    style={{ width: 100 + '%', marginTop: normaliseV(30), flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                    style={{
+                      width: 100 + '%',
+                      marginTop: normaliseV(30),
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
                   >
                     <Slider
                       style={{ width: 200, height: 40 }}
@@ -421,7 +453,15 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
                       maximumTrackTintColor="lightgrey"
                       onValueChange={(value) => setSliderValue(value)}
                     />
-                    <StyledText fontWeight='bold' style={{...styles.modalContentText, fontSize: normalise(14), right: normaliseH(70), position:'absolute'}}>{`${sliderValue}%`}</StyledText>
+                    <StyledText
+                      fontWeight="bold"
+                      style={{
+                        ...styles.modalContentText,
+                        fontSize: normalise(14),
+                        right: normaliseH(70),
+                        position: 'absolute',
+                      }}
+                    >{`${sliderValue}%`}</StyledText>
                   </View>
                 </View>
 
@@ -498,17 +538,17 @@ export default function UserCreditInfoCard(props: UserCreditInfoCardProps) {
           </ScrollView>
         </KeyboardAvoidingView>
         <LinearGradient
-            style={{
-              position: 'absolute',
-              bottom: normaliseV(-1),
-              borderRadius: 0,
-              width: 100 + '%',
-              alignSelf: 'center',
-              height: normaliseV(110),
-            }}
-            colors={fadedOpacity}
-            pointerEvents={'none'}
-          />
+          style={{
+            position: 'absolute',
+            bottom: normaliseV(-1),
+            borderRadius: 0,
+            width: 100 + '%',
+            alignSelf: 'center',
+            height: normaliseV(110),
+          }}
+          colors={fadedOpacity}
+          pointerEvents={'none'}
+        />
       </Container>
     </>
   )
