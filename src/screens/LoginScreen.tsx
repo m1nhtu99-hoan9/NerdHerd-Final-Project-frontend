@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     // PLEASE DO NOT EDIT THIS!
-    flex: 0.3,
+    flex: 0.25,
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 17 + '%',

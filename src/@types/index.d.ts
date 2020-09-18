@@ -46,12 +46,12 @@ type SearchResult = {
   score?: number
 }
 type ProfileOkResponse = {
-  user_id: string
+  user_id?: string
   phone: string
-  full_name: string
+  full_name?: string
   bank_id: string
   email: string
-  search_history: Array<SearchResult>
+  search_history?: Array<SearchResult>
 }
 
 

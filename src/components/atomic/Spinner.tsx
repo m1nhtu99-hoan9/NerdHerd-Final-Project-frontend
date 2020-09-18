@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Animated, ActivityIndicator, StyleSheet } from 'react-native'
 import { BlurView } from 'expo-blur'
 import { normalise, normaliseH, normaliseV } from '../../helpers'
-import { StyledText } from '.'
+import  StyledText from './StyledText'
 
 type SpinnerProps = {
   isLoading: boolean

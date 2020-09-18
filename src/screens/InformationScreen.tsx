@@ -192,18 +192,18 @@ export default function InformationScreen() {
           /* update screeen's `userInfo` state accordingly to the `AppService` context */
           setUserInfo(appMState.context.userProfile)
 
-          // console.log('Context at this moment')
-          // console.log(appMState.context)
+          // console.log('Received user info')
+          // console.log(appMState.context.userProfile)
 
           _stopAnimation()
 
           return
         case 'FAILURE':
           /* getting back to LoginScreen without giving user an error message is a bit rude  
-             but it's okey for now, I reckon 凸( •̀_•́ )凸
+             凸( •̀_•́ )凸
           */
           // @ts-ignore
-          navigation.navigate('Index')
+          // navigation.navigate('Index')
           return
       }
     })(appMState.value)
@@ -223,9 +223,11 @@ export default function InformationScreen() {
 
           <View style={styles.information}>
             <View style={styles.nameContainer}>
+              {/* USER'S FULL NAME */}
               <StyledText fontWeight="bold" style={styles.name}>
-                {userInfo.full_name}
+                {userInfo.fullName}
               </StyledText>
+              {/* END: USER'S FULL NAME */}
               <TouchableOpacity
                 style={{ flexDirection: 'row', alignItems: 'center' }}
               >
@@ -245,10 +247,9 @@ export default function InformationScreen() {
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.bank',
             )}: ${userInfo.bank_id || userInfo.bankId}`}</StyledText>
-            <StyledText
-              fontWeight="bold"
-              style={styles.infoText}
-            >{`User ID: ${userInfo.user_id || userInfo.userId}`}</StyledText>
+            <StyledText fontWeight="bold" style={styles.infoText}>{`User ID: ${
+              userInfo.user_id || userInfo.userId
+            }`}</StyledText>
             <StyledText fontWeight="bold" style={styles.infoText}>{`${i18n.t(
               'aboutMe.email',
             )}: ${userInfo.email}`}</StyledText>

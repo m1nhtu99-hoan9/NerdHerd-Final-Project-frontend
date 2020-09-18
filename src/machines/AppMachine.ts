@@ -151,7 +151,7 @@ const AppMachine = Machine<
       /* HomeScreen & InformationScreen is ready to display 
          (after user being logged in 
           or a credit score request being resolved successfully) */
-      
+
       // on this state, OTP from last OTP request shouldn't be stored
       entry: [resetOtp],
       on: {
@@ -169,7 +169,8 @@ const AppMachine = Machine<
       // @ts-ignore; TS too rigid (ó﹏ò｡)
       invoke: {
         id: 'otp_promise',
-        src: (ctx, event) => asyncGetOtp(ctx.token as string)(event.phoneNum as string),
+        src: (ctx, event) =>
+          asyncGetOtp(ctx.token as string)(event.phoneNum as string),
         onDone: [
           {
             cond: isSuccessResp,
@@ -231,22 +232,22 @@ const AppMachine = Machine<
           {
             /* in case of non-200's response */
             cond: isNotSuccessResp,
-            target: 'OTP_UPDATED',
+            target: 'SEARCH_FAILURE',
             actions: persistRejectedMessage,
           },
         ],
         onError: {
-          target: 'OTP_UPDATED',
+          target: 'SEARCH_FAILURE',
           actions: persistUnsuccRespMessage,
         },
       },
-      exit: [resetOtp]
+      exit: [resetOtp],
     },
     CRESCORE_READY: {
       on: {
-        MoveOn: { target: 'READY' }
-      }
-    },  
+        MoveOn: { target: 'READY' },
+      },
+    },
     LOGGING_OUT: {
       /* @ts-ignore; request the server to revoke current user token */
       invoke: {
@@ -256,7 +257,6 @@ const AppMachine = Machine<
           {
             cond: isSuccessResp,
             target: 'UNAUTHORISED',
-            actions: resetContext,
           },
           {
             /* for non-200's responses */
@@ -270,6 +270,17 @@ const AppMachine = Machine<
           actions: persistRejectedMessage,
         },
       },
+      exit: [resetContext],
+    },
+    SEARCH_FAILURE: {
+      on: {
+        /* still under READY */
+        RequestOtp: {
+          // prevent user from sending excessive OTP requests
+          cond: hasOtpNotLoaded,
+          target: 'OTP_FETCHING',
+        },
+      },
     },
     FAILURE: {
       on: {
@@ -278,11 +289,6 @@ const AppMachine = Machine<
          */
         Logout: { target: 'UNAUTHORISED' },
         Login: { target: 'AUTHENTICATING' },
-        RequestOtp: {
-          // prevent user from sending excessive OTP requests
-          cond: hasOtpNotLoaded,
-          target: 'OTP_FETCHING',
-        },
       },
     },
   },

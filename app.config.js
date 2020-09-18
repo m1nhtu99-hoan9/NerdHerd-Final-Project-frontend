@@ -16,6 +16,9 @@ export default {
     '**/*',
     'node_modules/@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/*',
   ],
+  android: {
+    package: "com.nerdherd.crescorex"
+  },
   ios: {
     supportsTablet: true,
   },

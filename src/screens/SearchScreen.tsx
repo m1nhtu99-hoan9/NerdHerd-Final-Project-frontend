@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { BlurView } from 'expo-blur'
+import { hasPath } from 'ramda'
 
 import { useForm, Controller } from 'react-hook-form'
 import { AppMachineContext } from '../contexts'
@@ -168,11 +169,13 @@ export default function SeacrhScreen() {
   const _setPopupContent = function (
     isSuccess: boolean,
     header: string,
-    content: string,
+    content?: string,
   ) {
     setIconColour(isSuccess ? PopupColor.GREEN : PopupColor.RED)
     setIcon(isSuccess ? PopupIcon.SUCCESS : PopupIcon.ERROR)
-    setMessage(content)
+    if (content) {
+      setMessage(content)
+    }
     setHeader(header)
   }
   const _showErrorMessage = function (props: unknown): JSX.Element | undefined {
@@ -259,7 +262,7 @@ export default function SeacrhScreen() {
           phoneNum: '',
         })
 
-        _hideSearchAnimation()
+        
       }
     }
   }
@@ -268,13 +271,16 @@ export default function SeacrhScreen() {
 
   useEffect(() => {
     ;(function (state) {
+      console.log(`SearchScreen; current machine state: ${appMState.value}`)
       switch (state) {
         /* Expected intial machine state for SearchScreen: `READY` 
            If `AppService` is still in `PROFILE_FETCHING` state,
              no request will be processed 
         */
         case 'OTP_UPDATED':
-          /* prepare content of Popup modal */
+          // console.log('Last response: ', appMState.context.lastResponse)
+
+          /* prepare popup content */
           _setPopupContent(
             true,
             'Thành công',
@@ -285,19 +291,31 @@ export default function SeacrhScreen() {
           setPopupModalVisible(true)
 
           /* for DEBUGGING?! nah ┌П┐(►˛◄’!) I just want to see OTP code
-             yeah, I know what you're thinking ( ͡ ͡° ͜つ ͡͡° ) Yes, I'm cheating ◕‿↼
-          */
+               yeah, I know what you're thinking ( ͡ ͡° ͜つ ͡͡° ) Yes, I'm cheating ◕‿↼
+            */
           console.log(`｀(^▼^)´ OTP: ${appMState.context.otp}`)
+
           return
-        case 'FAILURE':
+        case 'SEARCH_FAILURE':
           /* prepare content of Popup modal */
-          _setPopupContent(false, 'Lỗi', `Internal server error!`)
+          _setPopupContent(
+            false,
+            'Lỗi',
+            appMState.context.lastResponse.statusCode == 400
+              ? 'Số điện thoại này không tồn tại trong CSDL'
+              : 'Lỗi từ server',
+          )
 
           /* display the popup modal to inform user that the request is successfully resolved */
           setPopupModalVisible(true)
+
+          // at this point, loading indicator is still running in the background
+          _stopAnimation()
+
+          console.log('FAILURE happend during OTP request')
           return
         case 'CRESCORE_READY':
-          // console.log(appMState.context)
+          //console.log(appMState.context.searchHistory[0])
 
           _stopAnimation()
 
@@ -311,7 +329,16 @@ export default function SeacrhScreen() {
           return
       }
     })(appMState.value)
-  }, [appMState, phoneNum, icon, iconColour, message, header, isLoading])
+  }, [
+    appMState,
+    isLoading,
+    phoneNum,
+    icon,
+    iconColour,
+    message,
+    header,
+    isLoading,
+  ])
 
   return (
     <GradientContainer flexDirection={'column'}>
@@ -545,12 +572,12 @@ const styles = StyleSheet.create({
   animatedModalContainer: {
     backgroundColor: 'black',
     width: 94 + '%',
-    height: 51.1 + '%',
+    height: 52.6 + '%',
     alignItems: 'center',
     justifyContent: 'center',
 
     position: 'absolute',
-    left: normaliseH(42),
+    left: normaliseH(41),
     top: normaliseV(140),
     borderRadius: 15,
   },

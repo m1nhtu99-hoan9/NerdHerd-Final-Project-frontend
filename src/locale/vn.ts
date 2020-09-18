@@ -92,6 +92,7 @@ const vn = {
   },
   aboutMe: {
     _nav: 'Thông tin cá nhân',
+    
     additional: 'Bổ sung',
     bank: 'Ngân hàng',
     accId: 'Mã khách hàng',

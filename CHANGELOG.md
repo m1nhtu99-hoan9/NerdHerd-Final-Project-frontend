@@ -1,5 +1,14 @@
 # CHANGELOG 
 
+## Log: 19/09/2020
+
+PUBLISH VERSION 1.1.0:
+
+- [x] Sửa lỗi hiện sai điểm số ở màn hình hiện thị kết quả tìm kiếm
+- [x] Sửa lỗi hiện thiếu thông tin người dùng ở màn hình profile
+- [x] Sửa lỗi chương trình crash khi người dùng truy vấn số điện thoại không có trong database
+- [x] Cải thiện các thông báo lỗi
+
 ## Log: 18/09/2020
 
 - PUBLISH VERSION 1.0.0

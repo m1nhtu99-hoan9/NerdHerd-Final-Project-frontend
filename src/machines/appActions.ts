@@ -7,6 +7,22 @@ import {
 } from '../@types/machines'
 
 import { map, prepend } from 'ramda'
+import { preciseRound as round } from '../utils'
+
+const _transformSearchedCustItem = function (
+  item: SearchResultResponse | SearchResult,
+) {
+  const raw_score =
+    (item as SearchResultResponse).credit_score || (item as SearchResult).score
+
+  return {
+    phone:
+      (item as SearchResultResponse).customer_phone ||
+      (item as SearchResult).phone,
+    // @ts-ignore
+    score: round(parseFloat(raw_score, 2) * 100),
+  }
+}
 
 /**@tutorial should use `@ts-ignore` for this to take advantage of JS' flexibility */
 const resetContext = assign<AppMachineContext, AppMachineEvent>({
@@ -27,7 +43,7 @@ const persistUnsuccRespMessage = assign<AppMachineContext, AppMachineEvent>({
       lastErrorMessage:
         statusCode >= 500
           ? 'Internal server error'
-          : (Object.values(respData)[0] as string),
+          : respData.msg || respData.message,
     }
   },
 })
@@ -36,7 +52,11 @@ const persistUnsuccRespMessage = assign<AppMachineContext, AppMachineEvent>({
 const persistRejectedMessage = assign<AppMachineContext, AppMachineEvent>({
   // @ts-ignore; for rejected promises, `event.data` returns error message
   lastResponse: (ctx, event) => {
-    return { ...ctx.lastResponse, lastErrorMessage: event.data }
+    const resp = event.data
+    return {
+      statusCode: resp.status,
+      lastErrorMessage: resp.data.msg || resp.data.message,
+    }
   },
 })
 
@@ -47,10 +67,15 @@ const resetOtp = assign<AppMachineContext, AppMachineEvent>({
 
 /** prepend received search result to search history in context */
 const addSearchResultToHistory = assign<AppMachineContext, AppMachineEvent>({
-  searchHistory: (ctx, event) => [
-    event.data.data,
-    ...(ctx.searchHistory as Array<SearchResult>),
-  ],
+  searchHistory: function (ctx, event) {
+    console.log(event.data)
+
+    return [
+      // `event.data.data` has type of `SearchResult`
+      _transformSearchedCustItem(event.data.data),
+      ...(ctx.searchHistory as Array<SearchResult>),
+    ]
+  },
 })
 
 interface TAssignHandler {
@@ -60,28 +85,9 @@ interface TAssignHandler {
 const assignHandler: TAssignHandler = {
   /** assign handler for search history context on logged in */
   SearchHistory: (_, event) => {
-    const _transformSearchedCustItem = function (
-      item: SearchResultResponse,
-    ): SearchResult {
-      /* round function 
-      щ（ﾟДﾟщ）because JS' default round method is stupid AF */
-      const round = (num: Number) => (places: Number) => {
-        // @ts-ignore; because TS too dump to understand the brilliance of this
-        return +(Math.round(num + 'e+' + places) + 'e-' + places)
-      }
-
-      return {
-        phone: Object.values(item)[1],
-        // @ts-ignore
-        score: (round(parseFloat(Object.values(item)[0]))(2) * 100) | 0,
-      }
-    }
-
     /* convert received Array<SearchResultResponse> to Array<SearchResult> */
-    return map(_transformSearchedCustItem)(
-      // `event.data` returns an object complying to interface `ApiOkResponse`
-      event.data.data.search_history,
-    )
+    // `event.data` returns an object complying to interface `ApiOkResponse`
+    return event.data.data.search_history.map(_transformSearchedCustItem)
   },
   /** update user profile context on logged in */
   UserProfile: (_, event): TUserProfile => {

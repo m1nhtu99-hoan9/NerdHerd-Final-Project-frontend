@@ -46,6 +46,7 @@ export interface AppMachineStateSchema extends StateSchema {
     CRESCORE_QUERYING: {}
     CRESCORE_READY: {}
     LOGGING_OUT: {}
+    SEARCH_FAILURE: {}
     FAILURE: {}
   }
 }
@@ -91,7 +92,7 @@ export type TAppMachineState = State<
 export type TAppMachineSender = (
   event:
     | AppMachineEvent
-    | 'Login' | 'MoveOn' | 'Logout' | 'RequestOtp' | 'QueryScore'
+    | 'Login' | 'MoveOn' | 'Logout' | 'RequestOtp' | 'QueryScore' 
     | SCXML.Event<AppMachineEvent>
     | Event<AppMachineEvent>[],
   phoneNum?: EventData | undefined,
