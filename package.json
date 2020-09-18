@@ -26,7 +26,7 @@
     "lint:fix": "eslint -ext js,jsx,ts,tsx . --fix",
     "prettier": "prettier . ",
     "prettier:fix": "prettier . --fix",
-    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start",
+    "dev": "echo \"DEVELOPMENT MODE on LINUX\"; DEVELOPMENT=true; expo start"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
