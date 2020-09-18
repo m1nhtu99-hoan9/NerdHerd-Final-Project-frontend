@@ -259,7 +259,7 @@ export default function SeacrhScreen() {
           phoneNum: '',
         })
 
-        _hideSearchAnimation()
+        
       }
     }
   }
@@ -301,7 +301,7 @@ export default function SeacrhScreen() {
           return
         case 'CRESCORE_READY':
           // console.log(appMState.context)
-
+          _hideSearchAnimation()  
           _stopAnimation()
 
           navigation.navigate('SearchResult', {
@@ -548,12 +548,12 @@ const styles = StyleSheet.create({
   animatedModalContainer: {
     backgroundColor: 'black',
     width: 94 + '%',
-    height: 51.1 + '%',
+    height: 52.6 + '%',
     alignItems: 'center',
     justifyContent: 'center',
 
     position: 'absolute',
-    left: normaliseH(42),
+    left: normaliseH(41),
     top: normaliseV(140),
     borderRadius: 15,
   },
