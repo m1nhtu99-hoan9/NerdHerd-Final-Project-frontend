@@ -29,6 +29,7 @@ import {
 import { GradientText, StyledText } from '../atomic/index'
 
 import { SignInNavContext, AppMachineContext } from '../../contexts'
+import { reset } from 'i18n-js'
 
 interface FormInput {
   password: string
@@ -41,7 +42,7 @@ export default function LoginForm() {
   // get & consume LoginScreen's navigation object
   const nav = useContext(SignInNavContext)
 
-  const { control, handleSubmit, errors } = useForm<FormInput>()
+  const { control, handleSubmit, errors, reset } = useForm<FormInput>()
 
   const [apiErrorMessage, setApiErrorMessage] = useState<string | undefined>(
     undefined,
@@ -137,7 +138,7 @@ export default function LoginForm() {
   const _showPasswordErrorMessage = function (): JSX.Element | undefined {
     // @ts-ignore; we need JS' flexibility here ¯\_(ツ)_/¯
     if (apiErrorMessage != ' ' && apiErrorMessage?.length) {
-      return <Text style={styles.validationText}>{apiErrorMessage}</Text>
+      return <Text style={styles.validationTextApi}>{apiErrorMessage}</Text>
     }
 
     // ლ(´ڡ`ლ)
@@ -216,6 +217,10 @@ export default function LoginForm() {
       if(!isFirstRender)
       {
         setApiErrorMessage(appMState.context.lastResponse.lastErrorMessage)
+        reset({
+          phoneNum: 0,
+          password: ''
+        })
       }
       setIsFirstRender(true)
 
@@ -278,7 +283,7 @@ export default function LoginForm() {
               value={value}
               maxLength={10}
               // End of validation code-block
-              style={styles.input}
+              style={styles.inputPhone}
               placeholder={i18n.t('signIn.usernameInput')}
               iconClass={FontAwesome}
               iconName={'mobile-phone'}
@@ -308,6 +313,7 @@ export default function LoginForm() {
               value={value}
               maxLength={14}
               // End of validation code-block
+              style={styles.inputPassword}
               secureTextEntry
               placeholder={i18n.t('signIn.passwordInput')}
               iconClass={FontAwesome}
@@ -328,7 +334,7 @@ export default function LoginForm() {
 
         {/* END Password input field */}
       </View>
-      <View style={{ flex: 2, justifyContent: 'center' }}>
+      <View style={{ flex: 2.2, justifyContent: 'center' }}>
         {/* Link to `ForgotPassword` screen */}
         <TouchableOpacity onPress={_forgotPassTxtOnClicked}>
           <StyledText fontWeight="bold" style={styles.forgetPasswordTxt}>
@@ -424,10 +430,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   formContainer: {
-    flex: 15, // !! DANGEROUR ZONE FOR EDITTING !!
+    flex: 17, // !! DANGEROUR ZONE FOR EDITTING !!
     flexDirection: 'column',
     alignItems: 'flex-start',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
   btnContainer: {
     backgroundColor: Colours.White,
@@ -461,13 +467,26 @@ const styles = StyleSheet.create({
     shadowRadius: 2.22,
     elevation: 3,
   },
-  input: {
-    marginTop: 30,
+  inputPhone: {
+    top: normaliseV(120),
+    position: 'absolute'
+  },
+  inputPassword: {
+    top: normaliseV(380),
+    position: 'absolute',
+    paddingBottom: normaliseV(-70)
   },
   validationText: {
     fontSize: normalise(14),
     color: 'rgba(242, 38, 19, 1)',
-    paddingBottom: normaliseV(27),
+    marginBottom: normaliseV(20),
+    marginTop: normaliseV(30),
+    alignSelf: 'center',
+  },
+  validationTextApi: {
+    fontSize: normalise(14),
+    marginTop: 0,
+    color: 'rgba(242, 38, 19, 1)',
     alignSelf: 'center',
   },
   signUpTxt: {
