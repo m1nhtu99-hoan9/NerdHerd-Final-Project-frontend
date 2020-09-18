@@ -1,5 +1,10 @@
 # CHANGELOG 
 
+## Log: 19/09/2020
+
+- [x] Sửa lỗi hiện sai điểm số ở màn hình hiện thị kết quả tìm kiếm
+- [x] Sửa lỗi hiện thiếu thông tin người dùng ở màn hình profile
+
 ## Log: 18/09/2020
 
 - PUBLISH VERSION 1.0.0
