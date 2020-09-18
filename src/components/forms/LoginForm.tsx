@@ -240,7 +240,7 @@ export default function LoginForm() {
   const animatedContainerStyleSheet = {
     backgroundColor: 'black',
     width: 126 + '%',
-    height: 173 + '%',
+    height: 174 + '%',
     alignItems: 'center',
     justifyContent: 'center',
     opacity: opacity,

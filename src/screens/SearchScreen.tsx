@@ -262,7 +262,7 @@ export default function SeacrhScreen() {
           phoneNum: '',
         })
 
-        _hideSearchAnimation()
+        
       }
     }
   }
@@ -315,7 +315,7 @@ export default function SeacrhScreen() {
           console.log('FAILURE happend during OTP request')
           return
         case 'CRESCORE_READY':
-          console.log(appMState.context.searchHistory[0])
+          //console.log(appMState.context.searchHistory[0])
 
           _stopAnimation()
 
@@ -572,12 +572,12 @@ const styles = StyleSheet.create({
   animatedModalContainer: {
     backgroundColor: 'black',
     width: 94 + '%',
-    height: 51.1 + '%',
+    height: 52.6 + '%',
     alignItems: 'center',
     justifyContent: 'center',
 
     position: 'absolute',
-    left: normaliseH(42),
+    left: normaliseH(41),
     top: normaliseV(140),
     borderRadius: 15,
   },
